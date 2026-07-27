@@ -29,7 +29,7 @@ void GameCollision::CheckHitEnemyToShot(EnemyManager& enemyManager, ShotManager&
 	}
 }
 
-void GameCollision::CheckHitEnemyToPlayer(EnemyManager& enemyManager,Player& player)
+void GameCollision::CheckHitEnemyToPlayer(EnemyManager& enemyManager,CharacterManager& player)
 {
 	
 	VECTOR playerPos = player.GetCollisionPos();

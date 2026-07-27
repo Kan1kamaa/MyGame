@@ -3,37 +3,37 @@
 #include"../Camera/CameraManager.h"
 #include"../Object/Field/Sky.h"
 #include "../Object/Field/Field.h"
-#include"../Object/Player/Player.h"
+#include"../Object/Player/CharacterManager.h"
 #include"../Object/Enemy/EnemyManager.h"
 #include"../System/GameCollision.h"
 #include"../System/SoundManager.h"
 class PlayScene : public SceneBase {
 private:
-	//ƒvƒŒƒCƒ„[
-	Player player;
-	//’e
+	//ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[
+	CharacterManager player;
+	//ï¿½e
 	ShotManager shot;
-	//“G
+	//ï¿½G
 	EnemyManager enemy;
-	//”wŒi
+	//ï¿½wï¿½i
 	Field field;
 	Sky sky;
-	//ƒJƒƒ‰
+	//ï¿½Jï¿½ï¿½ï¿½ï¿½
 	CameraManager camera;
 
 public:
-	//•`‰æ
+	//ï¿½`ï¿½ï¿½
 	void Draw();
 
 private:
-	//‰Šú‰»
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void Init();
-	//ƒ[ƒh
+	//ï¿½ï¿½ï¿½[ï¿½h
 	void Load();
-	//–ˆƒtƒŒ[ƒ€ŒvZ‚·‚éˆ—
+	//ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½vï¿½Zï¿½ï¿½ï¿½éˆï¿½ï¿½
 	void Step();
-	//î•ñXV
+	//ï¿½ï¿½ï¿½Xï¿½V
 	void Update();
-	//”jŠü
+	//ï¿½jï¿½ï¿½
 	void Fin();
 };

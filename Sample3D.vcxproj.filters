@@ -69,7 +69,13 @@
     <ClCompile Include="\\abkcnas01\授業資料・OC資料\山本隆行\2年生\前期\ゲーム制作演習Ⅰ\サンプルプログラム\06_プレイヤーの基礎\Src\Fps\Fps.cpp">
       <Filter>ソース ファイル\Lib\Fps</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game\Object\Player\Player.cpp">
+    <ClCompile Include="Src\Game\Object\Player\CharacterManager.cpp">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game\Object\Player\MeleeCharacter.cpp">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game\Object\Player\RangedCharacter.cpp">
       <Filter>ソース ファイル\Game\Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game\Object\Field\Field.cpp">
@@ -140,7 +146,16 @@
     <ClInclude Include="\\abkcnas01\授業資料・OC資料\山本隆行\2年生\前期\ゲーム制作演習Ⅰ\サンプルプログラム\06_プレイヤーの基礎\Src\Fps\Fps.h">
       <Filter>ソース ファイル\Lib\Fps</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Game\Object\Player\Player.h">
+    <ClInclude Include="Src\Game\Object\Player\CharacterManager.h">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game\Object\Player\MeleeCharacter.h">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game\Object\Player\RangedCharacter.h">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game\Object\Player\PlayerCharacter.h">
       <Filter>ソース ファイル\Game\Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game\Object\Field\Field.h">

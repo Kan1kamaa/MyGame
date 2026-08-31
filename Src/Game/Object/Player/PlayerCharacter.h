@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "../ActorBase/ActorBase.h"
 #include "../Shot/ShotManager.h"
 

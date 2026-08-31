@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "PlayerCharacter.h"
 
 //近接攻撃キャラクター(キャラ1)

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "../ObjectBase/ObjectBase.h"
 #include "MeleeCharacter.h"
 #include "RangedCharacter.h"

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "PlayerCharacter.h"
 
 //遠距離攻撃キャラクター(キャラ2)

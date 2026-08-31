@@ -1,4 +1,4 @@
-#include "RangedCharacter.h"
+﻿#include "RangedCharacter.h"
 #include "math.h"
 
 namespace {

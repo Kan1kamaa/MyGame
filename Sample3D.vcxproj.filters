@@ -66,7 +66,7 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="\\abkcnas01\授業資料・OC資料\山本隆行\2年生\前期\ゲーム制作演習Ⅰ\サンプルプログラム\06_プレイヤーの基礎\Src\Fps\Fps.cpp">
+    <ClCompile Include="Src\Lib\Fps\Fps.cpp">
       <Filter>ソース ファイル\Lib\Fps</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game\Object\Player\CharacterManager.cpp">
@@ -143,7 +143,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="\\abkcnas01\授業資料・OC資料\山本隆行\2年生\前期\ゲーム制作演習Ⅰ\サンプルプログラム\06_プレイヤーの基礎\Src\Fps\Fps.h">
+    <ClInclude Include="Src\Lib\Fps\Fps.h">
       <Filter>ソース ファイル\Lib\Fps</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game\Object\Player\CharacterManager.h">

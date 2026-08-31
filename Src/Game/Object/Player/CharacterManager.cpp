@@ -1,4 +1,4 @@
-#include "CharacterManager.h"
+﻿#include "CharacterManager.h"
 #include "math.h"
 
 namespace {

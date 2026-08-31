@@ -160,7 +160,7 @@
     <ClCompile Include="Src\Lib\Fade\Fade.cpp" />
     <ClCompile Include="Src\Lib\Input\Input.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="\\abkcnas01\授業資料・OC資料\山本隆行\2年生\前期\ゲーム制作演習Ⅰ\サンプルプログラム\06_プレイヤーの基礎\Src\Fps\Fps.cpp" />
+    <ClCompile Include="Src\Lib\Fps\Fps.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Game\Camera\CameraManager.h" />
@@ -189,7 +189,7 @@
     <ClInclude Include="Src\Lib\Common.h" />
     <ClInclude Include="Src\Lib\Fade\Fade.h" />
     <ClInclude Include="Src\Lib\Input\Input.h" />
-    <ClInclude Include="\\abkcnas01\授業資料・OC資料\山本隆行\2年生\前期\ゲーム制作演習Ⅰ\サンプルプログラム\06_プレイヤーの基礎\Src\Fps\Fps.h" />
+    <ClInclude Include="Src\Lib\Fps\Fps.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

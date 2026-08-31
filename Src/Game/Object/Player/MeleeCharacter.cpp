@@ -1,4 +1,4 @@
-#include "MeleeCharacter.h"
+﻿#include "MeleeCharacter.h"
 #include "math.h"
 
 namespace {

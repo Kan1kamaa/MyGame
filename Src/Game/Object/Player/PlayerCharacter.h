@@ -10,10 +10,11 @@ public:
 	virtual void Attack(ShotManager& shotManager) = 0;
 
 	//移動・攻撃入力を受けてアニメーションを切り替える
-	//@isAttackInput : 攻撃キーが押されているか
-	//@isMoveInput   : 前進キーが押されているか
-	//@isRunInput    : ダッシュキーが押されているか
-	virtual void UpdateAnimState(bool isAttackInput, bool isMoveInput, bool isRunInput) = 0;
+	//@isAttackTrigger : 攻撃キーが押された瞬間か(トリガー入力。押しっぱなしでは連段させない)
+	//@isMoveInput     : 前進キーが押されているか
+	//@isRunInput      : ダッシュキーが押されているか
+	//@return          : このフレームでコンボの新しい段の攻撃を開始したか(trueならAttack()を呼ぶ)
+	virtual bool UpdateAnimState(bool isAttackTrigger, bool isMoveInput, bool isRunInput) = 0;
 
 	//アクティブになった瞬間に待機モーションへ戻す
 	virtual void ResetToIdle() = 0;

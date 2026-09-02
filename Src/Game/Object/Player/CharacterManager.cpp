@@ -11,7 +11,7 @@ namespace {
 //----------------------
 //	コンストラクタ
 //----------------------
-CharacterManager::CharacterManager() : m_characters{ &m_char1, &m_char2 }, m_activeIndex(0)
+CharacterManager::CharacterManager() : m_characters{ &m_char1, &m_char2 }, m_activeIndex(0), m_prevAttackKeyDown(false)
 {
 }
 
@@ -141,12 +141,18 @@ void CharacterManager::Step(ShotManager& shotManager)
 
 	//=======================================================================================
 	//アクティブなキャラクターのみ攻撃・アニメーションを処理
-	bool isAttackInput = CheckHitKey(KEY_INPUT_X);
+
+	//攻撃入力は「押した瞬間」だけ拾う。押しっぱなしにしても連段しないようにするため
+	bool isAttackKeyDown = CheckHitKey(KEY_INPUT_X);
+	bool isAttackTrigger = isAttackKeyDown && !m_prevAttackKeyDown;
+	m_prevAttackKeyDown = isAttackKeyDown;
+
 	PlayerCharacter* active = m_characters[m_activeIndex];
 
-	active->UpdateAnimState(isAttackInput, isMoveInput, isRunInput);
+	//コンボの新しい段が開始された時だけAttack()を呼び、実際の攻撃(弾/判定)を発生させる
+	bool isComboStarted = active->UpdateAnimState(isAttackTrigger, isMoveInput, isRunInput);
 
-	if (isAttackInput)
+	if (isComboStarted)
 	{
 		active->Attack(shotManager);
 	}

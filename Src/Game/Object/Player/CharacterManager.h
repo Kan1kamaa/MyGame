@@ -12,6 +12,8 @@ private:
 	PlayerCharacter* m_characters[2];
 	//現在操作中のキャラクターの添字
 	int m_activeIndex;
+	//1フレーム前に攻撃キーが押されていたか(トリガー入力判定用)
+	bool m_prevAttackKeyDown;
 
 	//操作キャラクターの切り替え
 	void SwitchActive(int index);

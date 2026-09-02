@@ -50,46 +50,65 @@ void RangedCharacter::Attack(ShotManager& shotManager)
 }
 
 //アニメーション状態の更新
-void RangedCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool isRunInput)
+//このキャラのモデルにはジャンプ・スキル・必殺技用のアニメーションが無いため、
+//isGrounded/velocityY/isJumpTrigger/isSkillTrigger/isUltTriggerは未使用
+void RangedCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool isRunInput,
+	bool isGrounded, float& velocityY, bool isJumpTrigger,
+	bool isSkillTrigger, bool isUltTrigger)
 {
+	//m_animData.m_indexは「今再生中のアニメ番号」。これで今の状態(待機/歩き/走り/攻撃)を判断している
 	switch (m_animData.m_index)
 	{
-	case ANIMID_IDLE2:
+	case ANIMID_IDLE2: //今は待機モーション中
+		//isAttackInputがtrueなら(=左クリックが押されていたら)攻撃モーションを再生する
 		if (isAttackInput)
 		{
 			RequestLoopAnim(ANIMID_ATTACK2, ANIM_SPEED);
 		}
+		//攻撃していなくて、isMoveInputがtrueなら(=WASDが押されていたら)歩き/走りへ切り替える
 		else if (isMoveInput)
 		{
-			RequestLoopAnim(isRunInput ? ANIMID_RUN2 : ANIMID_WALK2, ANIM_SPEED);
-		}
-		break;
-
-	case ANIMID_WALK2:
-		if (isAttackInput)
-		{
-			RequestLoopAnim(ANIMID_ATTACK2, ANIM_SPEED);
-		}
-		else if (isMoveInput)
-		{
+			//isRunInputがtrueなら(=シフトキーも押されていたら)走りモーション、そうでなければ歩きモーション
 			if (isRunInput)
 			{
 				RequestLoopAnim(ANIMID_RUN2, ANIM_SPEED);
 			}
+			else
+			{
+				RequestLoopAnim(ANIMID_WALK2, ANIM_SPEED);
+			}
 		}
+		break;
+
+	case ANIMID_WALK2: //今は歩きモーション中
+		if (isAttackInput)
+		{
+			RequestLoopAnim(ANIMID_ATTACK2, ANIM_SPEED);
+		}
+		else if (isMoveInput)
+		{
+			//歩き中にシフトキーが追加で押されたら走りへ切り替える
+			if (isRunInput)
+			{
+				RequestLoopAnim(ANIMID_RUN2, ANIM_SPEED);
+			}
+			//まだWASDは押されているのでそのまま歩き続ける(何もしない)
+		}
+		//isMoveInputがfalseなら(=もう何も押されていなければ)待機に戻る
 		else
 		{
 			RequestLoopAnim(ANIMID_IDLE2, ANIM_SPEED);
 		}
 		break;
 
-	case ANIMID_RUN2:
+	case ANIMID_RUN2: //今は走りモーション中
 		if (isAttackInput)
 		{
 			RequestLoopAnim(ANIMID_ATTACK2, ANIM_SPEED);
 		}
 		else if (isMoveInput)
 		{
+			//シフトキーが離されたら(isRunInputがfalseになったら)歩きに切り替える
 			if (!isRunInput)
 			{
 				RequestLoopAnim(ANIMID_WALK2, ANIM_SPEED);
@@ -101,7 +120,8 @@ void RangedCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool
 		}
 		break;
 
-	case ANIMID_ATTACK2:
+	case ANIMID_ATTACK2: //今は攻撃モーション中
+		//isAttackInputがfalseになったら(=左クリックを離したら)待機に戻る
 		if (!isAttackInput)
 		{
 			RequestLoopAnim(ANIMID_IDLE2, ANIM_SPEED);
@@ -113,4 +133,10 @@ void RangedCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool
 void RangedCharacter::ResetToIdle()
 {
 	RequestLoopAnim(ANIMID_IDLE2, ANIM_SPEED);
+}
+
+//攻撃モーションを再生中かどうか
+bool RangedCharacter::IsAttacking() const
+{
+	return m_animData.m_index == ANIMID_ATTACK2;
 }

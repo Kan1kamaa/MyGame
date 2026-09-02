@@ -1,11 +1,11 @@
 #include"CameraManager.h"
 
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
 CameraManager::CameraManager() : m_state(MAIN)
 {
 }
 
-//‰Šú‰»
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void CameraManager::Init()
 {
 	m_state = MAIN;
@@ -21,8 +21,17 @@ void CameraManager::Draw()
 		break;
 	}
 }
-//–ˆƒtƒŒ[ƒ€ŒvZ‚·‚éˆ—
-void CameraManager::Step(VECTOR tergetPos, float rotY)
+//update camera look direction from mouse (MAIN camera only)
+void CameraManager::UpdateLook()
+{
+	if (m_state == MAIN)
+	{
+		m_mainCam.UpdateLook();
+	}
+}
+
+//ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½vï¿½Zï¿½ï¿½ï¿½éˆï¿½ï¿½
+void CameraManager::Step(VECTOR tergetPos)
 {
 	if (CheckHitKey(KEY_INPUT_V) == true)
 	{
@@ -36,10 +45,10 @@ void CameraManager::Step(VECTOR tergetPos, float rotY)
 	switch(m_state)
 	{
 		case MAIN:
-			m_mainCam.Step( tergetPos,  rotY);
+			m_mainCam.Step(tergetPos);
 			break;
 		case DEBUG:
-			m_debugCam.Step(tergetPos,  rotY);
+			m_debugCam.Step(tergetPos, 0.0f);
 			break;
 
 	}

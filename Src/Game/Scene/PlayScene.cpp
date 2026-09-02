@@ -1,6 +1,6 @@
-#include"PlayScene.h"
+ï»¿#include"PlayScene.h"
 
-// •`‰æˆ—
+// æç”»å‡¦ç†
 void PlayScene::Draw()
 {
 	field.Draw();
@@ -11,7 +11,7 @@ void PlayScene::Draw()
 	enemy.Draw();
 }
 
-//‰Šú‰»
+//åˆæœŸåŒ–
 void PlayScene::Init()
 {
 	field.Init();
@@ -24,7 +24,7 @@ void PlayScene::Init()
 	m_state = LOAD;
 }
 
-//ƒ[ƒh
+//ãƒ­ãƒ¼ãƒ‰
 void PlayScene::Load()
 {
 	field.Load();
@@ -38,19 +38,21 @@ void PlayScene::Load()
 	m_state = START;
 }
 
-//–ˆƒtƒŒ[ƒ€ŒvZ‚·‚éˆ—
+//æ¯ãƒ•ãƒ¬ãƒ¼ãƒ è¨ˆç®—ã™ã‚‹å‡¦ç†
 void PlayScene::Step()
 {
 	if (camera.GetCameraID() == 0)
 	{
-		player.Step(shot);
+		//mouse look first, so movement uses this frame's camera direction
+		camera.UpdateLook();
+		player.Step(shot, camera.GetYaw());
 		shot.Step();
 		enemy.Step();
 		sky.Step();
 	}
-	//ƒJƒƒ‰‚ÌXV
-	camera.Step(player.GetPos(), player.GetRot().y);
-	//Šeí“–‚½‚è”»’è
+	//ã‚«ãƒ¡ãƒ©ã®æ›´æ–°
+	camera.Step(player.GetPos());
+	//å„ç¨®å½“ãŸã‚Šåˆ¤å®š
 	GameCollision::CheckHitEnemyToShot(enemy, shot);
 	GameCollision::CheckHitEnemyToPlayer(enemy, player);
 
@@ -61,18 +63,18 @@ void PlayScene::Step()
 	}
 }
 
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 void PlayScene::Update()
 {
 	field.Update();
-	sky.Update();
+	sky.Update(player.GetPos());
 	player.Update();
 	shot.Update();
 	enemy.Update();
 	camera.Update();
 }
 
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 void PlayScene::Fin()
 {
 	field.Fin();
@@ -80,7 +82,7 @@ void PlayScene::Fin()
 	player.Fin();
 	shot.Fin();
 	enemy.Fin();
-	
-	m_nextScene = 0;	//‚Æ‚è‚ ‚¦‚¸ƒŠƒUƒ‹ƒg‚É
-	m_state = INIT;		//”O‚Ì‚½‚ßÅ‰‚É–ß‚·
+
+	m_nextScene = 0;	//ã¨ã‚Šã‚ãˆãšãƒªã‚¶ãƒ«ãƒˆã«
+	m_state = INIT;		//å¿µã®ãŸã‚æœ€åˆã«æˆ»ã™
 }

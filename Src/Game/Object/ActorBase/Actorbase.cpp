@@ -1,39 +1,39 @@
-#include "ActorBase.h"
+ï»¿#include "ActorBase.h"
 
-//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒ^ƒCƒv
+//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¿ã‚¤ãƒ—
 enum tagAnimState
 {
-	ANIMSTATE_NORMAL,	//’ÊíÄ¶@ÅŒã‚É’â~
-	ANIMSTATE_LOOP,		//ƒ‹[ƒvÄ¶
+	ANIMSTATE_NORMAL,	//é€šå¸¸å†ç”Ÿã€€æœ€å¾Œã«åœæ­¢
+	ANIMSTATE_LOOP,		//ãƒ«ãƒ¼ãƒ—å†ç”Ÿ
 };
 
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 ActorBase::ActorBase() : m_animData{}
 {
 
 }
 
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 ActorBase::~ActorBase()
 {
 	Fin();
 }
 
-//‰Šú‰»ˆ—
+//åˆæœŸåŒ–å‡¦ç†
 void ActorBase::Init()
 {
 	ObjectBase::Init();
 	m_animData = { 0.0f,0.0f,0.0f,-1,-1,0 };
 }
 
-//ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶(ÅIƒtƒŒ[ƒ€‚Å’â~)
+//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿ(æœ€çµ‚ãƒ•ãƒ¬ãƒ¼ãƒ ã§åœæ­¢)
 void ActorBase::RequestAnim(int index, float animSpeed, int animSrcHndl, bool isCheck)
 {
 	if (index == m_animData.m_index) return;
-	//ƒAƒjƒÁ‹
+	//ã‚¢ãƒ‹ãƒ¡æ¶ˆå»
 	DetachAnim();
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶ˆ—‚ÆŠeíƒf[ƒ^ƒZƒbƒg
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿå‡¦ç†ã¨å„ç¨®ãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆ
 	m_animData.m_attachID = MV1AttachAnim(m_hndl, index, animSrcHndl, isCheck);
 
 	m_animData.m_index = index;
@@ -48,14 +48,14 @@ void ActorBase::RequestAnim(int index, float animSpeed, int animSrcHndl, bool is
 
 }
 
-//ƒAƒjƒ[ƒVƒ‡ƒ“ƒ‹[ƒvÄ¶
+//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ«ãƒ¼ãƒ—å†ç”Ÿ
 void ActorBase::RequestLoopAnim(int index, float animSpeed, int animSrcHndl, bool isCheck)
 {
 	RequestAnim(index, animSpeed, animSrcHndl, isCheck);
 	m_animData.m_state = ANIMSTATE_LOOP;
 }
 
-//ˆÀ‘S‚ÉƒAƒjƒ‚ğƒfƒ^ƒbƒ`
+//å®‰å…¨ã«ã‚¢ãƒ‹ãƒ¡ã‚’ãƒ‡ã‚¿ãƒƒãƒ
 void ActorBase::DetachAnim()
 {
 	if (m_animData.m_attachID != -1)
@@ -65,35 +65,35 @@ void ActorBase::DetachAnim()
 	}
 }
 
-//XVˆ—
+//æ›´æ–°å‡¦ç†
 void ActorBase::Update()
 {
 	ObjectBase::Update();
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚µ‚Ä‚È‚©‚Á‚½‚çI—¹
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã—ã¦ãªã‹ã£ãŸã‚‰çµ‚äº†
 	if (m_animData.m_attachID == -1)
 	{
 		return;
 	}
 
-	//ƒAƒjƒŠÔXV
+	//ã‚¢ãƒ‹ãƒ¡æ™‚é–“æ›´æ–°
 	m_animData.m_nowFrm += m_animData.m_speed;
 
-	//ÅŒã‚Ü‚Å‚«‚½‚çó‹µ‚É‡‚í‚¹‚Ä“®ì‚ğ•Ï‚¦‚é
+	//æœ€å¾Œã¾ã§ããŸã‚‰çŠ¶æ³ã«åˆã‚ã›ã¦å‹•ä½œã‚’å¤‰ãˆã‚‹
 	if (m_animData.m_nowFrm >= m_animData.m_endFrm)
 	{
 		switch (m_animData.m_state)
 		{
 		case ANIMSTATE_NORMAL:
-			//ÅIƒtƒŒ[ƒ€‚Å’â~
+			//æœ€çµ‚ãƒ•ãƒ¬ãƒ¼ãƒ ã§åœæ­¢
 			m_animData.m_nowFrm = m_animData.m_endFrm;
 			break;
 
 		case ANIMSTATE_LOOP:
-			//Å‰‚ÌƒtƒŒ[ƒ€‚É–ß‚é
+			//æœ€åˆã®ãƒ•ãƒ¬ãƒ¼ãƒ ã«æˆ»ã‚‹
 			m_animData.m_nowFrm = 0.0f;
 			break;
 		}
 	}
-	//ƒAƒjƒŠÔ‚ğİ’è
+	//ã‚¢ãƒ‹ãƒ¡æ™‚é–“ã‚’è¨­å®š
 	MV1SetAttachAnimTime(m_hndl, m_animData.m_attachID, m_animData.m_nowFrm);
 }

@@ -2,48 +2,49 @@
 #include "DxLib.h"
 #include "../Src/Lib/Fps/Fps.h"
 #include"../Src/Game/Scene/SceneManager.h"
-// ƒvƒƒOƒ‰ƒ€‚Í WinMain ‚©‚çn‚Ü‚è‚Ü‚·
+// ï¿½vï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ WinMain ï¿½ï¿½ï¿½ï¿½nï¿½Ü‚ï¿½Ü‚ï¿½
 int  WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
 {
-	// ƒƒ‚ƒŠƒŠ[ƒNŠm”F—p
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Nï¿½mï¿½Fï¿½p
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	ChangeWindowMode(TRUE);			// ƒEƒBƒ“ƒhƒEƒ‚[ƒh‚Å‹N“®
+	ChangeWindowMode(TRUE);			// ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½ï¿½ï¿½[ï¿½hï¿½Å‹Nï¿½ï¿½
 	SetGraphMode(1280, 720, 32);
 
-	// ‚c‚wƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»ˆ—
+	// ï¿½cï¿½wï¿½ï¿½ï¿½Cï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (DxLib_Init() == -1) return -1;
 
-	//ˆê”ÔÅ‰‚É‚P‰ñ‚¾‚¯‚â‚éˆ—
+	//ï¿½ï¿½ÔÅï¿½ï¿½É‚Pï¿½ñ‚¾‚ï¿½ï¿½ï¿½éˆï¿½ï¿½
 	SetDrawScreen(DX_SCREEN_BACK);
 	SetUseZBuffer3D(TRUE);
 	SetWriteZBuffer3D(TRUE);
-	// ‰Šú‰»
+	SetUseLighting(FALSE);	// diagnostic: lighting off to check model brightness
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	InitFps();
 	SceneManager scene;
-	//ƒQ[ƒ€ƒƒCƒ“ƒ‹[ƒv
+	//ï¿½Qï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½v
 	while (ProcessMessage() != -1)
 	{
-		//ƒGƒXƒP[ƒvƒL[‚ª‰Ÿ‚³‚ê‚½‚çI—¹
+		//ï¿½Gï¿½Xï¿½Pï¿½[ï¿½vï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½Iï¿½ï¿½
 		if (CheckHitKey(KEY_INPUT_ESCAPE) == 1) break;
 		if (!IsNextFrame()) continue;
 
 		ClearDrawScreen();
 		
-		//XVˆ—
+		//ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½
 		scene.Loop();
-		//•`‰æ
+		//ï¿½`ï¿½ï¿½
 		scene.Draw();
-		PrintFps();		// FPS•\¦
+		PrintFps();		// FPSï¿½\ï¿½ï¿½
 
 		ScreenFlip();
 
 	}
 
 	
-	DxLib_End();			// ‚c‚wƒ‰ƒCƒuƒ‰ƒŠg—p‚ÌI—¹ˆ—
+	DxLib_End();			// ï¿½cï¿½wï¿½ï¿½ï¿½Cï¿½uï¿½ï¿½ï¿½ï¿½ï¿½gï¿½pï¿½ÌIï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	return 0;				// ƒ\ƒtƒg‚ÌI—¹ 
+	return 0;				// ï¿½\ï¿½tï¿½gï¿½ÌIï¿½ï¿½ 
 }
 

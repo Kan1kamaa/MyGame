@@ -1,47 +1,51 @@
-#pragma once
+ï»¿#pragma once
 #include "../ObjectBase/ObjectBase.h"
 
-//ƒAƒjƒ[ƒVƒ‡ƒ“‚·‚é•¨‘Ì‚ÌŠî’êƒNƒ‰ƒX
+//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã™ã‚‹ç‰©ä½“ã®åŸºåº•ã‚¯ãƒ©ã‚¹
 class ActorBase : public ObjectBase
 {
 protected:
 	typedef struct
 	{
-		float m_nowFrm;		//Œ»İ‚ÌƒAƒjƒÄ¶ŠÔ
-		float m_endFrm;		//ƒAƒjƒ‚ÌI—¹ŠÔ
-		float m_speed;		//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‘¬“x
-		int	  m_attachID;	//ƒAƒ^ƒbƒ`ID
-		int   m_index;		//Ä¶’†‚ÌƒAƒjƒID
-		int   m_state;		//ƒAƒjƒ‚Ìó‘Ô(ƒ‹[ƒvorÄ¶Œã’â~)
+		float m_nowFrm;		//ç¾åœ¨ã®ã‚¢ãƒ‹ãƒ¡å†ç”Ÿæ™‚é–“
+		float m_endFrm;		//ã‚¢ãƒ‹ãƒ¡ã®çµ‚äº†æ™‚é–“
+		float m_speed;		//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®é€Ÿåº¦
+		int	  m_attachID;	//ã‚¢ã‚¿ãƒƒãƒID
+		int   m_index;		//å†ç”Ÿä¸­ã®ã‚¢ãƒ‹ãƒ¡ID
+		int   m_state;		//ã‚¢ãƒ‹ãƒ¡ã®çŠ¶æ…‹(ãƒ«ãƒ¼ãƒ—orå†ç”Ÿå¾Œåœæ­¢)
 	}ANIM_DATA;
 
-	ANIM_DATA m_animData;	//ƒAƒjƒ[ƒVƒ‡ƒ“ƒf[ƒ^ ˆê®
+	ANIM_DATA m_animData;	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‡ãƒ¼ã‚¿ ä¸€å¼
 
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^EƒfƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ»ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	ActorBase();
 	virtual ~ActorBase();
 
-	//‰Šú‰»ˆ—
+	//åˆæœŸåŒ–å‡¦ç†
 	virtual void Init();
 
-	//î•ñXV
+	//æƒ…å ±æ›´æ–°
 	virtual void Update();
 
 	//=========================
-	//ƒAƒjƒ[ƒVƒ‡ƒ“ŠÖ˜A
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–¢é€£
 	//=========================
-	//ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶iÅIƒtƒŒ[ƒ€‚Å’â~j
-	//@index       : ƒAƒ^ƒbƒ`‚·‚éƒAƒjƒ”Ô†
-	//@animSpeed   : ƒAƒjƒÄ¶‘¬“x
-	//@animSrcHndl : •Êƒ‚ƒfƒ‹‚ÌƒAƒjƒ‚ğg‚¤ê‡‚ÌŒ³ƒnƒ“ƒhƒ‹
-	//@isCheck	   : •Êƒ‚ƒfƒ‹‚ÌƒAƒjƒ‚ğg‚¤ê‡‚ÉƒtƒŒ[ƒ€–¼ƒ`ƒFƒbƒN‚·‚é‚©
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿï¼ˆæœ€çµ‚ãƒ•ãƒ¬ãƒ¼ãƒ ã§åœæ­¢ï¼‰
+	//@index       : ã‚¢ã‚¿ãƒƒãƒã™ã‚‹ã‚¢ãƒ‹ãƒ¡ç•ªå·
+	//@animSpeed   : ã‚¢ãƒ‹ãƒ¡å†ç”Ÿé€Ÿåº¦
+	//@animSrcHndl : åˆ¥ãƒ¢ãƒ‡ãƒ«ã®ã‚¢ãƒ‹ãƒ¡ã‚’ä½¿ã†å ´åˆã®å…ƒãƒãƒ³ãƒ‰ãƒ«
+	//@isCheck	   : åˆ¥ãƒ¢ãƒ‡ãƒ«ã®ã‚¢ãƒ‹ãƒ¡ã‚’ä½¿ã†å ´åˆã«ãƒ•ãƒ¬ãƒ¼ãƒ åãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‹
 
 	void RequestAnim(int index, float animSpeed, int animSrcHndl = -1, bool isCheck = false);
 
 	void RequestLoopAnim(int index, float animSpeed, int animSrcHndl = -1, bool isCheck = false);
 
+	//ãƒ‡ãƒãƒƒã‚°ç”¨:ç¾åœ¨å†ç”Ÿä¸­ã®ã‚¢ãƒ‹ãƒ¡ç•ªå·ã¨ã‚¢ã‚¿ãƒƒãƒçµæœ(-1ãªã‚‰ã‚¢ã‚¿ãƒƒãƒå¤±æ•—)
+	int GetAnimIndex() const { return m_animData.m_index; }
+	int GetAnimAttachID() const { return m_animData.m_attachID; }
+
 private:
-	//ˆÀ‘S‚ÉƒAƒjƒ‚ğƒfƒ^ƒbƒ`
+	//å®‰å…¨ã«ã‚¢ãƒ‹ãƒ¡ã‚’ãƒ‡ã‚¿ãƒƒãƒ
 	void DetachAnim();
 };

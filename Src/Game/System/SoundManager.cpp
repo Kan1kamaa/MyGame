@@ -2,21 +2,21 @@
 
 using namespace std;
 
-//ƒ[ƒh‚·‚é‰¹Šyƒf[ƒ^‚ÌƒpƒX
+//ï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½é‰¹ï¿½yï¿½fï¿½[ï¿½^ï¿½Ìƒpï¿½X
 static const char* FILE_PATH[SoundManager::SOUND_NUM] = {
 	"Data//Sound//bgm00.mp3","Data//Sound//se_plshot.mp3","Data//Sound//se_explore.mp3"
 };
 
-vector<int>SoundManager::m_hndl;  //ƒTƒEƒ“ƒhƒnƒ“ƒhƒ‹
+vector<int>SoundManager::m_hndl;  //ï¿½Tï¿½Eï¿½ï¿½ï¿½hï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
 
-//‰Šú‰»
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void SoundManager::Init()
 {
-	//I—¹ˆ—‚Æ“¯‚¶‚Å‚·
+	//ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ“ï¿½ï¿½ï¿½ï¿½Å‚ï¿½
 	Exit();
 }
 
-//I—¹ˆ—
+//ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void SoundManager::Exit()
 {
 	for (auto itr = m_hndl.begin(); itr != m_hndl.end(); ++itr)
@@ -26,17 +26,17 @@ void SoundManager::Exit()
 			DeleteSoundMem(*itr);
 		}
 	}
-	//“à•”ƒf[ƒ^‚ğ‘S‚ÄÁ‚·
+	//ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½Sï¿½Äï¿½ï¿½ï¿½
 	m_hndl.clear();
 }
 
-//‘Sƒf[ƒ^“Ç‚İ‚İ
+//ï¿½Sï¿½fï¿½[ï¿½^ï¿½Ç‚İï¿½ï¿½ï¿½
 void SoundManager::Load()
 {
-	//Šù‚Éƒf[ƒ^‚ª“ü‚Á‚Ä‚¢‚é‚È‚çI—¹
+	//ï¿½ï¿½ï¿½Éƒfï¿½[ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½È‚ï¿½Iï¿½ï¿½
 	if (m_hndl.size() > 0)return;
 
-	//ƒ‹[ƒv‚ğg‚Á‚ÄˆêŠ‡ƒ[ƒh
+	//ï¿½ï¿½ï¿½[ï¿½vï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ÄˆêŠ‡ï¿½ï¿½ï¿½[ï¿½h
 	for (int i = 0; i < SOUND_NUM; i++)
 	{
 		int hndl = LoadSoundMem(FILE_PATH[i]);
@@ -44,19 +44,19 @@ void SoundManager::Load()
 	}
 }
 
-//‰¹ŠyÄ¶
+//ï¿½ï¿½ï¿½yï¿½Äï¿½
 bool SoundManager::Play(tagSoundID id, int type, bool isStart)
 {
 	return !PlaySoundMem(m_hndl[id], type, isStart);
 }
 
-//‰¹Šy’â~
+//ï¿½ï¿½ï¿½yï¿½ï¿½~
 void SoundManager::Stop(tagSoundID id)
 {
 	StopSoundMem(m_hndl[id]);
 }
 
-//‘S‰¹Šy’â~
+//ï¿½Sï¿½ï¿½ï¿½yï¿½ï¿½~
 void SoundManager::StopAll()
 {
 	for (auto itr = m_hndl.begin(); itr != m_hndl.end(); ++itr)
@@ -65,35 +65,42 @@ void SoundManager::StopAll()
 	}
 }
 
-//ƒTƒEƒ“ƒhÄ¶’†‚©H
+//ï¿½Tï¿½Eï¿½ï¿½ï¿½hï¿½Äï¿½ï¿½ï¿½ï¿½ï¿½ï¿½H
 bool SoundManager::IsPlay(tagSoundID id)
 {
-	return CheckSoundMem(m_hndl[id]) == 1 ? true : false;
+	if (CheckSoundMem(m_hndl[id]) == 1)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
-//Œ»İ‚ÌÄ¶æ“¾(ƒ~ƒŠ•b)
+//ï¿½ï¿½ï¿½İ‚ÌÄï¿½ï¿½ï¿½ï¿½æ“¾(ï¿½~ï¿½ï¿½ï¿½b)
 LONGLONG SoundManager::GetSoundTime(tagSoundID id)
 {
 	return GetSoundCurrentTime(m_hndl[id]);
 }
 
-//‘Ä¶ŠÔæ“¾(ƒ~ƒŠ•b)
+//ï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½Ôæ“¾(ï¿½~ï¿½ï¿½ï¿½b)
 LONGLONG SoundManager::GetSoundAllTime(tagSoundID id)
 {
 	return GetSoundTotalTime(m_hndl[id]);
 }
 
-//Ä¶ŠJnŠÔİ’è
+//ï¿½Äï¿½ï¿½Jï¿½nï¿½ï¿½ï¿½Ôİ’ï¿½
 void SoundManager::SetStartFrame(tagSoundID id, int ms)
 {
-	//Ä¶ŠJnŠÔ‚ğƒ~ƒŠ•b‚©‚çSetCurrentPositionSoundMem‚Ìˆø”‚ÌŒ`‚É•ÏŠ·
+	//ï¿½Äï¿½ï¿½Jï¿½nï¿½ï¿½ï¿½Ô‚ï¿½ï¿½~ï¿½ï¿½ï¿½bï¿½ï¿½ï¿½ï¿½SetCurrentPositionSoundMemï¿½Ìˆï¿½ï¿½ï¿½ï¿½ÌŒ`ï¿½É•ÏŠï¿½
 	int freq = GetFrequencySoundMem(m_hndl[id]) * ms / 1000;
 	SetCurrentPositionSoundMem(freq, m_hndl[id]);
 }
 
-//Ä¶ŠJnŠÔİ’è
+//ï¿½Äï¿½ï¿½Jï¿½nï¿½ï¿½ï¿½Ôİ’ï¿½
 void SoundManager::SetVolume(tagSoundID id, float volume)
 {
-	//DxLib‚Ìˆø”‚Í0`255‚ÌŠÔ‚È‚Ì‚ÅA­‚µŒvZ‚ğ“ü‚ê‚Ä‚¢‚é
+	//DxLibï¿½Ìˆï¿½ï¿½ï¿½ï¿½ï¿½0ï¿½`255ï¿½ÌŠÔ‚È‚Ì‚ÅAï¿½ï¿½ï¿½ï¿½ï¿½vï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
 	ChangeVolumeSoundMem((int)(255.0f * volume), m_hndl[id]);
 }

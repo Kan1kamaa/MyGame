@@ -2,11 +2,11 @@
 
 
 
-//ƒ[ƒh
+//ï¿½ï¿½ï¿½[ï¿½h
 void Field::Load()
 {
 	if (m_hndl == -1)
 	{
-		m_hndl = MV1LoadModel("Data/Models/Field/Field.pmx");
+		m_hndl = MV1LoadModel("Data/Models/Field/Field.mv1");
 	}
 }

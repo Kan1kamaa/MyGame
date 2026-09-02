@@ -8,6 +8,7 @@ C:\Users\kanikama\Desktop\MyGame\Src\Game\Object\Field\Field.cpp;C:\Users\kanika
 C:\Users\kanikama\Desktop\MyGame\Src\Game\Object\Field\Sky.cpp;C:\Users\kanikama\Desktop\MyGame\Sample3D\x64\Debug\Sky.obj
 C:\Users\kanikama\Desktop\MyGame\Src\Game\Object\Objectbase\Objectbase.cpp;C:\Users\kanikama\Desktop\MyGame\Sample3D\x64\Debug\Objectbase.obj
 C:\Users\kanikama\Desktop\MyGame\Src\Game\Object\Player\CharacterManager.cpp;C:\Users\kanikama\Desktop\MyGame\Sample3D\x64\Debug\CharacterManager.obj
+C:\Users\kanikama\Desktop\MyGame\Src\Game\Object\Player\JiggleBone.cpp;C:\Users\kanikama\Desktop\MyGame\Sample3D\x64\Debug\JiggleBone.obj
 C:\Users\kanikama\Desktop\MyGame\Src\Game\Object\Player\MeleeCharacter.cpp;C:\Users\kanikama\Desktop\MyGame\Sample3D\x64\Debug\MeleeCharacter.obj
 C:\Users\kanikama\Desktop\MyGame\Src\Game\Object\Player\RangedCharacter.cpp;C:\Users\kanikama\Desktop\MyGame\Sample3D\x64\Debug\RangedCharacter.obj
 C:\Users\kanikama\Desktop\MyGame\Src\Game\Object\Shot\Shot.cpp;C:\Users\kanikama\Desktop\MyGame\Sample3D\x64\Debug\Shot.obj

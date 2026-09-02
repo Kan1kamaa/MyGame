@@ -3,29 +3,33 @@
 #include"DebugCamera.h"
 class CameraManager {
 public:
-	//g—p‚Å‚«‚éƒJƒƒ‰‚Ìƒ^ƒCƒv
+	//ï¿½gï¿½pï¿½Å‚ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìƒ^ï¿½Cï¿½v
 	enum tagCameraID
 	{
-		MAIN,		//ƒQ[ƒ€’†‚ÌƒƒCƒ“ƒJƒƒ‰
-		DEBUG,		//ƒfƒoƒbƒO—p‚ÌƒJƒƒ‰
+		MAIN,		//ï¿½Qï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Ìƒï¿½ï¿½Cï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½
+		DEBUG,		//ï¿½fï¿½oï¿½bï¿½Oï¿½pï¿½ÌƒJï¿½ï¿½ï¿½ï¿½
 	};
 private:
-	tagCameraID m_state;		//Œ»İ‚ÌƒJƒƒ‰ó‘Ô
-	MainCamera m_mainCam;		//ƒƒCƒ“ƒJƒƒ‰
+	tagCameraID m_state;		//ï¿½ï¿½ï¿½İ‚ÌƒJï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	MainCamera m_mainCam;		//ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½
 	DebugCamera m_debugCam;
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
 	CameraManager();
-	//‰Šú‰»
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void Init();
 
 	void Draw();
-	//–ˆƒtƒŒ[ƒ€ŒvZ‚·‚éˆ—
-	void Step(VECTOR targetPos,float rotY);
-	//î•ñXV
+	//update camera look direction from mouse (MAIN camera only)
+	void UpdateLook();
+	//ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½vï¿½Zï¿½ï¿½ï¿½éˆï¿½ï¿½
+	void Step(VECTOR targetPos);
+	//ï¿½ï¿½ï¿½Xï¿½V
 	void Update();
 
-	//ƒJƒƒ‰ƒ^ƒCƒv‚ÌƒZƒbƒgƒQƒbƒg
+	//ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½Cï¿½vï¿½ÌƒZï¿½bï¿½gï¿½Qï¿½bï¿½g
 	void setCameraID(tagCameraID& state) { m_state&  state; }
 	tagCameraID GetCameraID(){ return m_state; }
+	//current camera yaw, used to make player movement camera-relative
+	float GetYaw() const { return m_mainCam.GetYaw(); }
 };

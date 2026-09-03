@@ -2,40 +2,40 @@
 #include "DxLib.h"
 #include "../Src/Lib/Fps/Fps.h"
 #include"../Src/Game/Scene/SceneManager.h"
-// ï¿½vï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ WinMain ï¿½ï¿½ï¿½ï¿½nï¿½Ü‚ï¿½Ü‚ï¿½
+// ƒvƒƒOƒ‰ƒ€‚Í WinMain ‚©‚çn‚Ü‚è‚Ü‚·
 int  WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
 {
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Nï¿½mï¿½Fï¿½p
+	// ƒƒ‚ƒŠƒŠ[ƒNŠm”F—p
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	ChangeWindowMode(TRUE);			// ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½ï¿½ï¿½[ï¿½hï¿½Å‹Nï¿½ï¿½
+	ChangeWindowMode(TRUE);			// ƒEƒBƒ“ƒhƒEƒ‚[ƒh‚Å‹N“®
 	SetGraphMode(1280, 720, 32);
 
-	// ï¿½cï¿½wï¿½ï¿½ï¿½Cï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ‚c‚wƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»ˆ—
 	if (DxLib_Init() == -1) return -1;
 
-	//ï¿½ï¿½ÔÅï¿½ï¿½É‚Pï¿½ñ‚¾‚ï¿½ï¿½ï¿½éˆï¿½ï¿½
+	//ˆê”ÔÅ‰‚É‚P‰ñ‚¾‚¯‚â‚éˆ—
 	SetDrawScreen(DX_SCREEN_BACK);
 	SetUseZBuffer3D(TRUE);
 	SetWriteZBuffer3D(TRUE);
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ‰Šú‰»
 	InitFps();
 	SceneManager scene;
-	//ï¿½Qï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½v
+	//ƒQ[ƒ€ƒƒCƒ“ƒ‹[ƒv
 	while (ProcessMessage() != -1)
 	{
-		//ï¿½Gï¿½Xï¿½Pï¿½[ï¿½vï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½Iï¿½ï¿½
+		//ƒGƒXƒP[ƒvƒL[‚ª‰Ÿ‚³‚ê‚½‚çI—¹
 		if (CheckHitKey(KEY_INPUT_ESCAPE) == 1) break;
 		if (!IsNextFrame()) continue;
 
 		ClearDrawScreen();
 		
-		//ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½
+		//XVˆ—
 		scene.Loop();
-		//ï¿½`ï¿½ï¿½
+		//•`‰æ
 		scene.Draw();
-		PrintFps();		// FPSï¿½\ï¿½ï¿½
+		PrintFps();		// FPS•\¦
 
 		ScreenFlip();
 
@@ -44,8 +44,8 @@ int  WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	}
 
 	
-	DxLib_End();			// ï¿½cï¿½wï¿½ï¿½ï¿½Cï¿½uï¿½ï¿½ï¿½ï¿½ï¿½gï¿½pï¿½ÌIï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	DxLib_End();			// ‚c‚wƒ‰ƒCƒuƒ‰ƒŠg—p‚ÌI—¹ˆ—
 
-	return 0;				// ï¿½\ï¿½tï¿½gï¿½ÌIï¿½ï¿½ 
+	return 0;				// ƒ\ƒtƒg‚ÌI—¹ 
 }
 

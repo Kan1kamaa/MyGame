@@ -1,21 +1,21 @@
-#include"EnemyManager.h"
+ï»¿#include"EnemyManager.h"
 
-//ƒIƒŠƒWƒiƒ‹‚Æ‚È‚é“G‚ÌƒpƒX
+//ã‚ªãƒªã‚¸ãƒŠãƒ«ã¨ãªã‚‹æ•µã®ãƒ‘ã‚¹
 static const char FILE_PATH[] = "Data/models/Enemy/Enemy.pmx";
 
 static const int WAIT_COUNT(60);
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 EnemyManager::EnemyManager()
 {
 }
 
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 EnemyManager::~EnemyManager()
 {
 	Fin();
 }
 
-//‰Šú‰»
+//åˆæœŸåŒ–
 void EnemyManager::Init()
 {
 	for (int i = 0; i < ENEMY_MAX; i++)
@@ -24,17 +24,17 @@ void EnemyManager::Init()
 	}
 }
 
-//ƒ[ƒh
+//ãƒ­ãƒ¼ãƒ‰
 void EnemyManager::Load()
 {
-	//‚Ü‚¸‚ÍƒIƒŠƒWƒiƒ‹‚Ìƒ‚ƒfƒ‹ƒf[ƒ^‚ğƒ[ƒh
+	//ã¾ãšã¯ã‚ªãƒªã‚¸ãƒŠãƒ«ã®ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ­ãƒ¼ãƒ‰
 	int originhndl = MV1LoadModel(FILE_PATH);
-	//•¡»‚µ‚Ä‚¢‚­
+	//è¤‡è£½ã—ã¦ã„ã
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
 		m_Enemy[i].Load(originhndl);
 	}
-	//•¡»‚ªI‚í‚Á‚½‚çŒ³ƒf[ƒ^‚Ííœ
+	//è¤‡è£½ãŒçµ‚ã‚ã£ãŸã‚‰å…ƒãƒ‡ãƒ¼ã‚¿ã¯å‰Šé™¤
 	MV1DeleteModel(originhndl);
 }
 
@@ -47,11 +47,12 @@ void EnemyManager::Step()
 		{
 			m_EnemyCnt++;
 		}
-		if (m_waitCnt <= 0 && m_EnemyCnt <= 0)
-		{
-			RequestEnemy();
-			m_waitCnt = WAIT_COUNT;
-		}
+		//æ•µã®å‡ºç¾ã‚’ä¸€æ—¦æ­¢ã‚ã¦ã„ã‚‹ã€‚å†é–‹ã™ã‚‹æ™‚ã¯ã“ã®ifæ–‡ã®ä¸­ã®ã‚³ãƒ¡ãƒ³ãƒˆã‚’å¤–ã™
+		//if (m_waitCnt <= 0 && m_EnemyCnt <= 0)
+		//{
+		//	RequestEnemy();
+		//	m_waitCnt = WAIT_COUNT;
+		//}
 		m_waitCnt--;
 	}
 }
@@ -93,5 +94,5 @@ bool EnemyManager::RequestEnemy()
 	}
 	return false;
 
-	
+
 }

@@ -28,7 +28,7 @@ private:
 	int m_legFrameIndexUpperR; //太もも(右)のボーン番号。見つからなければ-1
 	int m_legFrameIndexLowerL; //すね(左)のボーン番号。見つからなければ-1
 	int m_legFrameIndexLowerR; //すね(右)のボーン番号。見つからなければ-1
-	int m_legFrameIndexFootL;  //足首(左)のボーン番号。見つからなければ-1(すね〜足首の判定に使う)
+	int m_legFrameIndexFootL;  //足首(左)のボーン番号。見つからなければ-1
 	int m_legFrameIndexFootR;  //足首(右)のボーン番号。見つからなければ-1
 	int m_hipsFrameIndex;      //お尻・骨盤(hips)のボーン番号。見つからなければ-1
 

@@ -61,6 +61,9 @@
     <Filter Include="ソース ファイル\Game\Object\ObjectBase">
       <UniqueIdentifier>{95b25291-9973-49bb-8b20-1c684abae74d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Lib\Effect">
+      <UniqueIdentifier>{d96d5fd4-3fae-4b05-b78c-85d82e69ab27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -143,6 +146,12 @@
     </ClCompile>
     <ClCompile Include="Src\Game\Scene\resultscene.cpp">
       <Filter>ソース ファイル\Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Lib\Effect\Effect.cpp">
+      <Filter>ソース ファイル\Lib\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Lib\Effect\EffectManager.cpp">
+      <Filter>ソース ファイル\Lib\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +238,12 @@
     </ClInclude>
     <ClInclude Include="Src\Game\Scene\resultScene.h">
       <Filter>ソース ファイル\Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Lib\Effect\Effect.h">
+      <Filter>ソース ファイル\Lib\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Lib\Effect\EffectManager.h">
+      <Filter>ソース ファイル\Lib\Effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,63 +1,63 @@
 ﻿  CameraManager.cpp
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Camera\CameraManager.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Camera\CameraManager.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\CameraManager.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\CameraManager.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'Src/Game/Camera/CameraManager.cpp' をコンパイルしています)
   
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
+C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
   (ソース ファイル 'Src/Game/Camera/CameraManager.cpp' をコンパイルしています)
   
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Camera\CameraManager.cpp(36,34): warning C4805: '==': 演算中の 'int' 型と 'bool' 型の混用は安全ではありません
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Camera\CameraManager.cpp(40,39): warning C4805: '==': 演算中の 'int' 型と 'bool' 型の混用は安全ではありません
+C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\CameraManager.cpp(36,34): warning C4805: '==': 演算中の 'int' 型と 'bool' 型の混用は安全ではありません
+C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\CameraManager.cpp(40,39): warning C4805: '==': 演算中の 'int' 型と 'bool' 型の混用は安全ではありません
   DebugCamera.cpp
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Camera\DebugCamera.cpp(73,20): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Camera\DebugCamera.cpp(77,20): warning C4305: '-=': 'double' から 'float' へ切り詰めます。
+C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\DebugCamera.cpp(73,20): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
+C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\DebugCamera.cpp(77,20): warning C4305: '-=': 'double' から 'float' へ切り詰めます。
   MainCamera.cpp
   Actorbase.cpp
   Enemy.cpp
-C:\Users\kanikama\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
+C:\Users\2509413\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
   (ソース ファイル 'Src/Game/Object/Enemy/Enemy.cpp' をコンパイルしています)
   
   EenemyManager.cpp
   Field.cpp
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Object\Field\Field.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Field\Field.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   Sky.cpp
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Object\Field\Sky.cpp(15,12): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
+C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Field\Sky.cpp(15,12): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
   Objectbase.cpp
   CharacterManager.cpp
   JiggleBone.cpp
   MeleeCharacter.cpp
   RangedCharacter.cpp
   Shot.cpp
-C:\Users\kanikama\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
+C:\Users\2509413\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
   (ソース ファイル 'Src/Game/Object/Shot/Shot.cpp' をコンパイルしています)
   
   ShotManager.cpp
   PlayScene.cpp
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Scene\PlayScene.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\2509413\Desktop\MyGame\Src\Game\Scene\PlayScene.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'Src/Game/Scene/PlayScene.cpp' をコンパイルしています)
   
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Camera\CameraManager.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\CameraManager.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'Src/Game/Scene/PlayScene.cpp' をコンパイルしています)
   
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
+C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
   (ソース ファイル 'Src/Game/Scene/PlayScene.cpp' をコンパイルしています)
   
-C:\Users\kanikama\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
+C:\Users\2509413\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
   (ソース ファイル 'Src/Game/Scene/PlayScene.cpp' をコンパイルしています)
   
   resultscene.cpp
   Scenebase.cpp
   SceneManager.cpp
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Scene\PlayScene.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\2509413\Desktop\MyGame\Src\Game\Scene\PlayScene.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'Src/Game/Scene/SceneManager.cpp' をコンパイルしています)
   
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Camera\CameraManager.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\CameraManager.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'Src/Game/Scene/SceneManager.cpp' をコンパイルしています)
   
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
+C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
   (ソース ファイル 'Src/Game/Scene/SceneManager.cpp' をコンパイルしています)
   
-C:\Users\kanikama\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
+C:\Users\2509413\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
   (ソース ファイル 'Src/Game/Scene/SceneManager.cpp' をコンパイルしています)
   
   Titltscene.cpp
@@ -65,27 +65,29 @@ C:\Users\kanikama\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4
   コンパイル中...
   GameCollision.cpp
   SoundManager.cpp
-C:\Users\kanikama\Desktop\MyGame\Src\Game\System\SoundManager.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-C:\Users\kanikama\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
+C:\Users\2509413\Desktop\MyGame\Src\Game\System\SoundManager.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\2509413\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
   (ソース ファイル 'Src/Game/System/SoundManager.cpp' をコンパイルしています)
   
   Collision.cpp
+  Effect.cpp
+  EffectManager.cpp
   Fade.cpp
   Input.cpp
   Main.cpp
-C:\Users\kanikama\Desktop\MyGame\src\Main.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Scene\PlayScene.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\2509413\Desktop\MyGame\src\Main.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\2509413\Desktop\MyGame\Src\Game\Scene\PlayScene.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'src/Main.cpp' をコンパイルしています)
   
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Camera\CameraManager.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\CameraManager.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
   (ソース ファイル 'src/Main.cpp' をコンパイルしています)
   
-C:\Users\kanikama\Desktop\MyGame\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
+C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
   (ソース ファイル 'src/Main.cpp' をコンパイルしています)
   
-C:\Users\kanikama\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
+C:\Users\2509413\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
   (ソース ファイル 'src/Main.cpp' をコンパイルしています)
   
   Fps.cpp
   コードを生成中...
-  Sample3D.vcxproj -> C:\Users\kanikama\Desktop\MyGame\x64\Debug\Sample3D.exe
+  Sample3D.vcxproj -> C:\Users\2509413\Desktop\MyGame\x64\Debug\Sample3D.exe

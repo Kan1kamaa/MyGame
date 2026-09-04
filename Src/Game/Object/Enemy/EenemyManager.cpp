@@ -48,11 +48,11 @@ void EnemyManager::Step()
 			m_EnemyCnt++;
 		}
 		//敵の出現を一旦止めている。再開する時はこのif文の中のコメントを外す
-		//if (m_waitCnt <= 0 && m_EnemyCnt <= 0)
-		//{
-		//	RequestEnemy();
-		//	m_waitCnt = WAIT_COUNT;
-		//}
+		if (m_waitCnt <= 0 && m_EnemyCnt <= 0)
+		{
+			RequestEnemy();
+			m_waitCnt = WAIT_COUNT;
+		}
 		m_waitCnt--;
 	}
 }

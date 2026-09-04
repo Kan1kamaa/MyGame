@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\2509413\\Desktop\\MyGame\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Lib\\Effect\\EffectManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Lib\\Effect\\EffectManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Lib\\Effect\\Effect.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Lib\\Effect\\Effect.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\MeleeCharacter.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Game\\Object\\Player\\MeleeCharacter.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -102,11 +110,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 0,
+              "Title": "EffectManager.cpp",
+              "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Lib\\Effect\\EffectManager.cpp",
+              "RelativeDocumentMoniker": "Src\\Lib\\Effect\\EffectManager.cpp",
+              "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Lib\\Effect\\EffectManager.cpp",
+              "RelativeToolTip": "Src\\Lib\\Effect\\EffectManager.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-09-04T03:50:53.724Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Effect.h",
+              "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Lib\\Effect\\Effect.h",
+              "RelativeDocumentMoniker": "Src\\Lib\\Effect\\Effect.h",
+              "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Lib\\Effect\\Effect.h",
+              "RelativeToolTip": "Src\\Lib\\Effect\\Effect.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-09-04T03:50:52.89Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "Field.h",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Field\\Field.h",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Field\\Field.h",
@@ -118,7 +152,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "Field.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Field\\Field.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Field\\Field.cpp",
@@ -130,7 +164,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "CharacterManager.h",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\CharacterManager.h",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\CharacterManager.h",
@@ -142,7 +176,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "CharacterManager.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\CharacterManager.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\CharacterManager.cpp",
@@ -154,7 +188,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "MeleeCharacter.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\MeleeCharacter.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\MeleeCharacter.cpp",
@@ -167,7 +201,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "JiggleBone.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\JiggleBone.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\JiggleBone.cpp",
@@ -179,7 +213,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "Actorbase.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\ActorBase\\Actorbase.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\ActorBase\\Actorbase.cpp",
@@ -191,7 +225,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "Objectbase.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\ObjectBase\\Objectbase.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\ObjectBase\\Objectbase.cpp",
@@ -203,7 +237,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "MeleeCharacter.h",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\MeleeCharacter.h",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\MeleeCharacter.h",
@@ -215,7 +249,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "JiggleBone.h",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\JiggleBone.h",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\JiggleBone.h",
@@ -227,7 +261,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "Objectbase.h",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\ObjectBase\\Objectbase.h",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\ObjectBase\\Objectbase.h",
@@ -239,7 +273,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "Sky.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Field\\Sky.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Field\\Sky.cpp",
@@ -251,7 +285,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "Sky.h",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Field\\Sky.h",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Field\\Sky.h",
@@ -263,7 +297,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "Actorbase.h",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\ActorBase\\Actorbase.h",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\ActorBase\\Actorbase.h",
@@ -275,7 +309,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "PlayerCharacter.h",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\PlayerCharacter.h",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\PlayerCharacter.h",
@@ -287,7 +321,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "RangedCharacter.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\RangedCharacter.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\RangedCharacter.cpp",
@@ -299,7 +333,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "CameraManager.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Camera\\CameraManager.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\Camera\\CameraManager.cpp",
@@ -311,7 +345,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 24,
               "Title": "RangedCharacter.h",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\RangedCharacter.h",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\RangedCharacter.h",
@@ -323,7 +357,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 23,
               "Title": "SoundManager.h",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\SoundManager.h",
               "RelativeDocumentMoniker": "Src\\Game\\System\\SoundManager.h",
@@ -335,7 +369,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "GameCollision.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\GameCollision.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\System\\GameCollision.cpp",
@@ -347,7 +381,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "MainCamera.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Camera\\MainCamera.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\Camera\\MainCamera.cpp",
@@ -359,7 +393,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 22,
               "Title": "SoundManager.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\SoundManager.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\System\\SoundManager.cpp",
@@ -371,7 +405,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "GameCollision.h",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\GameCollision.h",
               "RelativeDocumentMoniker": "Src\\Game\\System\\GameCollision.h",

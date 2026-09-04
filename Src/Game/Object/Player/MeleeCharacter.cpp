@@ -47,13 +47,13 @@ namespace {
 	const char* LEG_FRAME_NAME_LOWER_R = "lowerleg.R";
 	const char* LEG_FRAME_NAME_FOOT_L = "foot.L";
 	const char* LEG_FRAME_NAME_FOOT_R = "foot.R";
-	const char* HIPS_FRAME_NAME = "hips"; //お尻・骨盤のボーン名
-	const float LEG_COLLISION_RADIUS = 35.0f;  //脚(太もも・すね)がこの距離より近づいたら押し出す(左右の貫通対策で拡大)
-	const float HIPS_COLLISION_RADIUS = 18.0f; //お尻・骨盤がこの距離より近づいたら押し出す(前後のめくれ対策で縮小)
-	const float LEG_PUSH_POWER = 0.2f;    //脚:めり込んだ量を、どれくらいの角度の押し出しに変えるか(左右をさらに強化)
-	const float HIPS_PUSH_POWER = 0.04f;  //お尻:同上(前後を少し弱める)
-	const float LEG_PUSH_MAX = 0.6f;      //脚の押し出す角度の上限(左右がすぐ頭打ちにならないよう引き上げ)
-	const float HIPS_PUSH_MAX = 0.2f;     //お尻の押し出す角度の上限(前後は今まで通り控えめに)
+	const char* HIPS_FRAME_NAME = "hips";			//お尻・骨盤のボーン名
+	const float LEG_COLLISION_RADIUS = 35.0f;		//脚(太もも・すね)がこの距離より近づいたら押し出す(左右の貫通対策で拡大)
+	const float HIPS_COLLISION_RADIUS = 18.0f;		//お尻・骨盤がこの距離より近づいたら押し出す(前後のめくれ対策で縮小)
+	const float LEG_PUSH_POWER = 0.2f;				//脚:めり込んだ量を、どれくらいの角度の押し出しに変えるか(左右をさらに強化)
+	const float HIPS_PUSH_POWER = 0.04f;			//お尻:同上(前後を少し弱める)
+	const float LEG_PUSH_MAX = 0.6f;				//脚の押し出す角度の上限(左右がすぐ頭打ちにならないよう引き上げ)
+	const float HIPS_PUSH_MAX = 0.2f;				//お尻の押し出す角度の上限(前後は今まで通り控えめに)
 
 	//アニメーション一覧
 	enum tagAnim {
@@ -166,8 +166,6 @@ void MeleeCharacter::Update()
 	VECTOR moveDelta = VSub(m_pos, m_prevPos);
 	float turnDelta = m_rot.y - m_prevRotY;
 
-	//移動量を、キャラの向き基準の「右方向」「前方向」に分解する
-	//(CharacterManagerの移動計算で使っているforward/rightと同じ考え方)
 	float sinRot = sinf(m_rot.y);
 	float cosRot = cosf(m_rot.y);
 	VECTOR forward = { -sinRot, 0.0f, -cosRot };

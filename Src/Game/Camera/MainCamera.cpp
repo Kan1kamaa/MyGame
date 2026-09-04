@@ -9,14 +9,14 @@ namespace {
 	const int SCREEN_CENTER_X = 1280 / 2;
 	const int SCREEN_CENTER_Y = 720 / 2;
 
-	const float MOUSE_SENSITIVITY_YAW = 0.005f;   //マウス感度(左右)
-	const float MOUSE_SENSITIVITY_PITCH = 0.003f; //マウス感度(上下)
-	const float CAMERA_PITCH_MIN = -0.2f;   //見上げすぎ防止
-	const float CAMERA_PITCH_MAX = 1.3f;    //見下ろしすぎ防止
+	const float MOUSE_SENSITIVITY_YAW = 0.005f;		//マウス感度(左右)
+	const float MOUSE_SENSITIVITY_PITCH = 0.003f;	//マウス感度(上下)
+	const float CAMERA_PITCH_MIN = -0.2f;			//見上げすぎ防止
+	const float CAMERA_PITCH_MAX = 1.3f;			//見下ろしすぎ防止
 
-	const float CAMERA_DEFAULT_DISTANCE = 35.0f; //注視点からの距離
-	const float CAMERA_INITIAL_PITCH = 0.7f;     //カメラの高さ
-	const float FOCUS_HEIGHT = 10.0f;       //注視点の高さ(キャラの足元からのオフセット)
+	const float CAMERA_DEFAULT_DISTANCE = 35.0f;	//注視点からの距離
+	const float CAMERA_INITIAL_PITCH = 0.7f;		//カメラの高さ
+	const float FOCUS_HEIGHT = 10.0f;				//注視点の高さ(キャラの足元からのオフセット)
 }
 
 //コンストラクタ

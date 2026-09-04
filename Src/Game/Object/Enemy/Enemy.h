@@ -4,6 +4,9 @@
 class Enemy : public ObjectBase {
 private:
 	VECTOR m_speed;		//移動速度
+	float  m_speedMag;		// speed magnitude, kept constant across direction changes
+	int    m_dirChangeCnt;	// frames remaining until next random direction change
+	void ChangeDirRandom();	// pick a new random movement direction, keeping speed magnitude
 public:
 	//コンストラクタ・デストラクタ
 	Enemy();

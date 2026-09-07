@@ -1,11 +1,11 @@
-#include"CameraManager.h"
+﻿#include"CameraManager.h"
 
-//�R���X�g���N�^
+//コンストラクタ
 CameraManager::CameraManager() : m_state(MAIN)
 {
 }
 
-//������
+//初期化
 void CameraManager::Init()
 {
 	m_state = MAIN;
@@ -21,7 +21,7 @@ void CameraManager::Draw()
 		break;
 	}
 }
-//update camera look direction from mouse (MAIN camera only)
+//マウス入力でカメラの向きを更新する(MAINカメラのみ)
 void CameraManager::UpdateLook()
 {
 	if (m_state == MAIN)
@@ -30,7 +30,7 @@ void CameraManager::UpdateLook()
 	}
 }
 
-//���t���[���v�Z���鏈��
+//毎フレーム計算する処理
 void CameraManager::Step(VECTOR tergetPos)
 {
 	if (CheckHitKey(KEY_INPUT_V) == true)

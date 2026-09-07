@@ -145,7 +145,6 @@
     <ClCompile Include="Src\Game\Object\Field\Sky.cpp" />
     <ClCompile Include="Src\Game\Object\Objectbase\Objectbase.cpp" />
     <ClCompile Include="Src\Game\Object\Player\CharacterManager.cpp" />
-    <ClCompile Include="Src\Game\Object\Player\JiggleBone.cpp" />
     <ClCompile Include="Src\Game\Object\Player\MeleeCharacter.cpp" />
     <ClCompile Include="Src\Game\Object\Player\RangedCharacter.cpp" />
     <ClCompile Include="Src\Game\Object\Shot\Shot.cpp" />
@@ -176,7 +175,6 @@
     <ClInclude Include="Src\Game\Object\Field\Sky.h" />
     <ClInclude Include="Src\Game\Object\Objectbase\Objectbase.h" />
     <ClInclude Include="Src\Game\Object\Player\CharacterManager.h" />
-    <ClInclude Include="Src\Game\Object\Player\JiggleBone.h" />
     <ClInclude Include="Src\Game\Object\Player\MeleeCharacter.h" />
     <ClInclude Include="Src\Game\Object\Player\RangedCharacter.h" />
     <ClInclude Include="Src\Game\Object\Player\PlayerCharacter.h" />

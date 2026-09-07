@@ -1,22 +1,22 @@
-#include"SoundManager.h"
+﻿#include"SoundManager.h"
 
 using namespace std;
 
-//���[�h���鉹�y�f�[�^�̃p�X
+//ロードする音楽データのパス
 static const char* FILE_PATH[SoundManager::SOUND_NUM] = {
 	"Data//Sound//bgm00.mp3","Data//Sound//se_plshot.mp3","Data//Sound//se_explore.mp3"
 };
 
-vector<int>SoundManager::m_hndl;  //�T�E���h�n���h��
+vector<int>SoundManager::m_hndl;  //サウンドハンドル
 
-//������
+//初期化
 void SoundManager::Init()
 {
-	//�I�������Ɠ����ł�
+	//終了処理と同じです
 	Exit();
 }
 
-//�I������
+//終了処理
 void SoundManager::Exit()
 {
 	for (auto itr = m_hndl.begin(); itr != m_hndl.end(); ++itr)
@@ -26,17 +26,17 @@ void SoundManager::Exit()
 			DeleteSoundMem(*itr);
 		}
 	}
-	//�����f�[�^��S�ď���
+	//内部データを全て消す
 	m_hndl.clear();
 }
 
-//�S�f�[�^�ǂݍ���
+//全データ読み込み
 void SoundManager::Load()
 {
-	//���Ƀf�[�^�������Ă���Ȃ�I��
+	//既にデータが入っているなら終了
 	if (m_hndl.size() > 0)return;
 
-	//���[�v���g���Ĉꊇ���[�h
+	//ループを使って一括ロード
 	for (int i = 0; i < SOUND_NUM; i++)
 	{
 		int hndl = LoadSoundMem(FILE_PATH[i]);
@@ -44,19 +44,19 @@ void SoundManager::Load()
 	}
 }
 
-//���y�Đ�
+//音楽再生
 bool SoundManager::Play(tagSoundID id, int type, bool isStart)
 {
 	return !PlaySoundMem(m_hndl[id], type, isStart);
 }
 
-//���y��~
+//音楽停止
 void SoundManager::Stop(tagSoundID id)
 {
 	StopSoundMem(m_hndl[id]);
 }
 
-//�S���y��~
+//全音楽停止
 void SoundManager::StopAll()
 {
 	for (auto itr = m_hndl.begin(); itr != m_hndl.end(); ++itr)
@@ -65,7 +65,7 @@ void SoundManager::StopAll()
 	}
 }
 
-//�T�E���h�Đ������H
+//サウンド再生中か？
 bool SoundManager::IsPlay(tagSoundID id)
 {
 	if (CheckSoundMem(m_hndl[id]) == 1)
@@ -78,29 +78,29 @@ bool SoundManager::IsPlay(tagSoundID id)
 	}
 }
 
-//���݂̍Đ����擾(�~���b)
+//現在の再生時取得(ミリ秒)
 LONGLONG SoundManager::GetSoundTime(tagSoundID id)
 {
 	return GetSoundCurrentTime(m_hndl[id]);
 }
 
-//���Đ����Ԏ擾(�~���b)
+//総再生時間取得(ミリ秒)
 LONGLONG SoundManager::GetSoundAllTime(tagSoundID id)
 {
 	return GetSoundTotalTime(m_hndl[id]);
 }
 
-//�Đ��J�n���Ԑݒ�
+//再生開始時間設定
 void SoundManager::SetStartFrame(tagSoundID id, int ms)
 {
-	//�Đ��J�n���Ԃ��~���b����SetCurrentPositionSoundMem�̈����̌`�ɕϊ�
+	//再生開始時間をミリ秒からSetCurrentPositionSoundMemの引数の形に変換
 	int freq = GetFrequencySoundMem(m_hndl[id]) * ms / 1000;
 	SetCurrentPositionSoundMem(freq, m_hndl[id]);
 }
 
-//�Đ��J�n���Ԑݒ�
+//再生開始時間設定
 void SoundManager::SetVolume(tagSoundID id, float volume)
 {
-	//DxLib�̈�����0�`255�̊ԂȂ̂ŁA�����v�Z�����Ă���
+	//DxLibの引数は0〜255の間なので、少し計算を入れている
 	ChangeVolumeSoundMem((int)(255.0f * volume), m_hndl[id]);
 }

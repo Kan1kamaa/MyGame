@@ -1,8 +1,8 @@
-#include"Field.h"
+﻿#include"Field.h"
 
 
 
-//���[�h
+//ロード
 void Field::Load()
 {
 	if (m_hndl == -1)

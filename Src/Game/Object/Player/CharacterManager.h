@@ -20,8 +20,26 @@ private:
 	bool m_prevKeyE;
 	bool m_prevKeyR;
 
-	//操作キャラクターの切り替え
+	//--- Step() から呼ぶ小さな処理(1つずつ役割を分けている) ---
+
+	//指定した番号の操作キャラクターに切り替える
 	void SwitchActive(int index);
+	//1/2キーが押されていたら操作キャラクターを切り替える
+	void UpdateCharacterSwitch();
+
+	//WASD入力を読んで、カメラの向き基準の移動方向を返す
+	//(長さ1にそろえてある。入力が無い/打ち消し合った時は長さ0)
+	VECTOR ReadMoveDir(float cameraYaw) const;
+	//移動方向と歩き/走りの区別から、このフレームの水平移動量を返す
+	VECTOR CalcMoveVelocity(VECTOR moveDir, bool isRun) const;
+	//攻撃の踏み込みぶんの移動量を返す(踏み込み中でなければ長さ0)
+	VECTOR CalcLungeVelocity(PlayerCharacter* active) const;
+	//m_pos を移動可能範囲(フィールド)の中に収める
+	void ClampInsideField();
+	//移動している方向へ、m_rot.y を少しずつ回して向き直る
+	void TurnToward(VECTOR moveDir);
+	//ジャンプ入力と重力を処理して m_pos.y / m_velocityY を更新する
+	void UpdateVertical(bool isJumpTrigger);
 
 public:
 	//コンストラクタ・デストラクタ
@@ -41,4 +59,14 @@ public:
 	void DrawPL();
 	//破棄
 	void Fin();
+
+	//=========================
+	//近接攻撃の当たり判定(GameCollisionから使う)
+	//=========================
+	//攻撃モーション中で、前方に攻撃判定を出すべきかどうか
+	bool IsAttackActive() const;
+	//攻撃判定(球)の中心座標。キャラの前方に置く
+	VECTOR GetAttackPos() const;
+	//攻撃判定(球)の半径
+	float GetAttackRadius() const;
 };

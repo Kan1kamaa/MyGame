@@ -1,64 +1,39 @@
 ﻿  CameraManager.cpp
-D:\Users\2509413\Desktop\3DGame\Src\Game\Camera\CameraManager.h(29,48): warning C4552: '&': 式の結果が使用されていません
+  Field.cpp
+C:\Users\2509413\Desktop\2509413_林三史郎\プログラム\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
   (ソース ファイル 'Src/Game/Camera/CameraManager.cpp' をコンパイルしています)
   
-D:\Users\2509413\Desktop\3DGame\Src\Game\Camera\CameraManager.cpp(27,34): warning C4805: '==': 演算中の 'int' 型と 'bool' 型の混用は安全ではありません
-D:\Users\2509413\Desktop\3DGame\Src\Game\Camera\CameraManager.cpp(31,39): warning C4805: '==': 演算中の 'int' 型と 'bool' 型の混用は安全ではありません
-  DebugCamera.cpp
-D:\Users\2509413\Desktop\3DGame\Src\Game\Camera\DebugCamera.cpp(73,20): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
-D:\Users\2509413\Desktop\3DGame\Src\Game\Camera\DebugCamera.cpp(77,20): warning C4305: '-=': 'double' から 'float' へ切り詰めます。
-  MainCamera.cpp
-  Actorbase.cpp
-  Enemy.cpp
-D:\Users\2509413\Desktop\3DGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
-  (ソース ファイル 'Src/Game/Object/Enemy/Enemy.cpp' をコンパイルしています)
-  
-  EenemyManager.cpp
-  Field.cpp
-  Sky.cpp
-D:\Users\2509413\Desktop\3DGame\Src\Game\Object\Field\Sky.cpp(15,12): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
-  Objectbase.cpp
-  Player.cpp
-D:\Users\2509413\Desktop\3DGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
-  (ソース ファイル 'Src/Game/Object/Player/Player.cpp' をコンパイルしています)
-  
-D:\Users\2509413\Desktop\3DGame\Src\Game\Object\Player\Player.cpp(4,10): error C1083: include ファイルを開けません。'../../Lib/Common.h':No such file or directory
-  Shot.cpp
-D:\Users\2509413\Desktop\3DGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
-  (ソース ファイル 'Src/Game/Object/Shot/Shot.cpp' をコンパイルしています)
-  
-  ShotManager.cpp
+C:\Users\2509413\Desktop\2509413_林三史郎\プログラム\Src\Game\Camera\CameraManager.cpp(36,34): warning C4805: '==': 演算中の 'int' 型と 'bool' 型の混用は安全ではありません
+C:\Users\2509413\Desktop\2509413_林三史郎\プログラム\Src\Game\Camera\CameraManager.cpp(40,39): warning C4805: '==': 演算中の 'int' 型と 'bool' 型の混用は安全ではありません
+  CharacterManager.cpp
   PlayScene.cpp
-D:\Users\2509413\Desktop\3DGame\Src\Game\Camera\CameraManager.h(29,48): warning C4552: '&': 式の結果が使用されていません
+C:\Users\2509413\Desktop\2509413_林三史郎\プログラム\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
   (ソース ファイル 'Src/Game/Scene/PlayScene.cpp' をコンパイルしています)
   
-D:\Users\2509413\Desktop\3DGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
+C:\Users\2509413\Desktop\2509413_林三史郎\プログラム\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
   (ソース ファイル 'Src/Game/Scene/PlayScene.cpp' をコンパイルしています)
   
-  resultscene.cpp
-  Scenebase.cpp
   SceneManager.cpp
-D:\Users\2509413\Desktop\3DGame\Src\Game\Camera\CameraManager.h(29,48): warning C4552: '&': 式の結果が使用されていません
+C:\Users\2509413\Desktop\2509413_林三史郎\プログラム\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
   (ソース ファイル 'Src/Game/Scene/SceneManager.cpp' をコンパイルしています)
   
-D:\Users\2509413\Desktop\3DGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
+C:\Users\2509413\Desktop\2509413_林三史郎\プログラム\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
   (ソース ファイル 'Src/Game/Scene/SceneManager.cpp' をコンパイルしています)
   
-  Titltscene.cpp
-  GameCollision.cpp
   SoundManager.cpp
-D:\Users\2509413\Desktop\3DGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
+C:\Users\2509413\Desktop\2509413_林三史郎\プログラム\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
   (ソース ファイル 'Src/Game/System/SoundManager.cpp' をコンパイルしています)
   
-  Collision.cpp
-  コンパイル中...
-  Fade.cpp
-  Input.cpp
   Main.cpp
-D:\Users\2509413\Desktop\3DGame\Src\Game\Camera\CameraManager.h(29,48): warning C4552: '&': 式の結果が使用されていません
+C:\Users\2509413\Desktop\2509413_林三史郎\プログラム\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
   (ソース ファイル 'src/Main.cpp' をコンパイルしています)
   
-D:\Users\2509413\Desktop\3DGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
+C:\Users\2509413\Desktop\2509413_林三史郎\プログラム\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
   (ソース ファイル 'src/Main.cpp' をコンパイルしています)
   
-  Fps.cpp
+  コード生成しています。
+  0 of 290 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
+  Sample3D.vcxproj -> C:\Users\2509413\Desktop\2509413_林三史郎\プログラム\x64\Release\Sample3D.exe

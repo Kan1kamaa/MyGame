@@ -61,15 +61,15 @@ void RangedCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool
 	{
 	case ANIMID_IDLE2: //今は待機モーション中
 		//isAttackInputがtrueなら(=左クリックが押されていたら)攻撃モーションを再生する
-		if (isAttackInput)
+		if (isAttackInput == true)
 		{
 			RequestLoopAnim(ANIMID_ATTACK2, ANIM_SPEED);
 		}
 		//攻撃していなくて、isMoveInputがtrueなら(=WASDが押されていたら)歩き/走りへ切り替える
-		else if (isMoveInput)
+		else if (isMoveInput == true)
 		{
 			//isRunInputがtrueなら(=シフトキーも押されていたら)走りモーション、そうでなければ歩きモーション
-			if (isRunInput)
+			if (isRunInput == true)
 			{
 				RequestLoopAnim(ANIMID_RUN2, ANIM_SPEED);
 			}
@@ -81,14 +81,14 @@ void RangedCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool
 		break;
 
 	case ANIMID_WALK2: //今は歩きモーション中
-		if (isAttackInput)
+		if (isAttackInput == true)
 		{
 			RequestLoopAnim(ANIMID_ATTACK2, ANIM_SPEED);
 		}
-		else if (isMoveInput)
+		else if (isMoveInput == true)
 		{
 			//歩き中にシフトキーが追加で押されたら走りへ切り替える
-			if (isRunInput)
+			if (isRunInput == true)
 			{
 				RequestLoopAnim(ANIMID_RUN2, ANIM_SPEED);
 			}
@@ -102,14 +102,14 @@ void RangedCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool
 		break;
 
 	case ANIMID_RUN2: //今は走りモーション中
-		if (isAttackInput)
+		if (isAttackInput == true)
 		{
 			RequestLoopAnim(ANIMID_ATTACK2, ANIM_SPEED);
 		}
-		else if (isMoveInput)
+		else if (isMoveInput == true)
 		{
 			//シフトキーが離されたら(isRunInputがfalseになったら)歩きに切り替える
-			if (!isRunInput)
+			if (isRunInput == false)
 			{
 				RequestLoopAnim(ANIMID_WALK2, ANIM_SPEED);
 			}
@@ -122,7 +122,7 @@ void RangedCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool
 
 	case ANIMID_ATTACK2: //今は攻撃モーション中
 		//isAttackInputがfalseになったら(=左クリックを離したら)待機に戻る
-		if (!isAttackInput)
+		if (isAttackInput == false)
 		{
 			RequestLoopAnim(ANIMID_IDLE2, ANIM_SPEED);
 		}

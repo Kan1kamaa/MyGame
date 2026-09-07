@@ -1,50 +1,49 @@
-#include <crtdbg.h>
+﻿#include <crtdbg.h>
 #include "DxLib.h"
 #include "../Src/Lib/Fps/Fps.h"
 #include"../Src/Game/Scene/SceneManager.h"
-// �v���O������ WinMain ����n�܂�܂�
+// プログラムは WinMain から始まります
 int  WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
 {
-	// ���������[�N�m�F�p
+	// メモリリーク確認用
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	ChangeWindowMode(TRUE);			// �E�B���h�E���[�h�ŋN��
+	ChangeWindowMode(TRUE);			// ウィンドウモードで起動
 	SetGraphMode(1280, 720, 32);
 
-	// �c�w���C�u��������������
+	// ＤＸライブラリ初期化処理
 	if (DxLib_Init() == -1) return -1;
 
-	//��ԍŏ��ɂP�񂾂���鏈��
+	//一番最初に１回だけやる処理
 	SetDrawScreen(DX_SCREEN_BACK);
 	SetUseZBuffer3D(TRUE);
 	SetWriteZBuffer3D(TRUE);
-	SetUseLighting(FALSE);	// diagnostic: lighting off to check model brightness
-	// ������
+	SetUseLighting(FALSE);	// モデルの明るさ確認用にライティングを無効化
+	// 初期化
 	InitFps();
 	SceneManager scene;
-	//�Q�[�����C�����[�v
+	//ゲームメインループ
 	while (ProcessMessage() != -1)
 	{
-		//�G�X�P�[�v�L�[�������ꂽ��I��
+		//エスケープキーが押されたら終了
 		if (CheckHitKey(KEY_INPUT_ESCAPE) == 1) break;
 		if (!IsNextFrame()) continue;
 
 		ClearDrawScreen();
-		
-		//�X�V����
+
+		//更新処理
 		scene.Loop();
-		//�`��
+		//描画
 		scene.Draw();
-		PrintFps();		// FPS�\��
+		PrintFps();		// FPS表示
 
 		ScreenFlip();
 
 	}
 
-	
-	DxLib_End();			// �c�w���C�u�����g�p�̏I������
 
-	return 0;				// �\�t�g�̏I�� 
+	DxLib_End();			// ＤＸライブラリ使用の終了処理
+
+	return 0;				// ソフトの終了
 }
-

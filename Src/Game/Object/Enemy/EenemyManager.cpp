@@ -4,6 +4,8 @@
 static const char FILE_PATH[] = "Data/models/Enemy/Enemy.pmx";
 
 static const int WAIT_COUNT(60);
+//同時に出現させておく敵の数
+static const int ACTIVE_ENEMY_MAX = 10;
 //コンストラクタ
 EnemyManager::EnemyManager()
 {
@@ -18,6 +20,8 @@ EnemyManager::~EnemyManager()
 //初期化
 void EnemyManager::Init()
 {
+	m_waitCnt = WAIT_COUNT;
+	m_EnemyCnt = 0;
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
 		m_Enemy[i].Init();
@@ -40,6 +44,8 @@ void EnemyManager::Load()
 
 void EnemyManager::Step()
 {
+	//毎フレーム現在の敵の数を数え直す
+	m_EnemyCnt = 0;
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
 		m_Enemy[i].Step();
@@ -47,14 +53,15 @@ void EnemyManager::Step()
 		{
 			m_EnemyCnt++;
 		}
-		//敵の出現を一旦止めている。再開する時はこのif文の中のコメントを外す
-		if (m_waitCnt <= 0 && m_EnemyCnt <= 0)
-		{
-			RequestEnemy();
-			m_waitCnt = WAIT_COUNT;
-		}
-		m_waitCnt--;
 	}
+
+	//待機時間が過ぎていて、かつ場の敵が上限未満なら次の敵を出現させる
+	if (m_waitCnt <= 0 && m_EnemyCnt < ACTIVE_ENEMY_MAX)
+	{
+		RequestEnemy();
+		m_waitCnt = WAIT_COUNT;
+	}
+	m_waitCnt--;
 }
 
 void EnemyManager::Update()
@@ -83,8 +90,9 @@ void EnemyManager::Fin()
 
 bool EnemyManager::RequestEnemy()
 {
-	VECTOR pos = { (float)GetRand(200) - 100.0f,0.0f,200.0f };
-	VECTOR speed = { 0.0f,0.0f,-0.5f };
+	//フィールド内のランダムな位置に出現させる(移動方向はEnemy側でランダムに決まる)
+	VECTOR pos = { (float)GetRand(500) - 250.0f,0.0f,(float)GetRand(500) - 250.0f };
+	VECTOR speed = { 0.0f,0.0f,0.0f };
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
 		if (m_Enemy[i].Request(pos, speed) == true)

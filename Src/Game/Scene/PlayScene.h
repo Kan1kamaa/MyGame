@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"Scenebase.h"
 #include"../Camera/CameraManager.h"
 #include"../Object/Field/Sky.h"
@@ -9,31 +9,31 @@
 #include"../System/SoundManager.h"
 class PlayScene : public SceneBase {
 private:
-	//�v���C���[
+	//プレイヤー
 	CharacterManager player;
-	//�e
+	//弾
 	ShotManager shot;
-	//�G
+	//敵
 	EnemyManager enemy;
-	//�w�i
+	//背景
 	Field field;
 	Sky sky;
-	//�J����
+	//カメラ
 	CameraManager camera;
 
 public:
-	//�`��
+	//描画
 	void Draw();
 
 private:
-	//������
+	//初期化
 	void Init();
-	//���[�h
+	//ロード
 	void Load();
-	//���t���[���v�Z���鏈��
+	//毎フレーム計算する処理
 	void Step();
-	//���X�V
+	//情報更新
 	void Update();
-	//�j��
+	//破棄
 	void Fin();
 };

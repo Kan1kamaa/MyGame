@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "Sample3D\\x64\\Release\\Field.obj",
+            "outputs": [
+                "Sample3D\\x64\\Release\\Field.h.obj.dt.module.json",
+                "Sample3D\\x64\\Release\\Field.h.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}

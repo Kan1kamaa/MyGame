@@ -75,9 +75,6 @@
     <ClCompile Include="Src\Game\Object\Player\CharacterManager.cpp">
       <Filter>ソース ファイル\Game\Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game\Object\Player\JiggleBone.cpp">
-      <Filter>ソース ファイル\Game\Object\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game\Object\Player\MeleeCharacter.cpp">
       <Filter>ソース ファイル\Game\Object\Player</Filter>
     </ClCompile>
@@ -159,9 +156,6 @@
       <Filter>ソース ファイル\Lib\Fps</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game\Object\Player\CharacterManager.h">
-      <Filter>ソース ファイル\Game\Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game\Object\Player\JiggleBone.h">
       <Filter>ソース ファイル\Game\Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game\Object\Player\MeleeCharacter.h">

@@ -1,24 +1,28 @@
-#pragma once
+ï»¿#pragma once
 #include"../ObjectBase/ObjectBase.h"
 
 class Enemy : public ObjectBase {
 private:
-	VECTOR m_speed;		//ˆÚ“®‘¬“x
+	VECTOR m_speed;		//ç§»å‹•é€Ÿåº¦
+	int m_changeDirCnt;	//æ¬¡ã«ãƒ©ãƒ³ãƒ€ãƒ ã§æ–¹å‘è»¢æ›ã™ã‚‹ã¾ã§ã®ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
+
+	//ç§»å‹•æ–¹å‘ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«é¸ã³ç›´ã™
+	void RandomizeDirection();
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^EƒfƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ»ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Enemy();
 	~Enemy();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Init();
-	//ƒ[ƒh
+	//ãƒ­ãƒ¼ãƒ‰
 	void Load(int originhndl);
-	//–ˆƒtƒŒ[ƒ€ŒvZ‚·‚éˆ—
+	//æ¯ãƒ•ãƒ¬ãƒ¼ãƒ è¨ˆç®—ã™ã‚‹å‡¦ç†
 	void Step();
-	//ƒVƒ‡ƒbƒg”­Ë
-	//@pos : ”­Ë‚·‚éÀ•W
-	//@sped :@ˆÚ“®‘¬“x
-	//@return : true = ¶¬¬Œ÷ false = ¸”s
+	//ã‚·ãƒ§ãƒƒãƒˆç™ºå°„
+	//@pos : ç™ºå°„ã™ã‚‹åº§æ¨™
+	//@speed :ã€€ç§»å‹•é€Ÿåº¦
+	//@return : true = ç”ŸæˆæˆåŠŸ false = å¤±æ•—
 	bool Request(const VECTOR& pos, const VECTOR& speed);
 
 	void HitCalc(const ObjectBase& other);

@@ -43,7 +43,7 @@ void PlayScene::Step()
 {
 	if (camera.GetCameraID() == 0)
 	{
-		//mouse look first, so movement uses this frame's camera direction
+		//先にマウスでカメラを回し、移動がこのフレームのカメラ向きを使うようにする
 		camera.UpdateLook();
 		player.Step(shot, camera.GetYaw());
 		shot.Step();
@@ -55,6 +55,7 @@ void PlayScene::Step()
 	//各種当たり判定
 	GameCollision::CheckHitEnemyToShot(enemy, shot);
 	GameCollision::CheckHitEnemyToPlayer(enemy, player);
+	GameCollision::CheckHitPlayerAttackToEnemy(player, enemy);
 
 	if (player.GetActive() == false)
 	{

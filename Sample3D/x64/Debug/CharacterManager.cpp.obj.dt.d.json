@@ -1,11 +1,11 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "c:\\users\\2509413\\desktop\\2509413_林三史郎\\プログラム\\src\\game\\object\\player\\charactermanager.cpp",
+        "Source": "c:\\users\\2509413\\desktop\\mygame\\src\\game\\object\\player\\charactermanager.cpp",
         "ProvidedModule": "",
         "Includes": [
-            "c:\\users\\2509413\\desktop\\2509413_林三史郎\\プログラム\\src\\game\\object\\player\\charactermanager.h",
-            "c:\\users\\2509413\\desktop\\2509413_林三史郎\\プログラム\\src\\game\\object\\objectbase\\objectbase.h",
+            "c:\\users\\2509413\\desktop\\mygame\\src\\game\\object\\player\\charactermanager.h",
+            "c:\\users\\2509413\\desktop\\mygame\\src\\game\\object\\objectbase\\objectbase.h",
             "c:\\dxlib_vc\\プロジェクトに追加すべきファイル_vc用\\dxlib.h",
             "c:\\dxlib_vc\\プロジェクトに追加すべきファイル_vc用\\dxcompileconfig.h",
             "c:\\dxlib_vc\\プロジェクトに追加すべきファイル_vc用\\dxdatatype.h",
@@ -262,12 +262,12 @@
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\shared\\poppack.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\um\\dpa_dsa.h",
             "c:\\dxlib_vc\\プロジェクトに追加すべきファイル_vc用\\dxfunctionwin.h",
-            "c:\\users\\2509413\\desktop\\2509413_林三史郎\\プログラム\\src\\game\\object\\player\\meleecharacter.h",
-            "c:\\users\\2509413\\desktop\\2509413_林三史郎\\プログラム\\src\\game\\object\\player\\playercharacter.h",
-            "c:\\users\\2509413\\desktop\\2509413_林三史郎\\プログラム\\src\\game\\object\\actorbase\\actorbase.h",
-            "c:\\users\\2509413\\desktop\\2509413_林三史郎\\プログラム\\src\\game\\object\\shot\\shotmanager.h",
-            "c:\\users\\2509413\\desktop\\2509413_林三史郎\\プログラム\\src\\game\\object\\shot\\shot.h",
-            "c:\\users\\2509413\\desktop\\2509413_林三史郎\\プログラム\\src\\game\\object\\player\\rangedcharacter.h",
+            "c:\\users\\2509413\\desktop\\mygame\\src\\game\\object\\player\\meleecharacter.h",
+            "c:\\users\\2509413\\desktop\\mygame\\src\\game\\object\\player\\playercharacter.h",
+            "c:\\users\\2509413\\desktop\\mygame\\src\\game\\object\\actorbase\\actorbase.h",
+            "c:\\users\\2509413\\desktop\\mygame\\src\\game\\object\\shot\\shotmanager.h",
+            "c:\\users\\2509413\\desktop\\mygame\\src\\game\\object\\shot\\shot.h",
+            "c:\\users\\2509413\\desktop\\mygame\\src\\game\\object\\player\\rangedcharacter.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\ucrt\\math.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.26100.0\\ucrt\\corecrt_math.h"
         ],

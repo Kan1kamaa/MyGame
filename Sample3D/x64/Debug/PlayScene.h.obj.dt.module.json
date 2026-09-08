@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "Sample3D\\x64\\Debug\\PlayScene.obj",
+            "outputs": [
+                "Sample3D\\x64\\Debug\\PlayScene.h.obj.dt.module.json",
+                "Sample3D\\x64\\Debug\\PlayScene.h.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}

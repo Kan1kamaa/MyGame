@@ -23,6 +23,8 @@ private:
 	void StartSkill();
 	//必殺技モーションを再生する
 	void StartUlt();
+	//地上の通常攻撃(1〜3段目)モーションを再生中かどうか
+	bool IsGroundAttackMotion() const;
 	//攻撃モーション(地上1〜3段目、空中攻撃)を再生中かどうか。刀を持たせるかどうかの判定にも使う
 	bool IsAttackMotion() const;
 

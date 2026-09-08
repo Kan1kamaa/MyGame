@@ -6,6 +6,7 @@ namespace {
 	const float COMBO_CHAIN_RATIO = 0.9f; //この割合を過ぎたら次の段へつなげられる(モーション終盤)
 	const float LUNGE_WINDOW_RATIO = 0.35f; //攻撃モーションの最初のこの割合の間だけ踏み込む
 	const float LUNGE_SPEED = 1.0f;         //踏み込みの速さ
+	const float RUNSTART_LUNGE_SPEED = 0.8f; //走り出しモーション中に前方へ加速する量(通常の移動速度に上乗せ)
 	const float JUMP_ATTACK_BOOST = 5.0f;   //空中攻撃開始時に与える上向きの速度(最後まで空中で出せるように)
 
 	const char* WEAPON_FILE_PATH = "Data/Models/Weapon/katana2.mv1"; //刀のモデルファイル
@@ -34,7 +35,7 @@ namespace {
 		ANIMID_JUMPRISE,    //上昇モーション
 		ANIMID_JUMSTART,    //ジャンプ開始モーション
 		ANIMID_RUN,			//走りモーション
-		ANIMID_RUNSTART,    //回避モーション
+		ANIMID_RUNSTART,    //走り出しモーション
 		ANIMID_SKILL,       //スキルモーション
 		ANIMID_TPAUSE,      //Tポーズモーション
 		ANIMID_ULT,         //必殺技モーション
@@ -182,10 +183,10 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 		//攻撃していなくて、isMoveInputがtrueなら(=WASDが押されていたら)歩き/走りへ切り替える
 		else if (isMoveInput == true)
 		{
-			//isRunInputがtrueなら(=シフトキーも押されていたら)走りモーション、そうでなければ歩きモーション
+			//isRunInputがtrueなら(=シフトキーも押されていたら)走り出しモーション、そうでなければ歩きモーション
 			if (isRunInput == true)
 			{
-				RequestLoopAnim(ANIMID_RUN, ANIM_SPEED);
+				RequestAnim(ANIMID_RUNSTART, ANIM_SPEED);
 			}
 			else
 			{
@@ -201,10 +202,10 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 		}
 		else if (isMoveInput == true)
 		{
-			//歩き中にシフトキーが追加で押されたら走りへ切り替える
+			//歩き中にシフトキーが追加で押されたら走り出しモーションへ切り替える
 			if (isRunInput == true)
 			{
-				RequestLoopAnim(ANIMID_RUN, ANIM_SPEED);
+				RequestAnim(ANIMID_RUNSTART, ANIM_SPEED);
 			}
 			//まだWASDは押されているのでそのまま歩き続ける(何もしない)
 		}
@@ -222,15 +223,26 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 		}
 		else if (isMoveInput == true)
 		{
-			//シフトキーが離されたら(isRunInputがfalseになったら)歩きに切り替える
-			if (isRunInput == false)
-			{
-				RequestLoopAnim(ANIMID_WALK, ANIM_SPEED);
-			}
+			RequestLoopAnim(ANIMID_RUN, ANIM_SPEED);
 		}
 		else
 		{
 			RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
+		}
+		break;
+	case ANIMID_RUNSTART: //今は走り出しモーション中
+		//モーションを最後まで再生してから移行する
+		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		{
+			if (isMoveInput == true)
+			{
+				RequestLoopAnim(ANIMID_RUN, ANIM_SPEED);
+			}
+			//WASDが離されていたら待機に戻る
+			else
+			{
+				RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
+			}
 		}
 		break;
 
@@ -340,12 +352,18 @@ void MeleeCharacter::ResetToIdle()
 	RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
 }
 
-//攻撃モーション(地上1〜3段目、空中攻撃)を再生中かどうか。刀を持たせるかどうかの判定にも使う
-bool MeleeCharacter::IsAttackMotion() const
+//地上の通常攻撃(1〜3段目)モーションを再生中かどうか
+bool MeleeCharacter::IsGroundAttackMotion() const
 {
 	return m_animData.m_index == ANIMID_ATTACK1
 		|| m_animData.m_index == ANIMID_ATTACK2
-		|| m_animData.m_index == ANIMID_ATTACK3
+		|| m_animData.m_index == ANIMID_ATTACK3;
+}
+
+//攻撃モーション(地上1〜3段目、空中攻撃)を再生中かどうか。刀を持たせるかどうかの判定にも使う
+bool MeleeCharacter::IsAttackMotion() const
+{
+	return IsGroundAttackMotion()
 		|| m_animData.m_index == ANIMID_JUMPATTACK;
 }
 
@@ -365,18 +383,22 @@ bool MeleeCharacter::IsAttackActive() const
 	return IsAttacking();
 }
 
-//攻撃モーションの序盤だけ、前方へ踏み込む速度を返す(空中攻撃では踏み込ませない)
+//前方へ加速させる速度を返す。攻撃モーションの序盤の踏み込みと、走り出しモーション中の加速に使う
 float MeleeCharacter::GetLungeSpeed() const
 {
-	bool isGroundAttack = m_animData.m_index == ANIMID_ATTACK1
-		|| m_animData.m_index == ANIMID_ATTACK2
-		|| m_animData.m_index == ANIMID_ATTACK3;
+	//走り出しモーション中は、モーションが終わるまでずっと前方へ加速する
+	if (m_animData.m_index == ANIMID_RUNSTART)
+	{
+		return RUNSTART_LUNGE_SPEED;
+	}
 
-	if (isGroundAttack == false)
+	//空中攻撃では踏み込ませないので、地上の通常攻撃中でなければ0
+	if (IsGroundAttackMotion() == false)
 	{
 		return 0.0f;
 	}
 
+	//攻撃モーションの最初のLUNGE_WINDOW_RATIOの間だけ踏み込む
 	if (m_animData.m_nowFrm < m_animData.m_endFrm * LUNGE_WINDOW_RATIO)
 	{
 		return LUNGE_SPEED;

@@ -139,6 +139,7 @@
     <ClCompile Include="Src\Game\Camera\DebugCamera.cpp" />
     <ClCompile Include="Src\Game\Camera\MainCamera.cpp" />
     <ClCompile Include="Src\Game\Object\Actorbase\Actorbase.cpp" />
+    <ClCompile Include="Src\Game\Object\Enemy\Boss.cpp" />
     <ClCompile Include="Src\Game\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="Src\Game\Object\Enemy\EenemyManager.cpp" />
     <ClCompile Include="Src\Game\Object\Field\Field.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Src\Game\Camera\DebugCamera.h" />
     <ClInclude Include="Src\Game\Camera\MainCamera.h" />
     <ClInclude Include="Src\Game\Object\Actorbase\Actorbase.h" />
+    <ClInclude Include="Src\Game\Object\Enemy\Boss.h" />
     <ClInclude Include="Src\Game\Object\Enemy\Enemy.h" />
     <ClInclude Include="Src\Game\Object\Enemy\EnemyManager.h" />
     <ClInclude Include="Src\Game\Object\Field\Field.h" />

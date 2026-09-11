@@ -1,5 +1,5 @@
 ﻿#include<math.h>
-#include"Enemy.h"
+#include"Boss.h"
 #include"../../System/SoundManager.h"
 static const VECTOR VEC_ZERO{ 0.0f,0.0f,0.0f };
 static const float MOVE_RANGE = 300.0f;	//移動可能範囲(プレイヤーのMOVE_RANGE_X / MOVE_RANGE_Zと同じ)
@@ -11,18 +11,18 @@ static const int   DIR_CHANGE_MIN = 30;		//方向転換するまでの最短フ�
 static const int   DIR_CHANGE_MAX = 90;		//方向転換するまでの最長フレーム数
 
 //コンストラクタ
-Enemy::Enemy() :m_speed(VEC_ZERO), m_changeDirCnt(0)
+BossGolem::BossGolem() :m_speed(VEC_ZERO), m_changeDirCnt(0)
 {
 }
 
 //デストラクタ
-Enemy::~Enemy()
+BossGolem::~BossGolem()
 {
 	Fin();
 }
 
 //初期化
-void Enemy::Init()
+void BossGolem::Init()
 {
 	ObjectBase::Init();
 	m_radius = ENEMY_RAD;
@@ -32,7 +32,7 @@ void Enemy::Init()
 }
 
 //移動方向をランダムに選び直す(XZ平面)
-void Enemy::RandomizeDirection()
+void BossGolem::RandomizeDirection()
 {
 	//0〜359度のランダムな角度
 	float rad = (float)(GetRand(359)) * DX_PI_F / 180.0f;
@@ -45,7 +45,7 @@ void Enemy::RandomizeDirection()
 }
 
 //ロード
-void Enemy::Load(int origiinhndl)
+void BossGolem::Load(int origiinhndl)
 {
 	if (m_hndl == -1)
 	{
@@ -55,7 +55,7 @@ void Enemy::Load(int origiinhndl)
 }
 
 //毎フレーム計算する処理
-void Enemy::Step()
+void BossGolem::Step()
 {
 	//フラグオフなら終了
 	if (m_isActive == false)return;
@@ -72,13 +72,13 @@ void Enemy::Step()
 
 	//範囲外に出たら消さずにフィールド内へ跳ね返す
 	if (m_pos.x < -MOVE_RANGE) { m_pos.x = -MOVE_RANGE; m_speed.x = fabsf(m_speed.x); }
-	if (m_pos.x > MOVE_RANGE) { m_pos.x = MOVE_RANGE; m_speed.x = -fabsf(m_speed.x); }
+	if (m_pos.x >  MOVE_RANGE) { m_pos.x =  MOVE_RANGE; m_speed.x = -fabsf(m_speed.x); }
 	if (m_pos.z < -MOVE_RANGE) { m_pos.z = -MOVE_RANGE; m_speed.z = fabsf(m_speed.z); }
-	if (m_pos.z > MOVE_RANGE) { m_pos.z = MOVE_RANGE; m_speed.z = -fabsf(m_speed.z); }
+	if (m_pos.z >  MOVE_RANGE) { m_pos.z =  MOVE_RANGE; m_speed.z = -fabsf(m_speed.z); }
 }
 
-//ボススポーン
-bool Enemy::Request(const VECTOR& pos, const VECTOR& speed)
+//ショット発射
+bool BossGolem::Request(const VECTOR& pos, const VECTOR& speed)
 {
 	//既に発射されていたら終了
 	if (m_isActive == true)return false;
@@ -93,7 +93,7 @@ bool Enemy::Request(const VECTOR& pos, const VECTOR& speed)
 	return true;
 }
 
-void Enemy::HitCalc(const ObjectBase& other)
+void BossGolem::HitCalc(const ObjectBase& other)
 {
 	SoundManager::Play(SoundManager::SE_EXPLORE);
 	m_isActive = false;

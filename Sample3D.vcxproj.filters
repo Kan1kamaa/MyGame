@@ -153,6 +153,9 @@
     <ClCompile Include="Src\Game\Object\Enemy\Boss.cpp">
       <Filter>ソース ファイル\Game\Object\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game\System\Status.cpp">
+      <Filter>ソース ファイル\Game\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Lib\Fps\Fps.h">
@@ -244,6 +247,9 @@
     </ClInclude>
     <ClInclude Include="Src\Game\Object\Enemy\Boss.h">
       <Filter>ソース ファイル\Game\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game\System\Status.h">
+      <Filter>ソース ファイル\Game\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,10 +1,23 @@
 ﻿#pragma once
 #include"../ObjectBase/ObjectBase.h"
-
+#include"../../System/Status.h"
 class Enemy : public ObjectBase {
 private:
 	VECTOR m_speed;		//移動速度
 	int m_changeDirCnt;	//次にランダムで方向転換するまでのフレーム数
+
+	enum EnemyState
+	{
+		Search,
+		Chase,
+		Attack
+	};
+
+	Status m_status;
+
+
+
+	static const 
 
 	//移動方向をランダムに選び直す
 	void RandomizeDirection();

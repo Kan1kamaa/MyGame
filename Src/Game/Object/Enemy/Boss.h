@@ -2,7 +2,7 @@
 #pragma once
 #include"../ObjectBase/ObjectBase.h"
 
-class Enemy : public ObjectBase {
+class BossGolem : public ObjectBase {
 private:
 	VECTOR m_speed;		//移動速度
 	int m_changeDirCnt;	//次にランダムで方向転換するまでのフレーム数
@@ -11,8 +11,8 @@ private:
 	void RandomizeDirection();
 public:
 	//コンストラクタ・デストラクタ
-	Enemy();
-	~Enemy();
+	BossGolem();
+	~BossGolem();
 
 	//初期化
 	void Init();
@@ -20,7 +20,7 @@ public:
 	void Load(int originhndl);
 	//毎フレーム計算する処理
 	void Step();
-	//ボススポーン
+	//ショット発射
 	//@pos : 発射する座標
 	//@speed :　移動速度
 	//@return : true = 生成成功 false = 失敗

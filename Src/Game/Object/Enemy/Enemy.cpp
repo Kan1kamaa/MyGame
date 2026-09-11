@@ -25,6 +25,7 @@ Enemy::~Enemy()
 void Enemy::Init()
 {
 	ObjectBase::Init();
+	m_status.Init(100,20);
 	m_radius = ENEMY_RAD;
 	m_speed = VEC_ZERO;
 	m_changeDirCnt = 0;
@@ -95,6 +96,10 @@ bool Enemy::Request(const VECTOR& pos, const VECTOR& speed)
 
 void Enemy::HitCalc(const ObjectBase& other)
 {
-	SoundManager::Play(SoundManager::SE_EXPLORE);
-	m_isActive = false;
+	m_status.AddDamage()
+	if (m_status.IsAlive() == false)
+	{
+		SoundManager::Play(SoundManager::SE_EXPLORE);
+		m_isActive = false;
+	}
 }

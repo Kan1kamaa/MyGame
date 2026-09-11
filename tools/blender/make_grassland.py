@@ -46,6 +46,15 @@ N_STANDING    = 6         # 立石(ランドマーク)
 
 HERO_TREE_POS = (0.0, -190.0)   # 大きな一本木の位置(spawn から見て正面奥)
 
+# ボス専用ステージ(ボスゴーレム戦の広場)。既存の木/岩/草の生成物とは重ならないよう
+# avoid ゾーンに登録した上で、同じ M_Rock/M_RockDark を使った岩の円陣として作る。
+BOSS_ARENA_POS      = (135.0, -125.0)   # (x, z) spawn からやや離れた開けた一角
+BOSS_ARENA_FLOOR_R  = 78.0              # 焼け跡・岩肌の地面になる半径
+BOSS_ARENA_RING_R   = 112.0             # 岩の尖塔が並ぶ円の半径
+BOSS_ARENA_AVOID_R  = 130.0             # 他の草木/岩をここでは生成しないための半径
+N_ARENA_SPIRES      = 8                 # 尖塔の本数(1本分は入口として空ける)
+ARENA_ENTRANCE_DEG  = None              # None なら spawn の方を自動で向く
+
 OUT_DIR_REL  = "Data/Models/Field"
 FBX_NAME     = "Field_grassland.fbx"
 BLEND_NAME   = "Field_grassland.blend"
@@ -180,8 +189,16 @@ def build_ground():
     mesh.materials.append(MATS["grass2"])      # 1 少し違う緑(まだら)
     mesh.materials.append(MATS["slope"])       # 2 丘の斜面(枯れ草)
     mesh.materials.append(MATS["rock_dark"])   # 3 高い所の岩肌
+    mesh.materials.append(MATS["scorched"])    # 4 ボスアリーナの焼け跡
+    ax, az = BOSS_ARENA_POS
     for p in mesh.polygons:
         c = p.center
+        arena_d = math.hypot(c.x - ax, c.z - az)
+        arena_d += noise.noise(Vector((c.x * 0.02, c.z * 0.02, 60.0))) * 8.0   # 縁をギザギザに
+        if arena_d < BOSS_ARENA_FLOOR_R:
+            p.material_index = 4       # 焼け焦げた地面(M_Scorched)で統一
+            p.use_smooth = True
+            continue
         rock_line = 115.0 + noise.noise(Vector((c.x * 0.006, c.z * 0.006, 9.0))) * 30.0
         slope_line = 45.0 + noise.noise(Vector((c.x * 0.006, c.z * 0.006, 2.0))) * 26.0
         if c.y > rock_line:
@@ -329,6 +346,98 @@ def build_standing_stones():
     return join(parts, "StandingStones")
 
 
+def build_ember_crack(x0, z0, x1, z1, width):
+    """地面に張り付く、ひび割れ状の発光帯(照明無し描画なので色=発光に見える)"""
+    mesh = bpy.data.meshes.new("EmberCrack")
+    bm = bmesh.new()
+    steps = 10
+    prev = None
+    for i in range(steps + 1):
+        t = i / steps
+        x = x0 + (x1 - x0) * t + noise.noise(Vector((x0 * 0.1, x1 * 0.1, t * 30.0))) * width * 1.4
+        z = z0 + (z1 - z0) * t + noise.noise(Vector((z0 * 0.1, z1 * 0.1, t * 30.0 + 5.0))) * width * 1.4
+        y = ground_height(x, z) + 0.22
+        w = width * (0.35 + 0.65 * (1.0 - abs(t - 0.5) * 2.0))
+        perp = Vector((-(z1 - z0), 0, (x1 - x0))).normalized() * w
+        left = bm.verts.new((x - perp.x, y, z - perp.z))
+        right = bm.verts.new((x + perp.x, y, z + perp.z))
+        if prev:
+            bm.faces.new((prev[0], left, right, prev[1]))
+        prev = (left, right)
+    bm.to_mesh(mesh)
+    bm.free()
+    obj = new_object("EmberCrack", mesh)
+    mesh.materials.append(MATS["ember"])
+    for p in mesh.polygons:
+        p.use_smooth = True
+    return obj
+
+
+def build_arena_spire(x, z):
+    """円陣を囲む、ゴツゴツと積み重なった岩の尖塔"""
+    y = ground_height(x, z)
+    total_h = random.uniform(85.0, 150.0)
+    n_stack = random.randint(3, 4)
+    parts = []
+    cursor = y
+    for i in range(n_stack):
+        # 半径は高さ配分の半分程度(球なので)。tan- 上に行くほど細く。
+        s = (total_h / n_stack) * 0.5 * random.uniform(0.8, 1.1) * (1.0 - i * 0.15)
+        ox, oz = random.uniform(-4, 4), random.uniform(-4, 4)
+        parts.append(_ico(2, s, (x + ox, cursor + s * 0.55, z + oz),
+                          random.choice([MATS["rock"], MATS["rock_dark"]]),
+                          squash=random.uniform(0.85, 1.15), jitter=0.30))
+        cursor += s * (1.55 - i * 0.10)
+    return join(parts, "ArenaSpire")
+
+
+def build_boss_arena():
+    """ボスゴーレム専用の戦闘フィールド: 岩の尖塔で囲われた、焼け焦げた円形の広場。
+    中央には割れた巨石(ゴーレムが目覚めた跡)を置き、地面には発光する亀裂を走らせる。"""
+    parts = []
+    cx, cz = BOSS_ARENA_POS
+    entrance = ARENA_ENTRANCE_DEG
+    if entrance is None:
+        entrance = math.degrees(math.atan2(0.0 - cz, 0.0 - cx))   # spawn(0,0)側を自動で向く
+
+    # 周囲の尖塔(入口の1本だけ抜く)
+    for k in range(N_ARENA_SPIRES):
+        deg = entrance + k * (360.0 / N_ARENA_SPIRES)
+        if k == 0:
+            continue  # 入口
+        a = math.radians(deg)
+        x = cx + math.cos(a) * BOSS_ARENA_RING_R
+        z = cz + math.sin(a) * BOSS_ARENA_RING_R
+        parts.append(build_arena_spire(x, z))
+
+    # 中央: 割れて転がった巨石(ボスが割って出てきたようなクレーター跡)
+    cy = ground_height(cx, cz)
+    core_parts = []
+    for i in range(5):
+        a = math.radians(i * 72 + random.uniform(-12, 12))
+        r = random.uniform(6.0, 22.0)
+        s = random.uniform(9.0, 16.0)
+        core_parts.append(_ico(2, s,
+                               (cx + math.cos(a) * r, cy + s * 0.32, cz + math.sin(a) * r),
+                               random.choice([MATS["rock"], MATS["rock_dark"]]),
+                               squash=random.uniform(0.45, 0.65), jitter=0.32))
+    parts.append(join(core_parts, "ArenaCore"))
+
+    # 中間: 瓦礫(小岩)を円陣の内側にまばらに
+    rubble_pts = [(cx + x, cz + z) for (x, z) in
+                  scatter_points(14, BOSS_ARENA_FLOOR_R * 0.55, BOSS_ARENA_RING_R * 0.92, min_dist=18)]
+    rubble = [build_rock(x, ground_height(x, z), z) for (x, z) in rubble_pts]
+    parts.append(join(rubble, "ArenaRubble"))
+
+    # 地面の発光する亀裂(中央から放射状)
+    for i in range(6):
+        a = math.radians(entrance + 25 + i * 51)
+        ex, ez = cx + math.cos(a) * BOSS_ARENA_RING_R * 0.98, cz + math.sin(a) * BOSS_ARENA_RING_R * 0.98
+        parts.append(build_ember_crack(cx, cz, ex, ez, width=random.uniform(1.6, 2.6)))
+
+    return join(parts, "BossArena")
+
+
 def build_path():
     mesh = bpy.data.meshes.new("Path")
     bm = bmesh.new()
@@ -387,37 +496,40 @@ def build():
         "fl_pink":   make_material("M_FlPink",    (0.90, 0.55, 0.68)),
         "fl_blue":   make_material("M_FlBlue",    (0.50, 0.60, 0.90)),
         "fl_yellow": make_material("M_FlYellow",  (0.95, 0.82, 0.35)),
+        "scorched":  make_material("M_Scorched",  (0.14, 0.12, 0.11)),
+        "ember":     make_material("M_Ember",     (0.95, 0.42, 0.10)),
     })
 
     HERO = (HERO_TREE_POS[0], HERO_TREE_POS[1], 55.0)
     SPAWN = (0.0, 0.0, 90.0)        # spawn 周りは大きい木を置かない
     STONES = (-170.0, 150.0, 90.0)
+    ARENA = (BOSS_ARENA_POS[0], BOSS_ARENA_POS[1], BOSS_ARENA_AVOID_R)
 
     pieces = [build_ground(), build_pond(), build_path(),
-              build_hero_tree(), build_standing_stones()]
+              build_hero_tree(), build_standing_stones(), build_boss_arena()]
 
     trees = [build_tree(x, ground_height(x, z), z)
-             for (x, z) in scatter_points(N_TREES, 120, 1000, avoid=[HERO, SPAWN, STONES], min_dist=42)]
+             for (x, z) in scatter_points(N_TREES, 120, 1000, avoid=[HERO, SPAWN, STONES, ARENA], min_dist=42)]
     pieces.append(join(trees, "Trees"))
 
     boulders = [build_boulder(x, ground_height(x, z), z)
-                for (x, z) in scatter_points(N_BOULDERS, 90, 900, avoid=[HERO, (0, 0, 55)], min_dist=40)]
+                for (x, z) in scatter_points(N_BOULDERS, 90, 900, avoid=[HERO, (0, 0, 55), ARENA], min_dist=40)]
     pieces.append(join(boulders, "Boulders"))
 
     rocks = [build_rock(x, ground_height(x, z), z)
-             for (x, z) in scatter_points(N_ROCKS, 20, 850, min_dist=16)]
+             for (x, z) in scatter_points(N_ROCKS, 20, 850, avoid=[ARENA], min_dist=16)]
     pieces.append(join(rocks, "Rocks"))
 
     bushes = [build_bush(x, ground_height(x, z), z)
-              for (x, z) in scatter_points(N_BUSHES, 40, 850, min_dist=22)]
+              for (x, z) in scatter_points(N_BUSHES, 40, 850, avoid=[ARENA], min_dist=22)]
     pieces.append(join(bushes, "Bushes"))
 
     grass = [build_grass(x, ground_height(x, z), z)
-             for (x, z) in scatter_points(N_GRASS, 12, 620, min_dist=7)]
+             for (x, z) in scatter_points(N_GRASS, 12, 620, avoid=[ARENA], min_dist=7)]
     pieces.append(join(grass, "Grass"))
 
     flowers = [build_flower(x, ground_height(x, z), z)
-               for (x, z) in scatter_points(N_FLOWERS, 15, 560, min_dist=10)]
+               for (x, z) in scatter_points(N_FLOWERS, 15, 560, avoid=[ARENA], min_dist=10)]
     pieces.append(join(flowers, "Flowers"))
 
     field = join(pieces, "Field")

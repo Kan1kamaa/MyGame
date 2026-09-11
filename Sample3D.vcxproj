@@ -157,6 +157,7 @@
     <ClCompile Include="Src\Game\Scene\Titltscene.cpp" />
     <ClCompile Include="Src\Game\System\GameCollision.cpp" />
     <ClCompile Include="Src\Game\System\SoundManager.cpp" />
+    <ClCompile Include="Src\Game\System\Status.cpp" />
     <ClCompile Include="Src\Lib\Collision\Collision.cpp" />
     <ClCompile Include="Src\Lib\Effect\Effect.cpp" />
     <ClCompile Include="Src\Lib\Effect\EffectManager.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="Src\Game\Scene\TitleScene.h" />
     <ClInclude Include="Src\Game\System\GameCollision.h" />
     <ClInclude Include="Src\Game\System\SoundManager.h" />
+    <ClInclude Include="Src\Game\System\Status.h" />
     <ClInclude Include="Src\Lib\Collision\Collsion.h" />
     <ClInclude Include="Src\Lib\Common.h" />
     <ClInclude Include="Src\Lib\Effect\Effect.h" />

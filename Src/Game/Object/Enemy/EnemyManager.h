@@ -1,37 +1,37 @@
 #pragma once
 #include"Enemy.h"
 
-//“G‚Ì”‚ÌÅ‘å’l
+//ï¿½Gï¿½Ìï¿½ï¿½ÌÅ‘ï¿½l
 static const int ENEMY_MAX = 50;
 
 class EnemyManager {
 private:
-	Enemy m_Enemy[ENEMY_MAX];		//“G
-	int m_waitCnt;					//Ÿ‚Ì“G‚ªo‚é‚Ü‚Å‚ÌŠÔ
+	Enemy m_Enemy[ENEMY_MAX];		//ï¿½G
+	int m_waitCnt;					//ï¿½ï¿½ï¿½Ì“Gï¿½ï¿½ï¿½oï¿½ï¿½Ü‚Å‚Ìï¿½ï¿½ï¿½
 	int m_EnemyCnt;
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^EƒfƒXƒgƒ‰ƒNƒ^
+	//ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^ï¿½Eï¿½fï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
 	EnemyManager();
 	~EnemyManager();
 	
-	//‰Šú‰»
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void Init();
-	//ƒ[ƒh
+	//ï¿½ï¿½ï¿½[ï¿½h
 	void Load();
-	//–ˆƒtƒŒ[ƒ€ŒvZ‚·‚éˆ—
-	void Step();
-	//î•ñXV
+	//ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½vï¿½Zï¿½ï¿½ï¿½éˆï¿½ï¿½
+	void Step(const VECTOR& playerPos);
+	//ï¿½ï¿½ï¿½Xï¿½V
 	void Update();
-	//•`‰æ
+	//ï¿½`ï¿½ï¿½
 	void Draw();
-	//”jŠü
+	//ï¿½jï¿½ï¿½
 	void Fin();
 
 	
-	//@pos : ”­Ë‚·‚éÀ•W
-	//@speed : ˆÚ“®‘¬“x
-	//@return : true = ¶¬¬Œ÷ false = ¸”s
+	//@pos : ï¿½ï¿½ï¿½Ë‚ï¿½ï¿½ï¿½ï¿½ï¿½W
+	//@speed : ï¿½Ú“ï¿½ï¿½ï¿½ï¿½x
+	//@return : true = ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ false = ï¿½ï¿½ï¿½s
 	bool RequestEnemy();
-	//ŒÂ•Ê‚Ì“Gƒf[ƒ^æ“¾
+	//ï¿½Â•Ê‚Ì“Gï¿½fï¿½[ï¿½^ï¿½æ“¾
 	Enemy& GetEnemy(int index) { return m_Enemy[index]; }
 };

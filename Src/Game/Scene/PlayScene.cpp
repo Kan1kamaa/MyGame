@@ -47,7 +47,7 @@ void PlayScene::Step()
 		camera.UpdateLook();
 		player.Step(shot, camera.GetYaw());
 		shot.Step();
-		enemy.Step();
+		enemy.Step(player.GetPos());
 		sky.Step();
 	}
 	//カメラの更新

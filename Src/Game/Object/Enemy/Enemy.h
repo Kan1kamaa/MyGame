@@ -1,10 +1,11 @@
 ﻿#pragma once
-#include"../ObjectBase/ObjectBase.h"
+#include"../ActorBase/ActorBase.h"
 #include"../../System/Status.h"
-class Enemy : public ObjectBase {
+class Enemy : public ActorBase {
 private:
 	VECTOR m_speed;		//移動速度
 	int m_changeDirCnt;	//次にランダムで方向転換するまでのフレーム数
+	bool m_isDying;		//死亡モーション再生中かどうか
 
 	enum EnemyState
 	{
@@ -12,15 +13,28 @@ private:
 		Chase,
 		Attack
 	};
+	EnemyState m_state;	//現在の行動状態
+
+	//Golemモデルに書き出されているアニメーションの並び順
+	enum AnimID
+	{
+		ANIM_ATTACK,
+		ANIM_DEATH,
+		ANIM_WALK,
+	};
 
 	Status m_status;
 
-
-
-	static const 
-
 	//移動方向をランダムに選び直す
 	void RandomizeDirection();
+	//プレイヤーを見失っているときのランダム徘徊
+	void StepSearch();
+	//プレイヤーを追いかける
+	void StepChase(const VECTOR& playerPos);
+	//プレイヤーを攻撃する
+	void StepAttack(const VECTOR& playerPos);
+	//moveDirの方向へ少しずつ向き直る
+	void TurnToward(const VECTOR& moveDir);
 public:
 	//コンストラクタ・デストラクタ
 	Enemy();
@@ -31,7 +45,8 @@ public:
 	//ロード
 	void Load(int originhndl);
 	//毎フレーム計算する処理
-	void Step();
+	//@playerPos : プレイヤーの現在座標(索敵・追跡・攻撃の判定に使う)
+	void Step(const VECTOR& playerPos);
 	//ショット発射
 	//@pos : 発射する座標
 	//@speed :　移動速度

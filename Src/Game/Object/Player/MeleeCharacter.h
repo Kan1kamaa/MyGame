@@ -50,5 +50,5 @@ public:
 	int GetWeaponFrameIndex() const override { return m_handFrameIndexL; }
 	int GetWeaponFrameIndexR() const override { return m_handFrameIndexR; }
 
-	float GetAttackPower()const { return m_status.AttackPower; }
+	float GetAttackPower() const override;
 };

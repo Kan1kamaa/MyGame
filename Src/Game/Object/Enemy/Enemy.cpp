@@ -4,14 +4,22 @@
 static const VECTOR VEC_ZERO{ 0.0f,0.0f,0.0f };
 static const float MOVE_RANGE = 300.0f;	//移動可能範囲(プレイヤーのMOVE_RANGE_X / MOVE_RANGE_Zと同じ)
 static const float ENEMY_RAD = 5.0f;
+static const float ENEMY_SCALE = 0.08f;	//Golemモデルの表示倍率(見た目が大きすぎ/小さすぎる場合はここを調整)
+static const float ANIM_SPEED = 0.5f;		//アニメーション再生速度
 
 //ランダム移動の調整用パラメータ
-static const float ENEMY_MOVE_SPEED = 0.8f;	//1フレームあたりの移動量
+static const float ENEMY_MOVE_SPEED = 0.4f;	//1フレームあたりの移動量
 static const int   DIR_CHANGE_MIN = 30;		//方向転換するまでの最短フレーム数
 static const int   DIR_CHANGE_MAX = 90;		//方向転換するまでの最長フレーム数
 
+//プレイヤーの追跡・攻撃の調整用パラメータ
+static const float DETECT_RANGE = 150.0f;		//この距離より近づくとプレイヤーを追いかける
+static const float ATTACK_RANGE = 15.0f;		//この距離より近づくと攻撃する
+static const float CHASE_MOVE_SPEED = 0.5f;	//追いかけているときの1フレームあたりの移動量
+static const float ROT_SPEED = 0.08f;			//1フレームで向き直れる最大角度(巨体なのでゆっくり)
+
 //コンストラクタ
-Enemy::Enemy() :m_speed(VEC_ZERO), m_changeDirCnt(0)
+Enemy::Enemy() :m_speed(VEC_ZERO), m_changeDirCnt(0), m_isDying(false), m_state(Search)
 {
 }
 
@@ -24,11 +32,14 @@ Enemy::~Enemy()
 //初期化
 void Enemy::Init()
 {
-	ObjectBase::Init();
+	ActorBase::Init();
 	m_status.Init(100,20);
 	m_radius = ENEMY_RAD;
+	m_scale = { ENEMY_SCALE, ENEMY_SCALE, ENEMY_SCALE };
 	m_speed = VEC_ZERO;
 	m_changeDirCnt = 0;
+	m_isDying = false;
+	m_state = Search;
 	m_isActive = false;		//最初は見えないように消しておく
 }
 
@@ -45,6 +56,75 @@ void Enemy::RandomizeDirection()
 	m_changeDirCnt = DIR_CHANGE_MIN + GetRand(DIR_CHANGE_MAX - DIR_CHANGE_MIN);
 }
 
+//moveDirの方向へ、m_rot.yを少しずつ回して向き直る(XZ平面)
+void Enemy::TurnToward(const VECTOR& moveDir)
+{
+	float targetRot = atan2f(-moveDir.x, -moveDir.z);
+
+	//現在の向きとの差分を-PI〜PIに収め、最短方向で回転させる
+	float diff = targetRot - m_rot.y;
+	while (diff > DX_PI_F)  diff -= DX_PI_F * 2.0f;
+	while (diff < -DX_PI_F) diff += DX_PI_F * 2.0f;
+
+	//1フレームで回れる角度に上限をつける
+	if (diff > ROT_SPEED)       diff = ROT_SPEED;
+	else if (diff < -ROT_SPEED) diff = -ROT_SPEED;
+
+	m_rot.y += diff;
+}
+
+//プレイヤーを見失っているときのランダム徘徊
+void Enemy::StepSearch()
+{
+	RequestLoopAnim(ANIM_WALK, ANIM_SPEED);
+
+	//カウントを減らし、0になったらランダムで新しい方向を選ぶ
+	m_changeDirCnt--;
+	if (m_changeDirCnt <= 0)
+	{
+		RandomizeDirection();
+	}
+	TurnToward(m_speed);
+
+	//現在の座標に速度を加算
+	m_pos = VAdd(m_pos, m_speed);
+
+	//範囲外に出たら消さずにフィールド内へ跳ね返す
+	if (m_pos.x < -MOVE_RANGE) { m_pos.x = -MOVE_RANGE; m_speed.x = fabsf(m_speed.x); }
+	if (m_pos.x >  MOVE_RANGE) { m_pos.x =  MOVE_RANGE; m_speed.x = -fabsf(m_speed.x); }
+	if (m_pos.z < -MOVE_RANGE) { m_pos.z = -MOVE_RANGE; m_speed.z = fabsf(m_speed.z); }
+	if (m_pos.z >  MOVE_RANGE) { m_pos.z =  MOVE_RANGE; m_speed.z = -fabsf(m_speed.z); }
+}
+
+//プレイヤーを追いかける
+void Enemy::StepChase(const VECTOR& playerPos)
+{
+	RequestLoopAnim(ANIM_WALK, ANIM_SPEED);
+
+	VECTOR toPlayer = VSub(playerPos, m_pos);
+	toPlayer.y = 0.0f;
+	VECTOR dir = VNorm(toPlayer);
+
+	TurnToward(dir);
+	m_pos = VAdd(m_pos, VScale(dir, CHASE_MOVE_SPEED));
+
+	//次にプレイヤーを見失ったときに変な方向へ歩き出さないよう、進行方向を保存しておく
+	m_speed = VScale(dir, ENEMY_MOVE_SPEED);
+}
+
+//プレイヤーを攻撃する
+void Enemy::StepAttack(const VECTOR& playerPos)
+{
+	VECTOR toPlayer = playerPos;
+	toPlayer.y = 0.0f;
+	VECTOR from = m_pos;
+	from.y = 0.0f;
+
+	//攻撃中も向きだけはプレイヤーに合わせ続ける
+	TurnToward(VSub(toPlayer, from));
+	RequestLoopAnim(ANIM_ATTACK, ANIM_SPEED);
+}
+
 //ロード
 void Enemy::Load(int origiinhndl)
 {
@@ -56,26 +136,43 @@ void Enemy::Load(int origiinhndl)
 }
 
 //毎フレーム計算する処理
-void Enemy::Step()
+void Enemy::Step(const VECTOR& playerPos)
 {
 	//フラグオフなら終了
 	if (m_isActive == false)return;
 
-	//カウントを減らし、0になったらランダムで新しい方向を選ぶ
-	m_changeDirCnt--;
-	if (m_changeDirCnt <= 0)
+	//死亡モーション再生中は移動処理を行わず、再生が終わったら消す
+	if (m_isDying)
 	{
-		RandomizeDirection();
+		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		{
+			m_isActive = false;
+			m_isDying = false;
+		}
+		return;
 	}
 
-	//現在の座標に速度を加算
-	m_pos = VAdd(m_pos, m_speed);
+	//プレイヤーとの距離で状態を決める
+	float distToPlayer = VSize(VSub(playerPos, m_pos));
+	if (distToPlayer <= ATTACK_RANGE)
+	{
+		m_state = Attack;
+	}
+	else if (distToPlayer <= DETECT_RANGE)
+	{
+		m_state = Chase;
+	}
+	else
+	{
+		m_state = Search;
+	}
 
-	//範囲外に出たら消さずにフィールド内へ跳ね返す
-	if (m_pos.x < -MOVE_RANGE) { m_pos.x = -MOVE_RANGE; m_speed.x = fabsf(m_speed.x); }
-	if (m_pos.x >  MOVE_RANGE) { m_pos.x =  MOVE_RANGE; m_speed.x = -fabsf(m_speed.x); }
-	if (m_pos.z < -MOVE_RANGE) { m_pos.z = -MOVE_RANGE; m_speed.z = fabsf(m_speed.z); }
-	if (m_pos.z >  MOVE_RANGE) { m_pos.z =  MOVE_RANGE; m_speed.z = -fabsf(m_speed.z); }
+	switch (m_state)
+	{
+	case Search: StepSearch();          break;
+	case Chase:  StepChase(playerPos);  break;
+	case Attack: StepAttack(playerPos); break;
+	}
 }
 
 //ショット発射
@@ -96,10 +193,15 @@ bool Enemy::Request(const VECTOR& pos, const VECTOR& speed)
 
 void Enemy::HitCalc(const ObjectBase& other)
 {
+	//死亡モーション再生中は追加のダメージ判定をしない
+	if (m_isDying)return;
+
 	m_status.AddDamage(other.GetAttackPower());
 	if (m_status.IsAlive() == false)
 	{
 		SoundManager::Play(SoundManager::SE_EXPLORE);
-		m_isActive = false;
+		RequestAnim(ANIM_DEATH, ANIM_SPEED);
+		m_isDying = true;
+		m_speed = VEC_ZERO;		//死亡モーション再生中は動きを止める
 	}
 }

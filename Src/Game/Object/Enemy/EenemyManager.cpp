@@ -1,7 +1,7 @@
 ﻿#include"EnemyManager.h"
 
 //オリジナルとなる敵のパス
-static const char FILE_PATH[] = "Data/models/Enemy/Enemy.pmx";
+static const char FILE_PATH[] = "Data/models/Enemy/Golem.mv1";
 
 static const int WAIT_COUNT(60);
 //同時に出現させておく敵の数
@@ -42,13 +42,13 @@ void EnemyManager::Load()
 	MV1DeleteModel(originhndl);
 }
 
-void EnemyManager::Step()
+void EnemyManager::Step(const VECTOR& playerPos)
 {
 	//毎フレーム現在の敵の数を数え直す
 	m_EnemyCnt = 0;
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
-		m_Enemy[i].Step();
+		m_Enemy[i].Step(playerPos);
 		if (m_Enemy[i].GetActive() == true)
 		{
 			m_EnemyCnt++;

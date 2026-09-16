@@ -39,6 +39,7 @@ int  WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		PrintFps();		// FPS表示
 
 		ScreenFlip();
+		StepFps();
 
 	}
 

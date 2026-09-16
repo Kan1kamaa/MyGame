@@ -392,6 +392,7 @@ bool MeleeCharacter::IsAttackActive() const
 }
 
 //現在再生中のモーションに応じた攻撃の威力を返す。攻撃中でなければ0
+//[反映確認用マーカー 9/16] このコメントが見えていれば最新のpushが届いています
 float MeleeCharacter::GetAttackPower() const
 {
 	switch (m_animData.m_index)

@@ -408,6 +408,7 @@ float MeleeCharacter::GetAttackPower()const
 	case 13:
 		return ULT_POWER;
 	}
+	return 0;
 
 }
 //前方へ加速させる速度を返す。攻撃モーションの序盤の踏み込みと、走り出しモーション中の加速に使う

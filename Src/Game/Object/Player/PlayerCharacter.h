@@ -35,6 +35,9 @@ public:
 	//(通常攻撃1〜3段・ジャンプ攻撃・スキル・必殺技。近接キャラだけtrueを返す)
 	virtual bool IsAttackActive() const { return false; }
 
+	//現在出している攻撃の威力(攻撃の種類によって変わる。攻撃中でなければ0を返す)
+	virtual float GetAttackPower() const { return 0.0f; }
+
 	//攻撃の踏み込みで前進させたい速度(0なら前進しない。攻撃の無いキャラや通常時は0を返す)
 	virtual float GetLungeSpeed() const { return 0.0f; }
 

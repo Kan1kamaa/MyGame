@@ -69,4 +69,6 @@ public:
 	VECTOR GetAttackPos() const;
 	//攻撃判定(球)の半径
 	float GetAttackRadius() const;
+	//現在出している攻撃の威力(実体は操作中のキャラに聞く。攻撃中でなければ0)
+	float GetAttackPower() const;
 };

@@ -295,6 +295,12 @@ float CharacterManager::GetAttackRadius() const
 	return ATTACK_HIT_RADIUS;
 }
 
+//現在出している攻撃の威力(実体は操作中のキャラに聞く)
+float CharacterManager::GetAttackPower() const
+{
+	return m_characters[m_activeIndex]->GetAttackPower();
+}
+
 //----------------------
 //	破棄
 //----------------------

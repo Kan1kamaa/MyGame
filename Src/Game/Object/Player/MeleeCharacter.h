@@ -44,6 +44,7 @@ public:
 	void ResetToIdle() override;
 	bool IsAttacking() const override;
 	bool IsAttackActive() const override;
+	float GetAttackPower() const override;
 	float GetLungeSpeed() const override;
 	void UpdateWeapon() override;
 	void DrawWeapon() override;

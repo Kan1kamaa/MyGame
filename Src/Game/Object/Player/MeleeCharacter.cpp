@@ -9,6 +9,14 @@ namespace {
 	const float RUNSTART_LUNGE_SPEED = 0.8f; //走り出しモーション中に前方へ加速する量(通常の移動速度に上乗せ)
 	const float JUMP_ATTACK_BOOST = 5.0f;   //空中攻撃開始時に与える上向きの速度(最後まで空中で出せるように)
 
+	//攻撃の種類ごとの威力
+	const float ATTACK1_POWER     = 10.0f;
+	const float ATTACK2_POWER     = 14.0f;
+	const float ATTACK3_POWER     = 22.0f;	//3段目は強め
+	const float JUMPATTACK_POWER  = 18.0f;
+	const float SKILL_POWER       = 25.0f;
+	const float ULT_POWER         = 50.0f;	//必殺技は一番強い
+
 	const char* WEAPON_FILE_PATH = "Data/Models/Weapon/katana2.mv1"; //刀のモデルファイル
 	const char* HAND_FRAME_NAME_L = "Hand.L"; //左手のボーン名
 	const char* HAND_FRAME_NAME_R = "Hand.R"; //右手のボーン名
@@ -381,6 +389,21 @@ bool MeleeCharacter::IsAttacking() const
 bool MeleeCharacter::IsAttackActive() const
 {
 	return IsAttacking();
+}
+
+//現在再生中のモーションに応じた攻撃の威力を返す。攻撃中でなければ0
+float MeleeCharacter::GetAttackPower() const
+{
+	switch (m_animData.m_index)
+	{
+	case ANIMID_ATTACK1:    return ATTACK1_POWER;
+	case ANIMID_ATTACK2:    return ATTACK2_POWER;
+	case ANIMID_ATTACK3:    return ATTACK3_POWER;
+	case ANIMID_JUMPATTACK: return JUMPATTACK_POWER;
+	case ANIMID_SKILL:      return SKILL_POWER;
+	case ANIMID_ULT:        return ULT_POWER;
+	default:                return 0.0f;	//攻撃モーション中でなければ威力なし
+	}
 }
 
 //前方へ加速させる速度を返す。攻撃モーションの序盤の踏み込みと、走り出しモーション中の加速に使う

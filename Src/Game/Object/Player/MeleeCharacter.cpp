@@ -23,6 +23,13 @@ namespace {
 	const float WEAPON_ROT_Y_L = DX_PI_F;
 	const float WEAPON_ROT_Z_L = DX_PI_F;    //180度反転
 
+	//攻撃の倍率
+	static const int ATTACK1_POWER = 15;
+	static const int ATTACK2_POWER = 20;
+	static const int ATTACK3_POWER = 35;
+	static const int JUMPATTACK_POWER = 50;
+	static const int SKILL_POWER = 70;
+	static const int ULT_POWER = 200;
 	//アニメーション一覧
 	enum tagAnim {
 		ANIMID_ATTACK1,		//攻撃1モーション
@@ -383,6 +390,26 @@ bool MeleeCharacter::IsAttackActive() const
 	return IsAttacking();
 }
 
+
+float MeleeCharacter::GetAttackPower()const
+{
+	switch (m_animData.m_index)
+	{
+	case 0:
+		return ATTACK1_POWER;
+	case 1:
+		return ATTACK2_POWER;
+	case 2:
+		return ATTACK3_POWER;
+	case 4:
+		return JUMPATTACK_POWER;
+	case 11:
+		return SKILL_POWER;
+	case 13:
+		return ULT_POWER;
+	}
+
+}
 //前方へ加速させる速度を返す。攻撃モーションの序盤の踏み込みと、走り出しモーション中の加速に使う
 float MeleeCharacter::GetLungeSpeed() const
 {

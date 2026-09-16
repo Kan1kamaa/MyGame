@@ -47,4 +47,6 @@ public:
 	virtual VECTOR GetCollisionPos() { return{ m_pos.x, m_pos.y + m_radius, m_pos.z };}
 
 	virtual void HitCalc(const ObjectBase& other);
+
+	virtual float GetAttackPower()const { return 0; }
 };

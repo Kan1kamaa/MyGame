@@ -49,4 +49,6 @@ public:
 	void DrawWeapon() override;
 	int GetWeaponFrameIndex() const override { return m_handFrameIndexL; }
 	int GetWeaponFrameIndexR() const override { return m_handFrameIndexR; }
+
+	float GetAttackPower()const { return m_status.AttackPower; }
 };

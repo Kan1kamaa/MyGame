@@ -1,11 +1,22 @@
 #pragma once
-#pragma once
 #include"../ObjectBase/ObjectBase.h"
+#include"../../System/Status.h"
 
 class BossGolem : public ObjectBase {
 private:
 	VECTOR m_speed;		//移動速度
 	int m_changeDirCnt;	//次にランダムで方向転換するまでのフレーム数
+
+
+
+	enum EnemyState
+	{
+		Search,
+		Chase,
+		Attack
+	};
+
+	Status m_status;
 
 	//移動方向をランダムに選び直す
 	void RandomizeDirection();
@@ -27,4 +38,6 @@ public:
 	bool Request(const VECTOR& pos, const VECTOR& speed);
 
 	void HitCalc(const ObjectBase& other);
+
+	float GetAttackPower()const { return m_status.AttackPower; }
 };

@@ -96,7 +96,7 @@ bool Enemy::Request(const VECTOR& pos, const VECTOR& speed)
 
 void Enemy::HitCalc(const ObjectBase& other)
 {
-	m_status.AddDamage()
+	m_status.AddDamage(other.GetAttackPower());
 	if (m_status.IsAlive() == false)
 	{
 		SoundManager::Play(SoundManager::SE_EXPLORE);

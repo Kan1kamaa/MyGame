@@ -92,9 +92,12 @@ bool BossGolem::Request(const VECTOR& pos, const VECTOR& speed)
 
 	return true;
 }
-
 void BossGolem::HitCalc(const ObjectBase& other)
 {
-	SoundManager::Play(SoundManager::SE_EXPLORE);
-	m_isActive = false;
+	m_status.AddDamage(other.GetAttackPower());
+	if (m_status.IsAlive() == false)
+	{
+		SoundManager::Play(SoundManager::SE_EXPLORE);
+		m_isActive = false;
+	}
 }

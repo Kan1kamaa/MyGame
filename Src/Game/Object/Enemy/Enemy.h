@@ -39,4 +39,6 @@ public:
 	bool Request(const VECTOR& pos, const VECTOR& speed);
 
 	void HitCalc(const ObjectBase& other);
+
+	float GetAttackPower()const { return m_status.AttackPower; }
 };

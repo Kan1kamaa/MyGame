@@ -8,7 +8,7 @@ static const float ENEMY_SCALE = 0.08f;	//Golemモデルの表示倍率(見た�
 static const float ANIM_SPEED = 0.5f;		//アニメーション再生速度
 
 //ランダム移動の調整用パラメータ
-static const float ENEMY_MOVE_SPEED = 0.4f;	//1フレームあたりの移動量
+static const float ENEMY_MOVE_SPEED = 0.2f;	//1フレームあたりの移動量
 static const int   DIR_CHANGE_MIN = 30;		//方向転換するまでの最短フレーム数
 static const int   DIR_CHANGE_MAX = 90;		//方向転換するまでの最長フレーム数
 

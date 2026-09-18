@@ -8,15 +8,18 @@ private:
 	int m_changeDirCnt;	//次にランダムで方向転換するまでのフレーム数
 
 
-
 	enum EnemyState
 	{
 		Search,
 		Chase,
 		Attack
-	};
 
+	};
+	EnemyState m_state;	//現在の行動状態
+
+	
 	Status m_status;
+
 
 	//移動方向をランダムに選び直す
 	void RandomizeDirection();

@@ -15,7 +15,7 @@ static const int   DIR_CHANGE_MAX = 90;		//方向転換するまでの最長フ�
 //プレイヤーの追跡・攻撃の調整用パラメータ
 static const float DETECT_RANGE = 150.0f;		//この距離より近づくとプレイヤーを追いかける
 static const float ATTACK_RANGE = 15.0f;		//この距離より近づくと攻撃する
-static const float CHASE_MOVE_SPEED = 0.5f;	//追いかけているときの1フレームあたりの移動量
+static const float CHASE_MOVE_SPEED = 0.3f;	//追いかけているときの1フレームあたりの移動量
 static const float ROT_SPEED = 0.08f;			//1フレームで向き直れる最大角度(巨体なのでゆっくり)
 
 //コンストラクタ

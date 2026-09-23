@@ -2,8 +2,9 @@
 #include "math.h"
 
 namespace {
-	const float ANIM_SPEED = 1.0f;	  //アニメーションの速度
+	const float ANIM_SPEED = 1.25f;	  //アニメーションの速度
 	const float ATTACK_DIST = 15.0f;     //プレイヤーの前に出す距離
+	const float ATTACK_POWER = 15.0f;    //攻撃力(実際のダメージは発射したShot側が持つ値。表示・参照用にこちらにも同じ値を持たせておく)
 
 	//アニメーション一覧
 	enum tagAnim2 {
@@ -139,4 +140,9 @@ void RangedCharacter::ResetToIdle()
 bool RangedCharacter::IsAttacking() const
 {
 	return m_animData.m_index == ANIMID_ATTACK2;
+}
+
+float RangedCharacter::GetAttackPower() const
+{
+	return ATTACK_POWER;
 }

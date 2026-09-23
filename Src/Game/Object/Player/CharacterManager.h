@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "../ObjectBase/ObjectBase.h"
+#include "../../System/Status.h"
 #include "MeleeCharacter.h"
 #include "RangedCharacter.h"
 
@@ -19,6 +20,11 @@ private:
 	//前フレームのスキル/必殺技キー入力状態(押した瞬間だけ発動させるための判定用)
 	bool m_prevKeyE;
 	bool m_prevKeyR;
+
+	//HP管理
+	Status m_status;
+	//被弾後、無敵時間として残っているフレーム数(この間はHitCalcでダメージを受けない)
+	int m_invincibleCnt;
 
 	//--- Step() から呼ぶ小さな処理(1つずつ役割を分けている) ---
 
@@ -69,4 +75,12 @@ public:
 	VECTOR GetAttackPos() const;
 	//攻撃判定(球)の半径
 	float GetAttackRadius() const;
+
+	//被弾したときの処理(無敵時間が無ければダメージを受け、HPが0になったら行動不能にする)
+	void HitCalc(const ObjectBase& other) override;
+	//現在操作中のキャラクターの攻撃力(近接攻撃の当たり判定で使う)
+	float GetAttackPower() const override;
+	//現在のHP・最大HP(HUD表示用)
+	int GetHp() const { return m_status.NowHp; }
+	int GetMaxHp() const { return m_status.MaxHp; }
 };

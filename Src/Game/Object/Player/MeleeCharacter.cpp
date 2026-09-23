@@ -1,7 +1,7 @@
 ﻿#include "MeleeCharacter.h"
 
 namespace {
-	const float ANIM_SPEED = 0.44f;	  //アニメーションの速度
+	const float ANIM_SPEED = 0.55f;	  //アニメーションの速度
 	const float ATTACK_DIST = 15.0f;     //プレイヤーの前に出す距離
 	const float COMBO_CHAIN_RATIO = 0.9f; //この割合を過ぎたら次の段へつなげられる(モーション終盤)
 	const float LUNGE_WINDOW_RATIO = 0.35f; //攻撃モーションの最初のこの割合の間だけ踏み込む

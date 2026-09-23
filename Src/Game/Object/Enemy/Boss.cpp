@@ -2,16 +2,26 @@
 #include"Boss.h"
 #include"../../System/SoundManager.h"
 static const VECTOR VEC_ZERO{ 0.0f,0.0f,0.0f };
-static const float MOVE_RANGE = 300.0f;	//移動可能範囲(プレイヤーのMOVE_RANGE_X / MOVE_RANGE_Zと同じ)
-static const float ENEMY_RAD = 5.0f;
 
-//ランダム移動の調整用パラメータ
-static const float ENEMY_MOVE_SPEED = 0.8f;	//1フレームあたりの移動量
-static const int   DIR_CHANGE_MIN = 30;		//方向転換するまでの最短フレーム数
-static const int   DIR_CHANGE_MAX = 90;		//方向転換するまでの最長フレーム数
+//オリジナルとなるボスのパス
+static const char FILE_PATH[] = "Data/models/Enemy/BossGolem.mv1";
+
+static const float BOSS_RAD = 30.0f;		//当たり判定の半径(通常の敵より大きめ)
+static const float BOSS_SCALE = 0.6f;		//BossGolemモデルの表示倍率(見た目が大きすぎ/小さすぎる場合はここを調整)
+static const float ANIM_SPEED = 0.5f;		//アニメーション再生速度
+
+static const int   BOSS_MAX_HP = 1000;		//最大HP(通常の敵は100)
+static const int   BOSS_ATTACK_POWER = 40;	//攻撃力(通常の敵は20)
+
+//プレイヤーの追跡・攻撃の調整用パラメータ
+static const float DETECT_RANGE = 200.0f;		//この距離より近づくとプレイヤーを追いかける
+static const float ATTACK_RANGE = 50.0f;		//この距離より近づくと攻撃する
+static const float CHASE_MOVE_SPEED = 0.4f;	//追いかけているときの1フレームあたりの移動量
+static const float ROT_SPEED = 0.06f;			//1フレームで向き直れる最大角度(巨体なのでゆっくり)
+static const int   ATTACK_COOLDOWN = 40;		//攻撃と攻撃の間隔(フレーム数)
 
 //コンストラクタ
-BossGolem::BossGolem() :m_speed(VEC_ZERO), m_changeDirCnt(0)
+BossGolem::BossGolem() :m_speed(VEC_ZERO), m_isDying(false), m_attackCoolCnt(0), m_state(Search)
 {
 }
 
@@ -24,80 +34,174 @@ BossGolem::~BossGolem()
 //初期化
 void BossGolem::Init()
 {
-	ObjectBase::Init();
-	m_radius = ENEMY_RAD;
+	ActorBase::Init();
+	m_status.Init(BOSS_MAX_HP, BOSS_ATTACK_POWER);
+	m_radius = BOSS_RAD;
+	m_scale = { BOSS_SCALE, BOSS_SCALE, BOSS_SCALE };
 	m_speed = VEC_ZERO;
-	m_changeDirCnt = 0;
-	m_isActive = false;		//最初は見えないように消しておく
+	m_isDying = false;
+	m_attackCoolCnt = 0;
+	m_state = Search;
+	m_isActive = false;		//Request()で出現させるまで非表示
 }
 
-//移動方向をランダムに選び直す(XZ平面)
-void BossGolem::RandomizeDirection()
+//moveDirの方向へ、m_rot.yを少しずつ回して向き直る(XZ平面)
+void BossGolem::TurnToward(const VECTOR& moveDir)
 {
-	//0〜359度のランダムな角度
-	float rad = (float)(GetRand(359)) * DX_PI_F / 180.0f;
-	m_speed.x = cosf(rad) * ENEMY_MOVE_SPEED;
-	m_speed.y = 0.0f;
-	m_speed.z = sinf(rad) * ENEMY_MOVE_SPEED;
+	float targetRot = atan2f(-moveDir.x, -moveDir.z);
 
-	//次の方向転換までのフレーム数をランダムで決める
-	m_changeDirCnt = DIR_CHANGE_MIN + GetRand(DIR_CHANGE_MAX - DIR_CHANGE_MIN);
+	//現在の向きとの差分を-PI〜PIに収め、最短方向で回転させる
+	float diff = targetRot - m_rot.y;
+	while (diff > DX_PI_F)  diff -= DX_PI_F * 2.0f;
+	while (diff < -DX_PI_F) diff += DX_PI_F * 2.0f;
+
+	//1フレームで回れる角度に上限をつける
+	if (diff > ROT_SPEED)       diff = ROT_SPEED;
+	else if (diff < -ROT_SPEED) diff = -ROT_SPEED;
+
+	m_rot.y += diff;
+}
+
+//プレイヤーが索敵範囲外にいるときはその場で待機する
+void BossGolem::StepSearch()
+{
+	RequestLoopAnim(ANIM_IDLE, ANIM_SPEED);
+	m_speed = VEC_ZERO;
+}
+
+//プレイヤーを追いかける
+void BossGolem::StepChase(const VECTOR& playerPos)
+{
+	RequestLoopAnim(ANIM_WALK, ANIM_SPEED);
+
+	VECTOR toPlayer = VSub(playerPos, m_pos);
+	toPlayer.y = 0.0f;
+	VECTOR dir = VNorm(toPlayer);
+
+	TurnToward(dir);
+	m_pos = VAdd(m_pos, VScale(dir, CHASE_MOVE_SPEED));
+	m_speed = VScale(dir, CHASE_MOVE_SPEED);
+}
+
+//プレイヤーを攻撃する
+void BossGolem::StepAttack(const VECTOR& playerPos)
+{
+	VECTOR toPlayer = playerPos;
+	toPlayer.y = 0.0f;
+	VECTOR from = m_pos;
+	from.y = 0.0f;
+
+	//攻撃中も向きだけはプレイヤーに合わせ続ける
+	TurnToward(VSub(toPlayer, from));
+	m_speed = VEC_ZERO;
+
+	//攻撃モーション(通常攻撃1〜3)を再生中ならそのまま最後まで見せる
+	bool isAttackAnim = (m_animData.m_index == ANIM_ATTACK1 || m_animData.m_index == ANIM_ATTACK2 || m_animData.m_index == ANIM_ATTACK3);
+	bool isAttackFinished = (m_animData.m_nowFrm >= m_animData.m_endFrm);
+	if (isAttackAnim && !isAttackFinished)
+	{
+		return;
+	}
+
+	//攻撃と攻撃の間はクールタイムを置いて待機モーションにする
+	if (m_attackCoolCnt > 0)
+	{
+		m_attackCoolCnt--;
+		RequestLoopAnim(ANIM_IDLE, ANIM_SPEED);
+		return;
+	}
+
+	//クールタイムが明けたら、1〜3段目の攻撃モーションをランダムで出す
+	int pick = ANIM_ATTACK1 + GetRand(2);
+	RequestAnim(pick, ANIM_SPEED);
+	m_attackCoolCnt = ATTACK_COOLDOWN;
 }
 
 //ロード
-void BossGolem::Load(int origiinhndl)
+void BossGolem::Load()
 {
 	if (m_hndl == -1)
 	{
-		//モデルは複製する
-		m_hndl = MV1DuplicateModel(origiinhndl);
+		m_hndl = MV1LoadModel(FILE_PATH);
 	}
 }
 
 //毎フレーム計算する処理
-void BossGolem::Step()
+void BossGolem::Step(const VECTOR& playerPos)
 {
 	//フラグオフなら終了
 	if (m_isActive == false)return;
 
-	//カウントを減らし、0になったらランダムで新しい方向を選ぶ
-	m_changeDirCnt--;
-	if (m_changeDirCnt <= 0)
+	//死亡モーション再生中は行動せず、再生が終わったら消す
+	if (m_isDying)
 	{
-		RandomizeDirection();
+		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		{
+			m_isActive = false;
+			m_isDying = false;
+		}
+		return;
 	}
 
-	//現在の座標に速度を加算
-	m_pos = VAdd(m_pos, m_speed);
+	//攻撃モーション(通常攻撃1〜3)を再生中は、距離に関わらず最後まで攻撃状態を維持する
+	//(振っている途中でプレイヤーが離れてもChaseに切り替わって歩き出さないようにするため)
+	bool isAttackAnim = (m_animData.m_index == ANIM_ATTACK1 || m_animData.m_index == ANIM_ATTACK2 || m_animData.m_index == ANIM_ATTACK3);
+	bool isAttackFinished = (m_animData.m_nowFrm >= m_animData.m_endFrm);
+	bool isMidAttack = (m_state == Attack && isAttackAnim && !isAttackFinished);
 
-	//範囲外に出たら消さずにフィールド内へ跳ね返す
-	if (m_pos.x < -MOVE_RANGE) { m_pos.x = -MOVE_RANGE; m_speed.x = fabsf(m_speed.x); }
-	if (m_pos.x >  MOVE_RANGE) { m_pos.x =  MOVE_RANGE; m_speed.x = -fabsf(m_speed.x); }
-	if (m_pos.z < -MOVE_RANGE) { m_pos.z = -MOVE_RANGE; m_speed.z = fabsf(m_speed.z); }
-	if (m_pos.z >  MOVE_RANGE) { m_pos.z =  MOVE_RANGE; m_speed.z = -fabsf(m_speed.z); }
+	if (!isMidAttack)
+	{
+		//プレイヤーとの距離で状態を決める
+		float distToPlayer = VSize(VSub(playerPos, m_pos));
+		if (distToPlayer <= ATTACK_RANGE)
+		{
+			m_state = Attack;
+		}
+		else if (distToPlayer <= DETECT_RANGE)
+		{
+			m_state = Chase;
+		}
+		else
+		{
+			m_state = Search;
+		}
+	}
+
+	switch (m_state)
+	{
+	case Search: StepSearch();          break;
+	case Chase:  StepChase(playerPos);  break;
+	case Attack: StepAttack(playerPos); break;
+	}
 }
 
-//ショット発射
-bool BossGolem::Request(const VECTOR& pos, const VECTOR& speed)
+//出現させる
+bool BossGolem::Request(const VECTOR& pos)
 {
-	//既に発射されていたら終了
+	//既に出現中なら終了
 	if (m_isActive == true)return false;
 
 	m_pos = pos;
-	m_speed = speed;
+	m_status.Init(BOSS_MAX_HP, BOSS_ATTACK_POWER);
+	m_state = Search;
+	m_isDying = false;
+	m_attackCoolCnt = 0;
 	m_isActive = true;
-
-	//すぐにランダムな方向へ動き出す
-	RandomizeDirection();
 
 	return true;
 }
+
 void BossGolem::HitCalc(const ObjectBase& other)
 {
+	//死亡モーション再生中は追加のダメージ判定をしない
+	if (m_isDying)return;
+
 	m_status.AddDamage(other.GetAttackPower());
 	if (m_status.IsAlive() == false)
 	{
 		SoundManager::Play(SoundManager::SE_EXPLORE);
-		m_isActive = false;
+		RequestAnim(ANIM_DEATH, ANIM_SPEED);
+		m_isDying = true;
+		m_speed = VEC_ZERO;		//死亡モーション再生中は動きを止める
 	}
 }

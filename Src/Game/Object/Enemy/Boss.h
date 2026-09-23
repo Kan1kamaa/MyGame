@@ -1,44 +1,63 @@
-#pragma once
-#include"../ObjectBase/ObjectBase.h"
+ï»¿#pragma once
+#include"../ActorBase/ActorBase.h"
 #include"../../System/Status.h"
 
-class BossGolem : public ObjectBase {
+class BossGolem : public ActorBase {
 private:
-	VECTOR m_speed;		//ˆÚ“®‘¬“x
-	int m_changeDirCnt;	//Ÿ‚Éƒ‰ƒ“ƒ_ƒ€‚Å•ûŒü“]Š·‚·‚é‚Ü‚Å‚ÌƒtƒŒ[ƒ€”
-
+	VECTOR m_speed;			//ç§»å‹•é€Ÿåº¦
+	bool m_isDying;			//æ­»äº¡ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿä¸­ã‹ã©ã†ã‹
+	int m_attackCoolCnt;	//æ¬¡ã®æ”»æ’ƒã‚’å‡ºã™ã¾ã§ã®ãƒ•ãƒ¬ãƒ¼ãƒ æ•°
 
 	enum EnemyState
 	{
 		Search,
 		Chase,
 		Attack
-
 	};
-	EnemyState m_state;	//Œ»İ‚Ìs“®ó‘Ô
+	EnemyState m_state;	//ç¾åœ¨ã®è¡Œå‹•çŠ¶æ…‹
 
-	
+	//BossGolemãƒ¢ãƒ‡ãƒ«ã«æ›¸ãå‡ºã•ã‚Œã¦ã„ã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ä¸¦ã³é †
+	enum AnimID
+	{
+		ANIM_ATTACK1,
+		ANIM_ATTACK2,
+		ANIM_ATTACK3,
+		ANIM_DEATH,
+		ANIM_DOWN,
+		ANIM_IDLE,
+		ANIM_JUMPATTACK,
+		ANIM_ROCKPILLAR,
+		ANIM_ROLLINGATTACK,
+		ANIM_THROWROCK,
+		ANIM_WALK,
+	};
+
 	Status m_status;
 
-
-	//ˆÚ“®•ûŒü‚ğƒ‰ƒ“ƒ_ƒ€‚É‘I‚Ñ’¼‚·
-	void RandomizeDirection();
+	//moveDirã®æ–¹å‘ã¸å°‘ã—ãšã¤å‘ãç›´ã‚‹
+	void TurnToward(const VECTOR& moveDir);
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒç´¢æ•µç¯„å›²å¤–ã«ã„ã‚‹ã¨ãã¯ãã®å ´ã§å¾…æ©Ÿã™ã‚‹
+	void StepSearch();
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’è¿½ã„ã‹ã‘ã‚‹
+	void StepChase(const VECTOR& playerPos);
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’æ”»æ’ƒã™ã‚‹
+	void StepAttack(const VECTOR& playerPos);
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^EƒfƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ»ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	BossGolem();
 	~BossGolem();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Init();
-	//ƒ[ƒh
-	void Load(int originhndl);
-	//–ˆƒtƒŒ[ƒ€ŒvZ‚·‚éˆ—
-	void Step();
-	//ƒVƒ‡ƒbƒg”­Ë
-	//@pos : ”­Ë‚·‚éÀ•W
-	//@speed :@ˆÚ“®‘¬“x
-	//@return : true = ¶¬¬Œ÷ false = ¸”s
-	bool Request(const VECTOR& pos, const VECTOR& speed);
+	//ãƒ­ãƒ¼ãƒ‰
+	void Load();
+	//æ¯ãƒ•ãƒ¬ãƒ¼ãƒ è¨ˆç®—ã™ã‚‹å‡¦ç†
+	//@playerPos : ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç¾åœ¨åº§æ¨™(ç´¢æ•µãƒ»è¿½è·¡ãƒ»æ”»æ’ƒã®åˆ¤å®šã«ä½¿ã†)
+	void Step(const VECTOR& playerPos);
+	//å‡ºç¾ã•ã›ã‚‹
+	//@pos : å‡ºç¾ã•ã›ã‚‹åº§æ¨™
+	//@return : true = æˆåŠŸ  false = å¤±æ•—(æ—¢ã«å‡ºç¾ä¸­)
+	bool Request(const VECTOR& pos);
 
 	void HitCalc(const ObjectBase& other);
 

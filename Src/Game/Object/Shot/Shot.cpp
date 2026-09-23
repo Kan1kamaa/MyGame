@@ -1,47 +1,48 @@
-#include"Shot.h"
+ï»¿#include"Shot.h"
 #include"../../System/SoundManager.h"
 static const VECTOR VEC_ZERO{ 0.0f,0.0f,0.0f };
-static const float MOVE_RANGE = 2000.0f;	//ˆÚ“®‰Â”\”ÍˆÍ
+static const float MOVE_RANGE = 2000.0f;	//ï¿½Ú“ï¿½ï¿½Â”\ï¿½Íˆï¿½
 static const float SHOT_RAD = 5.0f;
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+static const float SHOT_ATTACK_POWER = 15.0f;	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¼¾1ç™ºã‚ãŸã‚Šã®æ”»æ’ƒåŠ›
+//ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
 Shot::Shot() :m_speed(VEC_ZERO)
 {
 }
 
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ï¿½fï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
 Shot::~Shot()
 {
 	Fin();
 }
 
-//‰Šú‰»
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void Shot::Init()
 {
 	ObjectBase::Init();
 	m_radius = SHOT_RAD;
 	m_speed = VEC_ZERO;
-	m_isActive = false;		//Å‰‚ÍŒ©‚¦‚È‚¢‚æ‚¤‚ÉÁ‚µ‚Ä‚¨‚­
+	m_isActive = false;		//ï¿½Åï¿½ï¿½ÍŒï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½Éï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
 }
 
-//ƒ[ƒh
+//ï¿½ï¿½ï¿½[ï¿½h
 void Shot::Load(int origiinhndl)
 {
 	if (m_hndl == -1)
 	{
-		//ƒ‚ƒfƒ‹‚Í•¡»‚·‚é
+		//ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½Í•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		m_hndl = MV1DuplicateModel(origiinhndl);
 	}
 }
 
-//–ˆƒtƒŒ[ƒ€ŒvZ‚·‚éˆ—
+//ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½vï¿½Zï¿½ï¿½ï¿½éˆï¿½ï¿½
 void Shot::Step()
 {
-	//ƒtƒ‰ƒOƒIƒt‚È‚çI—¹
+	//ï¿½tï¿½ï¿½ï¿½Oï¿½Iï¿½tï¿½È‚ï¿½Iï¿½ï¿½
 	if (m_isActive == false)return;
 
-	//Œ»İ‚ÌÀ•W‚É‘¬“x‚ğŒvZ
+	//ï¿½ï¿½ï¿½İ‚Ìï¿½ï¿½Wï¿½É‘ï¿½ï¿½xï¿½ï¿½ï¿½vï¿½Z
 	m_pos = VAdd(m_pos, m_speed);
-	//ˆê’è”ÍˆÍ‚ğ’´‚¦‚½‚çÁ‚·
+	//ï¿½ï¿½ï¿½ÍˆÍ‚ğ’´‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (m_pos.x < -MOVE_RANGE || m_pos.x > MOVE_RANGE
 		|| m_pos.z < -MOVE_RANGE || m_pos.z > MOVE_RANGE)
 	{
@@ -49,10 +50,10 @@ void Shot::Step()
 	}
 }
 
-//ƒVƒ‡ƒbƒg”­Ë
+//ï¿½Vï¿½ï¿½ï¿½bï¿½gï¿½ï¿½ï¿½ï¿½
 bool Shot::Request(const VECTOR& pos, const VECTOR& speed)
 {
-	//Šù‚É”­Ë‚³‚ê‚Ä‚¢‚½‚çI—¹
+	//ï¿½ï¿½ï¿½É”ï¿½ï¿½Ë‚ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½
 	if (m_isActive == true)return false;
 
 	m_pos = pos;
@@ -60,4 +61,9 @@ bool Shot::Request(const VECTOR& pos, const VECTOR& speed)
 	m_isActive = true;
 	SoundManager::Play(SoundManager::SE_PLSHOT);
 	return true;
+}
+
+float Shot::GetAttackPower() const
+{
+	return SHOT_ATTACK_POWER;
 }

@@ -13,6 +13,9 @@ namespace {
 	const float ATTACK_HIT_DIST = 14.0f;   //攻撃判定(球)をキャラの前方どれだけ先に出すか
 	const float ATTACK_HIT_RADIUS = 14.0f; //攻撃判定(球)の半径
 
+	const int PLAYER_MAX_HP = 100;         //プレイヤーの最大HP
+	const int INVINCIBLE_TIME = 60;        //被弾後の無敵時間(フレーム数。60=約1秒)
+
 	//キーが「今のフレームで押された瞬間」かどうかを返す。
 	//prev には前フレームの押下状態が入っていて、この関数の中で更新する。
 	bool IsPressedNow(int keyCode, bool& prev)
@@ -52,6 +55,8 @@ void CharacterManager::Init()
 	m_prevKeySpace = false;
 	m_prevKeyE = false;
 	m_prevKeyR = false;
+	m_status.Init(PLAYER_MAX_HP, 0);
+	m_invincibleCnt = 0;
 	m_char1.Init();
 	m_char2.Init();
 }
@@ -72,6 +77,12 @@ void CharacterManager::Load()
 //それぞれの中身は下の小さな関数に分けてある。
 void CharacterManager::Step(ShotManager& shotManager, float cameraYaw)
 {
+	//無敵時間を減らす
+	if (m_invincibleCnt > 0)
+	{
+		m_invincibleCnt--;
+	}
+
 	//1/2キーで操作キャラクターを切り替える
 	UpdateCharacterSwitch();
 	PlayerCharacter* active = m_characters[m_activeIndex];
@@ -262,12 +273,38 @@ void CharacterManager::DrawPL()
 		MV1GetAnimNum(active->m_hndl), active->GetAnimIndex(), active->GetAnimAttachID(),
 		active->GetWeaponFrameIndex(), active->GetWeaponFrameIndexR());
 
+	//HP表示
+	DrawFormatString(16, 40, GetColor(255, 255, 255), "HP:%d/%d", GetHp(), GetMaxHp());
+
 	//攻撃判定の可視化(デバッグ):攻撃中は前方の当たり判定の球をワイヤーフレームで表示する
 	if (IsAttackActive() == true)
 	{
 		DrawSphere3D(GetAttackPos(), GetAttackRadius(), 16,
 			GetColor(255, 80, 80), GetColor(0, 0, 0), FALSE);
 	}
+}
+
+//----------------------
+//	被弾処理
+//----------------------
+//無敵時間中でなければダメージを受ける。HPが0になったら行動不能にする
+void CharacterManager::HitCalc(const ObjectBase& other)
+{
+	if (m_invincibleCnt > 0)return;
+
+	m_status.AddDamage(other.GetAttackPower());
+	m_invincibleCnt = INVINCIBLE_TIME;
+
+	if (m_status.IsAlive() == false)
+	{
+		m_isActive = false;
+	}
+}
+
+//現在操作中のキャラクターの攻撃力を返す(近接攻撃が敵に当たったときに使われる)
+float CharacterManager::GetAttackPower() const
+{
+	return m_characters[m_activeIndex]->GetAttackPower();
 }
 
 //----------------------

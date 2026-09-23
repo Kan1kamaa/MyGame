@@ -1,5 +1,8 @@
 ﻿#include"PlayScene.h"
 
+//ボスの出現座標(プレイヤーのスポーン地点から少し離れた場所)
+static const VECTOR BOSS_SPAWN_POS = { 0.0f, 0.0f, 200.0f };
+
 // 描画処理
 void PlayScene::Draw()
 {
@@ -9,6 +12,7 @@ void PlayScene::Draw()
 	shot.Draw();
 	camera.Draw();
 	enemy.Draw();
+	boss.Draw();
 }
 
 //初期化
@@ -20,6 +24,7 @@ void PlayScene::Init()
 	camera.Init();
 	shot.Init();
 	enemy.Init();
+	boss.Init();
 
 	m_state = LOAD;
 }
@@ -30,8 +35,10 @@ void PlayScene::Load()
 	field.Load();
 	sky.Load();
 	enemy.Load();
+	boss.Load();
 	player.Load();
 	shot.Load();
+	boss.Request(BOSS_SPAWN_POS);
 	Step();
 	Update();
 	SoundManager::Play(SoundManager::GAME_BGM, DX_PLAYTYPE_LOOP);
@@ -48,6 +55,7 @@ void PlayScene::Step()
 		player.Step(shot, camera.GetYaw());
 		shot.Step();
 		enemy.Step(player.GetPos());
+		boss.Step(player.GetPos());
 		sky.Step();
 	}
 	//カメラの更新
@@ -56,6 +64,9 @@ void PlayScene::Step()
 	GameCollision::CheckHitEnemyToShot(enemy, shot);
 	GameCollision::CheckHitEnemyToPlayer(enemy, player);
 	GameCollision::CheckHitPlayerAttackToEnemy(player, enemy);
+	GameCollision::CheckHitBossToShot(boss, shot);
+	GameCollision::CheckHitBossToPlayer(boss, player);
+	GameCollision::CheckHitPlayerAttackToBoss(player, boss);
 
 	if (player.GetActive() == false)
 	{
@@ -72,6 +83,7 @@ void PlayScene::Update()
 	player.Update();
 	shot.Update();
 	enemy.Update();
+	boss.Update();
 	camera.Update();
 }
 
@@ -83,6 +95,7 @@ void PlayScene::Fin()
 	player.Fin();
 	shot.Fin();
 	enemy.Fin();
+	boss.Fin();
 
 	m_nextScene = 0;	//とりあえずリザルトに
 	m_state = INIT;		//念のため最初に戻す

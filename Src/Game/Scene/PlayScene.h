@@ -5,6 +5,7 @@
 #include "../Object/Field/Field.h"
 #include"../Object/Player/CharacterManager.h"
 #include"../Object/Enemy/EnemyManager.h"
+#include"../Object/Enemy/Boss.h"
 #include"../System/GameCollision.h"
 #include"../System/SoundManager.h"
 class PlayScene : public SceneBase {
@@ -15,6 +16,8 @@ private:
 	ShotManager shot;
 	//敵
 	EnemyManager enemy;
+	//ボス
+	BossGolem boss;
 	//背景
 	Field field;
 	Sky sky;

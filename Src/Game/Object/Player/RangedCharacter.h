@@ -13,4 +13,5 @@ public:
 		bool isSkillTrigger, bool isUltTrigger) override;
 	void ResetToIdle() override;
 	bool IsAttacking() const override;
+	float GetAttackPower() const override;
 };

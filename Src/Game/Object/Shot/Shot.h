@@ -1,25 +1,27 @@
-#pragma once
+ï»¿#pragma once
 #include"../ObjectBase/ObjectBase.h"
 
 class Shot : public ObjectBase {
 private:
-	VECTOR m_speed;		//ˆÚ“®‘¬“x
+	VECTOR m_speed;		//ï¿½Ú“ï¿½ï¿½ï¿½ï¿½x
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^EƒfƒXƒgƒ‰ƒNƒ^
+	//ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^ï¿½Eï¿½fï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
 	Shot();
 	~Shot();
 
-	//‰Šú‰»
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void Init();
-	//ƒ[ƒh
+	//ï¿½ï¿½ï¿½[ï¿½h
 	void Load(int originhndl);
-	//–ˆƒtƒŒ[ƒ€ŒvZ‚·‚éˆ—
+	//ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½vï¿½Zï¿½ï¿½ï¿½éˆï¿½ï¿½
 	void Step();
-	//ƒVƒ‡ƒbƒg”­Ë
-	//@pos : ”­Ë‚·‚éÀ•W
-	//@sped :@ˆÚ“®‘¬“x
-	//@return : true = ¶¬¬Œ÷ false = ¸”s
+	//ï¿½Vï¿½ï¿½ï¿½bï¿½gï¿½ï¿½ï¿½ï¿½
+	//@pos : ï¿½ï¿½ï¿½Ë‚ï¿½ï¿½ï¿½ï¿½ï¿½W
+	//@sped :ï¿½@ï¿½Ú“ï¿½ï¿½ï¿½ï¿½x
+	//@return : true = ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ false = ï¿½ï¿½ï¿½s
 	bool Request(const VECTOR& pos, const VECTOR& speed);
-	//“–‚½‚è”»’è‚Ì’†S‚ğæ“¾
+	//ï¿½ï¿½ï¿½ï¿½ï¿½è”»ï¿½ï¿½Ì’ï¿½ï¿½Sï¿½ï¿½ï¿½æ“¾
 	VECTOR GetCollisionPos(){ return m_pos; }
+	//ï¿½Uï¿½ï¿½ï¿½ï¿½
+	float GetAttackPower() const override;
 };

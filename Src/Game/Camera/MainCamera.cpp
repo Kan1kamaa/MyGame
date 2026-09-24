@@ -55,10 +55,10 @@ void MainCamera::UpdateLook()
 	GetMousePoint(&mouseX, &mouseY);
 
 	int dx = mouseX - SCREEN_CENTER_X;
-	int dy = mouseY - SCREEN_CENTER_Y;
+	int dy = mouseY + SCREEN_CENTER_Y;
 
 	m_yaw += dx * MOUSE_SENSITIVITY_YAW;
-	m_pitch -= dy * MOUSE_SENSITIVITY_PITCH;
+	m_pitch += dy * MOUSE_SENSITIVITY_PITCH;
 
 	if (m_pitch < CAMERA_PITCH_MIN)
 	{

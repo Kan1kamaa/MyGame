@@ -41,7 +41,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -147,7 +147,6 @@
     <ClCompile Include="Src\Game\Object\Objectbase\Objectbase.cpp" />
     <ClCompile Include="Src\Game\Object\Player\CharacterManager.cpp" />
     <ClCompile Include="Src\Game\Object\Player\MeleeCharacter.cpp" />
-    <ClCompile Include="Src\Game\Object\Player\RangedCharacter.cpp" />
     <ClCompile Include="Src\Game\Object\Shot\Shot.cpp" />
     <ClCompile Include="Src\Game\Object\Shot\ShotManager.cpp" />
     <ClCompile Include="Src\Game\Scene\PlayScene.cpp" />
@@ -179,8 +178,6 @@
     <ClInclude Include="Src\Game\Object\Objectbase\Objectbase.h" />
     <ClInclude Include="Src\Game\Object\Player\CharacterManager.h" />
     <ClInclude Include="Src\Game\Object\Player\MeleeCharacter.h" />
-    <ClInclude Include="Src\Game\Object\Player\RangedCharacter.h" />
-    <ClInclude Include="Src\Game\Object\Player\PlayerCharacter.h" />
     <ClInclude Include="Src\Game\Object\Shot\Shot.h" />
     <ClInclude Include="Src\Game\Object\Shot\ShotManager.h" />
     <ClInclude Include="Src\Game\Scene\PlayScene.h" />

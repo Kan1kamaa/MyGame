@@ -1,21 +1,21 @@
 #include "ObjectBase.h"
 
-//VECTOR\‘¢‘Ì‚Ì’†g‚ğ0‚É‚·‚é‚½‚ß‚Ég—p‚·‚é
+//VECTORï¿½\ï¿½ï¿½ï¿½Ì‚Ì’ï¿½ï¿½gï¿½ï¿½0ï¿½É‚ï¿½ï¿½é‚½ï¿½ß‚Égï¿½pï¿½ï¿½ï¿½ï¿½
 static const VECTOR VEC_ZERO{ 0.0f,0.0f,0.0f };
 
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
 ObjectBase::ObjectBase() :m_pos(VEC_ZERO),
 m_rot(VEC_ZERO), m_scale(VEC_ZERO),m_hndl(-1), m_isActive(false)
 {
 }
 
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ï¿½fï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
 ObjectBase::~ObjectBase()
 {
 	Fin();
 }
 
-//‰Šú‰»
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void ObjectBase::Init()
 {
 	m_pos = VEC_ZERO;
@@ -25,19 +25,19 @@ void ObjectBase::Init()
 	m_isActive = true;
 }
 
-//ƒ[ƒh
+//ï¿½ï¿½ï¿½[ï¿½h
 void ObjectBase::Load()
 {
 
 }
 
-//–ˆƒtƒŒ[ƒ€XV‚·‚éˆ—
+//ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Xï¿½Vï¿½ï¿½ï¿½éˆï¿½ï¿½
 void ObjectBase::Step()
 {
 
 }
 
-//î•ñXV
+//ï¿½ï¿½ï¿½Xï¿½V
 void ObjectBase::Update()
 {
 	MV1SetPosition(m_hndl, m_pos);
@@ -45,17 +45,17 @@ void ObjectBase::Update()
 	MV1SetScale(m_hndl, m_scale);
 }
 
-//•`‰æ
+//ï¿½`ï¿½ï¿½
 void ObjectBase::Draw()
 {
-	if (!m_isActive)return;
+	if (m_isActive == false)return;
 
 	MV1DrawModel(m_hndl);
 
 
 }
 
-//”jŠü
+//ï¿½jï¿½ï¿½
 void ObjectBase::Fin()
 {
 	if (m_hndl != -1)

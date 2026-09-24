@@ -28,7 +28,7 @@ int  WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	{
 		//エスケープキーが押されたら終了
 		if (CheckHitKey(KEY_INPUT_ESCAPE) == 1) break;
-		if (!IsNextFrame()) continue;
+		if (IsNextFrame() == false) continue;
 
 		ClearDrawScreen();
 

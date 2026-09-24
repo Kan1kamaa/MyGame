@@ -96,9 +96,21 @@ void BossGolem::StepAttack(const VECTOR& playerPos)
 	m_speed = VEC_ZERO;
 
 	//攻撃モーション(通常攻撃1〜3)を再生中ならそのまま最後まで見せる
-	bool isAttackAnim = (m_animData.m_index == ANIM_ATTACK1 || m_animData.m_index == ANIM_ATTACK2 || m_animData.m_index == ANIM_ATTACK3);
+	bool isAttackAnim = false;
+	if (m_animData.m_index == ANIM_ATTACK1)
+	{
+		isAttackAnim = true;
+	}
+	if (m_animData.m_index == ANIM_ATTACK2)
+	{
+		isAttackAnim = true;
+	}
+	if (m_animData.m_index == ANIM_ATTACK3)
+	{
+		isAttackAnim = true;
+	}
 	bool isAttackFinished = (m_animData.m_nowFrm >= m_animData.m_endFrm);
-	if (isAttackAnim && !isAttackFinished)
+	if (isAttackAnim == true && isAttackFinished == false)
 	{
 		return;
 	}
@@ -133,7 +145,7 @@ void BossGolem::Step(const VECTOR& playerPos)
 	if (m_isActive == false)return;
 
 	//死亡モーション再生中は行動せず、再生が終わったら消す
-	if (m_isDying)
+	if (m_isDying == true)
 	{
 		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
 		{
@@ -145,11 +157,35 @@ void BossGolem::Step(const VECTOR& playerPos)
 
 	//攻撃モーション(通常攻撃1〜3)を再生中は、距離に関わらず最後まで攻撃状態を維持する
 	//(振っている途中でプレイヤーが離れてもChaseに切り替わって歩き出さないようにするため)
-	bool isAttackAnim = (m_animData.m_index == ANIM_ATTACK1 || m_animData.m_index == ANIM_ATTACK2 || m_animData.m_index == ANIM_ATTACK3);
+	bool isAttackAnim = false;
+	if (m_animData.m_index == ANIM_ATTACK1)
+	{
+		isAttackAnim = true;
+	}
+	if (m_animData.m_index == ANIM_ATTACK2)
+	{
+		isAttackAnim = true;
+	}
+	if (m_animData.m_index == ANIM_ATTACK3)
+	{
+		isAttackAnim = true;
+	}
 	bool isAttackFinished = (m_animData.m_nowFrm >= m_animData.m_endFrm);
-	bool isMidAttack = (m_state == Attack && isAttackAnim && !isAttackFinished);
 
-	if (!isMidAttack)
+	//「攻撃状態」で「攻撃アニメを再生中」で「まだ振り終わっていない」の3つが全部揃ったときだけtrue
+	bool isMidAttack = false;
+	if (m_state == Attack)
+	{
+		if (isAttackAnim == true)
+		{
+			if (isAttackFinished == false)
+			{
+				isMidAttack = true;
+			}
+		}
+	}
+
+	if (isMidAttack == false)
 	{
 		//プレイヤーとの距離で状態を決める
 		float distToPlayer = VSize(VSub(playerPos, m_pos));
@@ -194,7 +230,7 @@ bool BossGolem::Request(const VECTOR& pos)
 void BossGolem::HitCalc(const ObjectBase& other)
 {
 	//死亡モーション再生中は追加のダメージ判定をしない
-	if (m_isDying)return;
+	if (m_isDying == true)return;
 
 	m_status.AddDamage(other.GetAttackPower());
 	if (m_status.IsAlive() == false)

@@ -142,7 +142,7 @@ void Enemy::Step(const VECTOR& playerPos)
 	if (m_isActive == false)return;
 
 	//死亡モーション再生中は移動処理を行わず、再生が終わったら消す
-	if (m_isDying)
+	if (m_isDying == true)
 	{
 		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
 		{
@@ -194,7 +194,7 @@ bool Enemy::Request(const VECTOR& pos, const VECTOR& speed)
 void Enemy::HitCalc(const ObjectBase& other)
 {
 	//死亡モーション再生中は追加のダメージ判定をしない
-	if (m_isDying)return;
+	if (m_isDying == true)return;
 
 	m_status.AddDamage(other.GetAttackPower());
 	if (m_status.IsAlive() == false)

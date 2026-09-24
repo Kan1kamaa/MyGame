@@ -30,7 +30,7 @@ namespace {
 //----------------------
 //	コンストラクタ
 //----------------------
-CharacterManager::CharacterManager() : m_characters{ &m_char1, &m_char2 }, m_activeIndex(0),
+CharacterManager::CharacterManager() :
 m_velocityY(0.0f), m_prevKeySpace(false), m_prevKeyE(false), m_prevKeyR(false)
 {
 }
@@ -50,15 +50,13 @@ void CharacterManager::Init()
 {
 	ObjectBase::Init();
 	m_radius = 5.0f;
-	m_activeIndex = 0;
 	m_velocityY = 0.0f;
 	m_prevKeySpace = false;
 	m_prevKeyE = false;
 	m_prevKeyR = false;
 	m_status.Init(PLAYER_MAX_HP, 0);
 	m_invincibleCnt = 0;
-	m_char1.Init();
-	m_char2.Init();
+	m_char.Init();
 }
 
 //----------------------
@@ -66,8 +64,7 @@ void CharacterManager::Init()
 //----------------------
 void CharacterManager::Load()
 {
-	m_char1.Load();
-	m_char2.Load();
+	m_char.Load();
 }
 
 //----------------------
@@ -75,7 +72,7 @@ void CharacterManager::Load()
 //----------------------
 //大きく分けて「入力を読む → 移動 → 向き直り → ジャンプ/重力 → 座標反映 → アニメ/攻撃」の順で処理する。
 //それぞれの中身は下の小さな関数に分けてある。
-void CharacterManager::Step(ShotManager& shotManager, float cameraYaw)
+void CharacterManager::Step(float cameraYaw)
 {
 	//無敵時間を減らす
 	if (m_invincibleCnt > 0)
@@ -83,13 +80,9 @@ void CharacterManager::Step(ShotManager& shotManager, float cameraYaw)
 		m_invincibleCnt--;
 	}
 
-	//1/2キーで操作キャラクターを切り替える
-	UpdateCharacterSwitch();
-	PlayerCharacter* active = m_characters[m_activeIndex];
-
 	//------ このフレームの入力をすべて読む ------
 	//攻撃中はWASDでの移動を受け付けない(移動方向を0にする)
-	bool isAttacking = active->IsAttacking();
+	bool isAttacking = m_char.IsAttacking();
 	VECTOR moveDir = (isAttacking == true) ? VGet(0.0f, 0.0f, 0.0f) : ReadMoveDir(cameraYaw);
 
 	bool isMoveInput = (VSize(moveDir) > 0.0001f);
@@ -101,7 +94,7 @@ void CharacterManager::Step(ShotManager& shotManager, float cameraYaw)
 
 	//------ 水平移動(歩き/走り + 攻撃の踏み込み) ------
 	VECTOR velocity = CalcMoveVelocity(moveDir, isRunInput);
-	velocity = VAdd(velocity, CalcLungeVelocity(active));
+	velocity = VAdd(velocity, CalcLungeVelocity());
 	m_pos = VAdd(m_pos, velocity);
 	ClampInsideField();
 
@@ -115,44 +108,13 @@ void CharacterManager::Step(ShotManager& shotManager, float cameraYaw)
 	UpdateVertical(isJumpTrigger);
 	bool isGrounded = (m_pos.y <= 0.0f); //重力適用後の最新の接地状態(アニメーション判定用)
 
-	//------ どちらに切り替えても同じ場所に立つように、両方のキャラへ座標・向きを反映 ------
-	for (int i = 0; i < 2; i++)
-	{
-		m_characters[i]->SetPos(m_pos);
-		m_characters[i]->SetRot(m_rot);
-	}
+	//------ キャラクターへ座標・向きを反映 ------
+	m_char.SetPos(m_pos);
+	m_char.SetRot(m_rot);
 
-	//------ アクティブなキャラクターだけアニメーションと攻撃を処理 ------
-	active->UpdateAnimState(isAttackInput, isMoveInput, isRunInput, isGrounded, m_velocityY, isJumpTrigger,
+	//------ アニメーションを処理 ------
+	m_char.UpdateAnimState(isAttackInput, isMoveInput, isRunInput, isGrounded, m_velocityY, isJumpTrigger,
 		isSkillTrigger, isUltTrigger);
-
-	if (isAttackInput == true)
-	{
-		active->Attack(shotManager);
-	}
-}
-
-//----------------------
-//	操作キャラクターの切り替え
-//----------------------
-void CharacterManager::SwitchActive(int index)
-{
-	m_activeIndex = index;
-	//前のキャラの攻撃モーションのまま固まって見えないように待機に戻す
-	m_characters[m_activeIndex]->ResetToIdle();
-}
-
-//1/2キーが押されていたら操作キャラクターを切り替える
-void CharacterManager::UpdateCharacterSwitch()
-{
-	if (CheckHitKey(KEY_INPUT_1) != 0 && m_activeIndex != 0)
-	{
-		SwitchActive(0);
-	}
-	else if (CheckHitKey(KEY_INPUT_2) != 0 && m_activeIndex != 1)
-	{
-		SwitchActive(1);
-	}
 }
 
 //WASD入力を読んで、カメラの向き基準の移動方向を返す(長さ1。入力が無ければ長さ0)
@@ -192,9 +154,9 @@ VECTOR CharacterManager::CalcMoveVelocity(VECTOR moveDir, bool isRun) const
 }
 
 //攻撃の踏み込みぶんの移動量を返す(自分が向いている方向へ、攻撃モーション序盤だけ少し進む)
-VECTOR CharacterManager::CalcLungeVelocity(PlayerCharacter* active) const
+VECTOR CharacterManager::CalcLungeVelocity() const
 {
-	float lungeSpeed = active->GetLungeSpeed(); //踏み込み中でなければ0が返ってくる
+	float lungeSpeed = m_char.GetLungeSpeed(); //踏み込み中でなければ0が返ってくる
 	VECTOR lungeDir = { -sinf(m_rot.y), 0.0f, -cosf(m_rot.y) };
 	return VScale(lungeDir, lungeSpeed);
 }
@@ -253,8 +215,8 @@ void CharacterManager::UpdateVertical(bool isJumpTrigger)
 //----------------------
 void CharacterManager::Update()
 {
-	m_characters[m_activeIndex]->Update();
-	m_characters[m_activeIndex]->UpdateWeapon();
+	m_char.Update();
+	m_char.UpdateWeapon();
 }
 
 //----------------------
@@ -264,14 +226,13 @@ void CharacterManager::DrawPL()
 {
 	if (m_isActive == false) return;
 
-	m_characters[m_activeIndex]->Draw();
-	m_characters[m_activeIndex]->DrawWeapon();
+	m_char.Draw();
+	m_char.DrawWeapon();
 
 	//デバッグ表示:このモデルのアニメーション数と、直前のアタッチが成功したかを確認する
-	PlayerCharacter* active = m_characters[m_activeIndex];
 	DrawFormatString(16, 16, GetColor(255, 255, 0), "AnimNum:%d Index:%d AttachID:%d WeaponFrameL:%d WeaponFrameR:%d",
-		MV1GetAnimNum(active->m_hndl), active->GetAnimIndex(), active->GetAnimAttachID(),
-		active->GetWeaponFrameIndex(), active->GetWeaponFrameIndexR());
+		MV1GetAnimNum(m_char.m_hndl), m_char.GetAnimIndex(), m_char.GetAnimAttachID(),
+		m_char.GetWeaponFrameIndex(), m_char.GetWeaponFrameIndexR());
 
 	//HP表示
 	DrawFormatString(16, 40, GetColor(255, 255, 255), "HP:%d/%d", GetHp(), GetMaxHp());
@@ -287,10 +248,11 @@ void CharacterManager::DrawPL()
 //----------------------
 //	被弾処理
 //----------------------
-//無敵時間中でなければダメージを受ける。HPが0になったら行動不能にする
+//無敵時間中・回避モーション中でなければダメージを受ける。HPが0になったら行動不能にする
 void CharacterManager::HitCalc(const ObjectBase& other)
 {
 	if (m_invincibleCnt > 0)return;
+	if (m_char.IsDodging() == true)return; //走り出し(回避)モーション中は無敵
 
 	m_status.AddDamage(other.GetAttackPower());
 	m_invincibleCnt = INVINCIBLE_TIME;
@@ -304,7 +266,7 @@ void CharacterManager::HitCalc(const ObjectBase& other)
 //現在操作中のキャラクターの攻撃力を返す(近接攻撃が敵に当たったときに使われる)
 float CharacterManager::GetAttackPower() const
 {
-	return m_characters[m_activeIndex]->GetAttackPower();
+	return m_char.GetAttackPower();
 }
 
 //----------------------
@@ -313,13 +275,13 @@ float CharacterManager::GetAttackPower() const
 //攻撃モーション中で、前方に攻撃判定を出すべきかどうか(実体は操作中のキャラに聞く)
 bool CharacterManager::IsAttackActive() const
 {
-	return m_characters[m_activeIndex]->IsAttackActive();
+	return m_char.IsAttackActive();
 }
 
 //攻撃判定(球)の中心座標。キャラが向いている方向の少し前に置く
 VECTOR CharacterManager::GetAttackPos() const
 {
-	//キャラの前方ベクトル(移動処理やRangedCharacterと同じ向きの取り方)
+	//キャラの前方ベクトル(移動処理と同じ向きの取り方)
 	VECTOR forward = { -sinf(m_rot.y), 0.0f, -cosf(m_rot.y) };
 	VECTOR center = VAdd(m_pos, VScale(forward, ATTACK_HIT_DIST));
 	center.y += m_radius;	//敵のGetCollisionPosと同じく体の高さに合わせる
@@ -337,6 +299,5 @@ float CharacterManager::GetAttackRadius() const
 //----------------------
 void CharacterManager::Fin()
 {
-	m_char1.Fin();
-	m_char2.Fin();
+	m_char.Fin();
 }

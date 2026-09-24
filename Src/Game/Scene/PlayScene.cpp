@@ -52,7 +52,7 @@ void PlayScene::Step()
 	{
 		//先にマウスでカメラを回し、移動がこのフレームのカメラ向きを使うようにする
 		camera.UpdateLook();
-		player.Step(shot, camera.GetYaw());
+		player.Step(camera.GetYaw());
 		shot.Step();
 		enemy.Step(player.GetPos());
 		boss.Step(player.GetPos());

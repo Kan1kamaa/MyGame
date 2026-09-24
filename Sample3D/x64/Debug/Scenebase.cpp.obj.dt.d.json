@@ -1,0 +1,13 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\2509413\\desktop\\mygame\\src\\game\\scene\\scenebase.cpp",
+        "ProvidedModule": "",
+        "Includes": [
+            "c:\\users\\2509413\\desktop\\mygame\\src\\game\\scene\\scenebase.h",
+            "c:\\users\\2509413\\desktop\\mygame\\src\\lib\\fade\\fade.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

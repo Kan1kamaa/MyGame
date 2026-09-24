@@ -78,9 +78,6 @@
     <ClCompile Include="Src\Game\Object\Player\MeleeCharacter.cpp">
       <Filter>ソース ファイル\Game\Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Game\Object\Player\RangedCharacter.cpp">
-      <Filter>ソース ファイル\Game\Object\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game\Object\Field\Field.cpp">
       <Filter>ソース ファイル\Game\Object\Field</Filter>
     </ClCompile>
@@ -165,12 +162,6 @@
       <Filter>ソース ファイル\Game\Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game\Object\Player\MeleeCharacter.h">
-      <Filter>ソース ファイル\Game\Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game\Object\Player\RangedCharacter.h">
-      <Filter>ソース ファイル\Game\Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Game\Object\Player\PlayerCharacter.h">
       <Filter>ソース ファイル\Game\Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game\Object\Field\Field.h">

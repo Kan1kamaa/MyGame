@@ -1,0 +1,12 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\2509413\\desktop\\mygame\\src\\game\\scene\\resultscene.h",
+        "ProvidedModule": "",
+        "Includes": [
+            "c:\\users\\2509413\\desktop\\mygame\\src\\game\\scene\\scenebase.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

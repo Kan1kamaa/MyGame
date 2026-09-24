@@ -155,7 +155,19 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 
 	//地上にいる(待機・歩き・走り)ときだけジャンプ・スキル・必殺技を受け付ける
 	//※isGroundedは重力適用後(=ジャンプ開始直後は既に空中扱い)の値なのでここでは使わない
-	bool isGroundedState = (m_animData.m_index == ANIMID_IDLE || m_animData.m_index == ANIMID_WALK || m_animData.m_index == ANIMID_RUN);
+	bool isGroundedState = false;
+	if (m_animData.m_index == ANIMID_IDLE)
+	{
+		isGroundedState = true;
+	}
+	if (m_animData.m_index == ANIMID_WALK)
+	{
+		isGroundedState = true;
+	}
+	if (m_animData.m_index == ANIMID_RUN)
+	{
+		isGroundedState = true;
+	}
 
 	//isJumpTriggerがtrueで(=スペースキーを押した瞬間で)、isGroundedStateもtrueなら(=地上にいるなら)ジャンプを開始する
 	if (isJumpTrigger == true && isGroundedState == true)
@@ -362,25 +374,52 @@ void MeleeCharacter::ResetToIdle()
 //地上の通常攻撃(1〜3段目)モーションを再生中かどうか
 bool MeleeCharacter::IsGroundAttackMotion() const
 {
-	return m_animData.m_index == ANIMID_ATTACK1
-		|| m_animData.m_index == ANIMID_ATTACK2
-		|| m_animData.m_index == ANIMID_ATTACK3;
+	if (m_animData.m_index == ANIMID_ATTACK1)
+	{
+		return true;
+	}
+	if (m_animData.m_index == ANIMID_ATTACK2)
+	{
+		return true;
+	}
+	if (m_animData.m_index == ANIMID_ATTACK3)
+	{
+		return true;
+	}
+	return false;
 }
 
 //攻撃モーション(地上1〜3段目、空中攻撃)を再生中かどうか。刀を持たせるかどうかの判定にも使う
 bool MeleeCharacter::IsAttackMotion() const
 {
-	return IsGroundAttackMotion()
-		|| m_animData.m_index == ANIMID_JUMPATTACK;
+	if (IsGroundAttackMotion() == true)
+	{
+		return true;
+	}
+	if (m_animData.m_index == ANIMID_JUMPATTACK)
+	{
+		return true;
+	}
+	return false;
 }
 
 //攻撃モーション・スキル・必殺技のどれかを再生中かどうか
 //trueの間はCharacterManager側でWASD移動を受け付けなくなる
 bool MeleeCharacter::IsAttacking() const
 {
-	return IsAttackMotion()
-		|| m_animData.m_index == ANIMID_SKILL
-		|| m_animData.m_index == ANIMID_ULT;
+	if (IsAttackMotion() == true)
+	{
+		return true;
+	}
+	if (m_animData.m_index == ANIMID_SKILL)
+	{
+		return true;
+	}
+	if (m_animData.m_index == ANIMID_ULT)
+	{
+		return true;
+	}
+	return false;
 }
 
 //前方に攻撃の当たり判定を出すべきモーション中かどうか
@@ -388,6 +427,16 @@ bool MeleeCharacter::IsAttacking() const
 bool MeleeCharacter::IsAttackActive() const
 {
 	return IsAttacking();
+}
+
+//走り出し(=回避)モーション中かどうか
+bool MeleeCharacter::IsDodging() const
+{
+	if (m_animData.m_index == ANIMID_RUNSTART)
+	{
+		return true;
+	}
+	return false;
 }
 
 

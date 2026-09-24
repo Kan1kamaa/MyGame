@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include "PlayerCharacter.h"
+#include "../ActorBase/ActorBase.h"
 
-//近接攻撃キャラクター(キャラ1)
-class MeleeCharacter : public PlayerCharacter {
+//近接攻撃キャラクター(操作キャラクター)
+class MeleeCharacter : public ActorBase {
 private:
 	int  m_comboStage;      //現在のコンボ段階(0=攻撃していない、1〜3=攻撃中の段)
 	bool m_prevAttackInput; //前フレームの攻撃キー入力状態(トリガー判定用)
@@ -40,15 +40,17 @@ public:
 
 	void UpdateAnimState(bool isAttackInput, bool isMoveInput, bool isRunInput,
 		bool isGrounded, float& velocityY, bool isJumpTrigger,
-		bool isSkillTrigger, bool isUltTrigger) override;
-	void ResetToIdle() override;
-	bool IsAttacking() const override;
-	bool IsAttackActive() const override;
-	float GetLungeSpeed() const override;
-	void UpdateWeapon() override;
-	void DrawWeapon() override;
-	int GetWeaponFrameIndex() const override { return m_handFrameIndexL; }
-	int GetWeaponFrameIndexR() const override { return m_handFrameIndexR; }
+		bool isSkillTrigger, bool isUltTrigger);
+	void ResetToIdle();
+	bool IsAttacking() const;
+	bool IsAttackActive() const;
+	//走り出し(=回避)モーション中かどうか。この間は無敵にする
+	bool IsDodging() const;
+	float GetLungeSpeed() const;
+	void UpdateWeapon();
+	void DrawWeapon();
+	int GetWeaponFrameIndex() const { return m_handFrameIndexL; }
+	int GetWeaponFrameIndexR() const { return m_handFrameIndexR; }
 
 	float GetAttackPower() const override;
 };

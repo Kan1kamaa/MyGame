@@ -157,6 +157,7 @@ void BossGolem::StepJumpAttack(const VECTOR& playerPos)
 		if (isGroundedBeforeGravity == true && m_JumpatackCoolCnt >= 0)
 		{
 			m_velocityY = JUMP_POWER;
+			m_JumpatackCoolCnt = JUMPATTACK_COOLDOWN;
 		}
 		m_pos = VAdd(m_pos, VScale(dir, JUMPATTACK_MOVE_SPEED));
 		m_speed = VScale(dir, JUMPATTACK_MOVE_SPEED);

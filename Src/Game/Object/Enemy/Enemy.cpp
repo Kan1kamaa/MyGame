@@ -5,16 +5,16 @@ static const VECTOR VEC_ZERO{ 0.0f,0.0f,0.0f };
 static const float MOVE_RANGE = 300.0f;	//移動可能範囲(プレイヤーのMOVE_RANGE_X / MOVE_RANGE_Zと同じ)
 static const float ENEMY_RAD = 5.0f;
 static const float ENEMY_SCALE = 0.08f;	//Golemモデルの表示倍率(見た目が大きすぎ/小さすぎる場合はここを調整)
-static const float ANIM_SPEED = 0.5f;		//アニメーション再生速度
-
+static const float ANIM_SPEED = 0.3f;		//アニメーション再生速度
+static const int INVINCIBLE_TIME = 60;        //被弾後の無敵時間(フレーム数。60=約1秒)
 //ランダム移動の調整用パラメータ
 static const float ENEMY_MOVE_SPEED = 0.2f;	//1フレームあたりの移動量
 static const int   DIR_CHANGE_MIN = 30;		//方向転換するまでの最短フレーム数
 static const int   DIR_CHANGE_MAX = 90;		//方向転換するまでの最長フレーム数
 
 //プレイヤーの追跡・攻撃の調整用パラメータ
-static const float DETECT_RANGE = 150.0f;		//この距離より近づくとプレイヤーを追いかける
-static const float ATTACK_RANGE = 15.0f;		//この距離より近づくと攻撃する
+static const float DETECT_RANGE = 100.0f;		//この距離より近づくとプレイヤーを追いかける
+static const float ATTACK_RANGE = 10.0f;		//この距離より近づくと攻撃する
 static const float CHASE_MOVE_SPEED = 0.3f;	//追いかけているときの1フレームあたりの移動量
 static const float ROT_SPEED = 0.08f;			//1フレームで向き直れる最大角度(巨体なのでゆっくり)
 
@@ -33,7 +33,7 @@ Enemy::~Enemy()
 void Enemy::Init()
 {
 	ActorBase::Init();
-	m_status.Init(100,20);
+	m_status.Init(100,10);
 	m_radius = ENEMY_RAD;
 	m_scale = { ENEMY_SCALE, ENEMY_SCALE, ENEMY_SCALE };
 	m_speed = VEC_ZERO;
@@ -193,10 +193,12 @@ bool Enemy::Request(const VECTOR& pos, const VECTOR& speed)
 
 void Enemy::HitCalc(const ObjectBase& other)
 {
+	if (m_invincibleCnt > 0)return;
 	//死亡モーション再生中は追加のダメージ判定をしない
 	if (m_isDying == true)return;
 
 	m_status.AddDamage(other.GetAttackPower());
+	m_invincibleCnt = INVINCIBLE_TIME;
 	if (m_status.IsAlive() == false)
 	{
 		SoundManager::Play(SoundManager::SE_EXPLORE);

@@ -6,7 +6,8 @@ private:
 	VECTOR m_speed;		//移動速度
 	int m_changeDirCnt;	//次にランダムで方向転換するまでのフレーム数
 	bool m_isDying;		//死亡モーション再生中かどうか
-
+	//被弾後、無敵時間として残っているフレーム数(この間はHitCalcでダメージを受けない)
+	int m_invincibleCnt;
 	enum EnemyState
 	{
 		Search,

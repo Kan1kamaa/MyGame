@@ -9,8 +9,8 @@ namespace {
 	const int SCREEN_CENTER_X = 1280 / 2;
 	const int SCREEN_CENTER_Y = 720 / 2;
 
-	const float MOUSE_SENSITIVITY_YAW = 0.005f;		//マウス感度(左右)
-	const float MOUSE_SENSITIVITY_PITCH = 0.003f;	//マウス感度(上下)
+	const float MOUSE_SENSITIVITY_YAW = 0.003f;		//マウス感度(左右)
+	const float MOUSE_SENSITIVITY_PITCH = 0.002f;	//マウス感度(上下)
 	const float CAMERA_PITCH_MIN = -0.2f;			//見上げすぎ防止
 	const float CAMERA_PITCH_MAX = 1.3f;			//見下ろしすぎ防止
 
@@ -55,7 +55,7 @@ void MainCamera::UpdateLook()
 	GetMousePoint(&mouseX, &mouseY);
 
 	int dx = mouseX - SCREEN_CENTER_X;
-	int dy = mouseY + SCREEN_CENTER_Y;
+	int dy = mouseY - SCREEN_CENTER_Y;
 
 	m_yaw += dx * MOUSE_SENSITIVITY_YAW;
 	m_pitch += dy * MOUSE_SENSITIVITY_PITCH;

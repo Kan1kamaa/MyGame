@@ -7,12 +7,18 @@ private:
 	VECTOR m_speed;			//移動速度
 	bool m_isDying;			//死亡モーション再生中かどうか
 	int m_attackCoolCnt;	//次の攻撃を出すまでのフレーム数
-
+	int m_JumpatackCoolCnt;//ジャンプ攻撃のクールダウン
+	//被弾後、無敵時間として残っているフレーム数(この間はHitCalcでダメージを受けない)
+	int m_invincibleCnt;
+	//現在の上下速度(ジャンプ・重力で使用)
+	float m_velocityY;
 	enum EnemyState
 	{
 		Search,
 		Chase,
-		Attack
+		Attack,
+		JumpAttack,
+
 	};
 	EnemyState m_state;	//現在の行動状態
 
@@ -42,6 +48,8 @@ private:
 	void StepChase(const VECTOR& playerPos);
 	//プレイヤーを攻撃する
 	void StepAttack(const VECTOR& playerPos);
+	//ジャンプ攻撃でプレイヤーを攻撃する
+	void StepJumpAttack(const VECTOR& playerPos);
 public:
 	//コンストラクタ・デストラクタ
 	BossGolem();
@@ -57,6 +65,8 @@ public:
 	//出現させる
 	//@pos : 出現させる座標
 	//@return : true = 成功  false = 失敗(既に出現中)
+
+
 	bool Request(const VECTOR& pos);
 
 	void HitCalc(const ObjectBase& other);

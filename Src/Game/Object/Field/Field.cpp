@@ -10,3 +10,9 @@ void Field::Load()
 		m_hndl = MV1LoadModel("Data/Models/Field/Field_grassland.mv1");
 	}
 }
+
+//指定したXZ座標の地面の高さを返す(今は常に平面なので0.0f固定)
+float Field::GetGroundHeight(float x, float z)
+{
+	return 0.0f;
+}

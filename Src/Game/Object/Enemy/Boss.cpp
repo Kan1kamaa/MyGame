@@ -1,5 +1,6 @@
 ﻿#include<math.h>
 #include"Boss.h"
+#include"../Field/Field.h"
 #include"../../System/SoundManager.h"
 static const VECTOR VEC_ZERO{ 0.0f,0.0f,0.0f };
 
@@ -27,7 +28,7 @@ static const float JUMPATTACK_MOVE_SPEED = 0.8f;	//ジャンプ攻撃で追い�
 static const float ROT_SPEED = 0.06f;			//1フレームで向き直れる最大角度(巨体なのでゆっくり)
 static const int   ATTACK_COOLDOWN = 40;		//攻撃と攻撃の間隔(フレーム数)
 static const int   JUMPATTACK_COOLDOWN = 1200;  //ジャンプ攻撃の間隔
-static const float CHARGE_TIME = 0.2;          //アニメーションの初めのタメ時間を判別するのに使用
+static const float CHARGE_TIME = 0.35;          //アニメーションの初めのタメ時間を判別するのに使用
 
 //コンストラクタ
 BossGolem::BossGolem() :m_speed(VEC_ZERO), m_isDying(false), m_attackCoolCnt(0), m_state(Search)
@@ -50,8 +51,10 @@ void BossGolem::Init()
 	m_speed = VEC_ZERO;
 	m_isDying = false;
 	m_attackCoolCnt = 0;
-	m_JumpatackCoolCnt = 600;
+	m_JumpatackCoolCnt = 60;
 	m_state = Search;
+	m_velocityY = 0;
+	m_invincibleCnt = 0;
 	m_isActive = false;		//Request()で出現させるまで非表示
 }
 
@@ -133,6 +136,7 @@ void BossGolem::StepAttack(const VECTOR& playerPos)
 		return;
 	}
 
+
 	//クールタイムが明けたら、1〜3段目の攻撃モーションをランダムで出す
 	int pick = ANIM_ATTACK1 + GetRand(2);
 	RequestAnim(pick, ANIM_SPEED);
@@ -152,9 +156,9 @@ void BossGolem::StepJumpAttack(const VECTOR& playerPos)
 
 	if(m_animData.m_nowFrm >= m_animData.m_endFrm * CHARGE_TIME)
 	{
-		bool isGroundedBeforeGravity = (m_pos.y <= 0.0f);
+		bool isGroundedBeforeGravity = (m_pos.y <= Field::GetGroundHeight(m_pos.x, m_pos.z));
 
-		if (isGroundedBeforeGravity == true && m_JumpatackCoolCnt >= 0)
+		if (isGroundedBeforeGravity == true)
 		{
 			m_velocityY = JUMP_POWER;
 			m_JumpatackCoolCnt = JUMPATTACK_COOLDOWN;
@@ -178,6 +182,7 @@ void BossGolem::Load()
 //毎フレーム計算する処理
 void BossGolem::Step(const VECTOR& playerPos)
 {
+	
 	//フラグオフなら終了
 	if (m_isActive == false)return;
 
@@ -190,6 +195,15 @@ void BossGolem::Step(const VECTOR& playerPos)
 			m_isDying = false;
 		}
 		return;
+	}
+	//無敵時間とジャンプ攻撃のクールダウン減少
+	if (m_invincibleCnt > 0)
+	{
+		m_invincibleCnt--;
+	}
+	if (m_JumpatackCoolCnt > 0)
+	{
+		m_JumpatackCoolCnt--;
 	}
 
 	//攻撃モーション(通常攻撃1〜3)を再生中は、距離に関わらず最後まで攻撃状態を維持する
@@ -235,7 +249,7 @@ void BossGolem::Step(const VECTOR& playerPos)
 		{
 			m_state = Attack;
 		}
-		else if (distToPlayer <= DETECT_RANGE && distToPlayer >= JUMP_RANGE)
+		else if (distToPlayer <= DETECT_RANGE && distToPlayer >= JUMP_RANGE && m_JumpatackCoolCnt  <= 0)
 		{
 			m_state = JumpAttack;
 		}
@@ -256,14 +270,15 @@ void BossGolem::Step(const VECTOR& playerPos)
 	case Attack: StepAttack(playerPos); break;
 	case JumpAttack: StepJumpAttack(playerPos); break;
 	}
-	//重力を適用して上下移動(接地中は毎フレームY=0に戻るだけなので害はない)
+	//重力を適用して上下移動(接地中は毎フレーム地面の高さに戻るだけなので害はない)
 	m_velocityY -= GRAVITY;
 	m_pos.y += m_velocityY;
 
 	//地面より下には行かないようにする
-	if (m_pos.y <= 0.0f)
+	float groundHeight = Field::GetGroundHeight(m_pos.x, m_pos.z);
+	if (m_pos.y <= groundHeight)
 	{
-		m_pos.y = 0.0f;
+		m_pos.y = groundHeight;
 		m_velocityY = 0.0f;
 		m_JumpatackCoolCnt = JUMPATTACK_COOLDOWN;
 	}

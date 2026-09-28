@@ -1,4 +1,5 @@
 ﻿#include "CharacterManager.h"
+#include "../Field/Field.h"
 #include "math.h"
 
 namespace {
@@ -106,7 +107,7 @@ void CharacterManager::Step(float cameraYaw)
 
 	//------ ジャンプ・重力(縦移動) ------
 	UpdateVertical(isJumpTrigger);
-	bool isGrounded = (m_pos.y <= 0.0f); //重力適用後の最新の接地状態(アニメーション判定用)
+	bool isGrounded = (m_pos.y <= Field::GetGroundHeight(m_pos.x, m_pos.z)); //重力適用後の最新の接地状態(アニメーション判定用)
 
 	//------ キャラクターへ座標・向きを反映 ------
 	m_char.SetPos(m_pos);
@@ -188,24 +189,26 @@ void CharacterManager::TurnToward(VECTOR moveDir)
 	m_rot.y += diff;
 }
 
-//ジャンプ入力と重力を処理して m_pos.y / m_velocityY を更新する(地面は Y=0 の平面とする)
+//ジャンプ入力と重力を処理して m_pos.y / m_velocityY を更新する
 void CharacterManager::UpdateVertical(bool isJumpTrigger)
 {
+	float groundHeight = Field::GetGroundHeight(m_pos.x, m_pos.z);
+
 	//接地しているときだけジャンプキーを受け付ける
-	bool isGroundedBeforeGravity = (m_pos.y <= 0.0f);
+	bool isGroundedBeforeGravity = (m_pos.y <= groundHeight);
 	if (isJumpTrigger == true && isGroundedBeforeGravity == true)
 	{
 		m_velocityY = JUMP_POWER;
 	}
 
-	//重力を適用して上下移動(接地中は毎フレームY=0に戻るだけなので害はない)
+	//重力を適用して上下移動(接地中は毎フレーム地面の高さに戻るだけなので害はない)
 	m_velocityY -= GRAVITY;
 	m_pos.y += m_velocityY;
 
 	//地面より下には行かないようにする
-	if (m_pos.y <= 0.0f)
+	if (m_pos.y <= groundHeight)
 	{
-		m_pos.y = 0.0f;
+		m_pos.y = groundHeight;
 		m_velocityY = 0.0f;
 	}
 }

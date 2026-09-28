@@ -12,6 +12,7 @@ private:
 	int m_invincibleCnt;
 	//現在の上下速度(ジャンプ・重力で使用)
 	float m_velocityY;
+	bool m_IsGround; //地面に足がついているか
 	enum EnemyState
 	{
 		Search,

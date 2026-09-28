@@ -40,6 +40,7 @@ void Enemy::Init()
 	m_changeDirCnt = 0;
 	m_isDying = false;
 	m_state = Search;
+	m_invincibleCnt = 0;
 	m_isActive = false;		//最初は見えないように消しておく
 }
 
@@ -151,7 +152,7 @@ void Enemy::Step(const VECTOR& playerPos)
 		}
 		return;
 	}
-
+	m_invincibleCnt--;
 	//プレイヤーとの距離で状態を決める
 	float distToPlayer = VSize(VSub(playerPos, m_pos));
 	if (distToPlayer <= ATTACK_RANGE)

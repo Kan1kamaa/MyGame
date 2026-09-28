@@ -226,6 +226,10 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 			{
 				RequestAnim(ANIMID_RUNSTART, ANIM_SPEED);
 			}
+			else
+			{
+				RequestAnim(ANIMID_WALK, ANIM_SPEED);
+			}
 			//まだWASDは押されているのでそのまま歩き続ける(何もしない)
 		}
 		//isMoveInputがfalseなら(=もう何も押されていなければ)待機に戻る
@@ -242,7 +246,15 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 		}
 		else if (isMoveInput == true)
 		{
-			RequestLoopAnim(ANIMID_RUN, ANIM_SPEED);
+			//走り中にシフトキーが離されたら歩きモーションへ戻す
+			if (isRunInput == true)
+			{
+				RequestLoopAnim(ANIMID_RUN, ANIM_SPEED);
+			}
+			else
+			{
+				RequestLoopAnim(ANIMID_WALK, ANIM_SPEED);
+			}
 		}
 		else
 		{
@@ -253,9 +265,14 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 		//モーションを最後まで再生してから移行する
 		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
 		{
-			if (isMoveInput == true)
+			//シフトキーが押され続けていれば走り、離されていれば歩きへ
+			if (isRunInput == true)
 			{
 				RequestLoopAnim(ANIMID_RUN, ANIM_SPEED);
+			}
+			else if (isMoveInput == true)
+			{
+				RequestLoopAnim(ANIMID_WALK, ANIM_SPEED);
 			}
 			//WASDが離されていたら待機に戻る
 			else

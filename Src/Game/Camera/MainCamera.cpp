@@ -14,8 +14,8 @@ namespace {
 	const float CAMERA_PITCH_MIN = -0.2f;			//見上げすぎ防止
 	const float CAMERA_PITCH_MAX = 1.3f;			//見下ろしすぎ防止
 
-	const float CAMERA_DEFAULT_DISTANCE = 35.0f;	//注視点からの距離
-	const float CAMERA_INITIAL_PITCH = 0.7f;		//カメラの高さ
+	const float CAMERA_DEFAULT_DISTANCE = 50.0f;	//注視点からの距離
+	const float CAMERA_INITIAL_PITCH = 0.4f;		//カメラの高さ
 	const float FOCUS_HEIGHT = 10.0f;				//注視点の高さ(キャラの足元からのオフセット)
 }
 

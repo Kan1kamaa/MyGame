@@ -3,20 +3,24 @@
 #include "math.h"
 
 namespace {
-	const float WALK_SPEED = 0.6f;	  //歩きの移動速度
-	const float RUN_SPEED = WALK_SPEED * 2.5f;	  //走りの移動速度(歩きの2.5倍)
-	const float MOVE_RANGE_X = 300.0f;    //移動範囲を制限
-	const float MOVE_RANGE_Z = 300.0f;    //移動範囲を制限
-	const float ROT_SPEED = 0.30f;        //キャラが移動方向へ向き直る速さ(1フレームあたりの最大角度)
-	const float GRAVITY = 0.6f;           //重力(1フレームごとに上下速度から引く量)
-	const float JUMP_POWER = 8.0f;       //ジャンプ初速
+	const int PLAYER_MAX_HP = 100;					  //プレイヤーの最大HP
+	const float PLAYER_MAX_STAMINA = 100;			//プレイヤーの最大スタミナ
+	const float JUMP_POWER = 8.0f;					 //ジャンプ初速
+	const float WALK_SPEED = 0.6f;					//歩きの移動速度
+	const float RUN_SPEED = WALK_SPEED * 2.5f;		 //走りの移動速度(歩きの2.5倍)
+	const float MOVE_RANGE_X = 300.0f;				 //移動範囲を制限
+	const float MOVE_RANGE_Z = 300.0f;				 //移動範囲を制限
+	const float ROT_SPEED = 0.30f;					//キャラが移動方向へ向き直る速さ(1フレームあたりの最大角度)
+	const float GRAVITY = 0.6f;					  //重力(1フレームごとに上下速度から引く量)
+
+	const int STAMINAREGENDELEY;		//スタミナが回復を始めるまでの時間
+	const int INVINCIBLE_TIME = 60;        //被弾後の無敵時間(フレーム数。60=約1秒)
 
 	const float ATTACK_HIT_DIST = 14.0f;   //攻撃判定(球)をキャラの前方どれだけ先に出すか
 	const float ATTACK_HIT_RADIUS = 14.0f; //攻撃判定(球)の半径
 
-	const int PLAYER_MAX_HP = 100;         //プレイヤーの最大HP
-	const int INVINCIBLE_TIME = 60;        //被弾後の無敵時間(フレーム数。60=約1秒)
 
+	
 	//キーが「今のフレームで押された瞬間」かどうかを返す。
 	//prev には前フレームの押下状態が入っていて、この関数の中で更新する。
 	bool IsPressedNow(int keyCode, bool& prev)
@@ -56,6 +60,8 @@ void CharacterManager::Init()
 	m_prevKeyE = false;
 	m_prevKeyR = false;
 	m_status.Init(PLAYER_MAX_HP, 0);
+	m_stamina = PLAYER_MAX_STAMINA;
+	m_staminaRegenWait = 0;
 	m_invincibleCnt = 0;
 	m_char.Init();
 }

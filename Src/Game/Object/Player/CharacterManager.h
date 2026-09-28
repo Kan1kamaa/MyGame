@@ -20,6 +20,9 @@ private:
 	//被弾後、無敵時間として残っているフレーム数(この間はHitCalcでダメージを受けない)
 	int m_invincibleCnt;
 
+	float m_stamina;       //現在のスタミナ
+	int   m_staminaRegenWait; //消費してから回復が始まるまでの残りフレーム数
+
 	//--- Step() から呼ぶ小さな処理(1つずつ役割を分けている) ---
 
 	//WASD入力を読んで、カメラの向き基準の移動方向を返す

@@ -64,12 +64,24 @@ void Enemy::TurnToward(const VECTOR& moveDir)
 
 	//現在の向きとの差分を-PI〜PIに収め、最短方向で回転させる
 	float diff = targetRot - m_rot.y;
-	while (diff > DX_PI_F)  diff -= DX_PI_F * 2.0f;
-	while (diff < -DX_PI_F) diff += DX_PI_F * 2.0f;
+	while (diff > DX_PI_F)
+	{
+		diff -= DX_PI_F * 2.0f;
+	}
+	while (diff < -DX_PI_F)
+	{
+		diff += DX_PI_F * 2.0f;
+	}
 
 	//1フレームで回れる角度に上限をつける
-	if (diff > ROT_SPEED)       diff = ROT_SPEED;
-	else if (diff < -ROT_SPEED) diff = -ROT_SPEED;
+	if (diff > ROT_SPEED)
+	{
+		diff = ROT_SPEED;
+	}
+	else if (diff < -ROT_SPEED)
+	{
+		diff = -ROT_SPEED;
+	}
 
 	m_rot.y += diff;
 }
@@ -91,10 +103,30 @@ void Enemy::StepSearch()
 	m_pos = VAdd(m_pos, m_speed);
 
 	//範囲外に出たら消さずにフィールド内へ跳ね返す
-	if (m_pos.x < -MOVE_RANGE) { m_pos.x = -MOVE_RANGE; m_speed.x = fabsf(m_speed.x); }
-	if (m_pos.x >  MOVE_RANGE) { m_pos.x =  MOVE_RANGE; m_speed.x = -fabsf(m_speed.x); }
-	if (m_pos.z < -MOVE_RANGE) { m_pos.z = -MOVE_RANGE; m_speed.z = fabsf(m_speed.z); }
-	if (m_pos.z >  MOVE_RANGE) { m_pos.z =  MOVE_RANGE; m_speed.z = -fabsf(m_speed.z); }
+	//左端より外に出たら左端に戻して、右向きに進ませる
+	if (m_pos.x < -MOVE_RANGE)
+	{
+		m_pos.x = -MOVE_RANGE;
+		m_speed.x = fabsf(m_speed.x);
+	}
+	//右端より外に出たら右端に戻して、左向きに進ませる
+	if (m_pos.x > MOVE_RANGE)
+	{
+		m_pos.x = MOVE_RANGE;
+		m_speed.x = -fabsf(m_speed.x);
+	}
+	//手前端より外に出たら手前端に戻して、奥向きに進ませる
+	if (m_pos.z < -MOVE_RANGE)
+	{
+		m_pos.z = -MOVE_RANGE;
+		m_speed.z = fabsf(m_speed.z);
+	}
+	//奥端より外に出たら奥端に戻して、手前向きに進ませる
+	if (m_pos.z > MOVE_RANGE)
+	{
+		m_pos.z = MOVE_RANGE;
+		m_speed.z = -fabsf(m_speed.z);
+	}
 }
 
 //プレイヤーを追いかける
@@ -140,7 +172,10 @@ void Enemy::Load(int origiinhndl)
 void Enemy::Step(const VECTOR& playerPos)
 {
 	//フラグオフなら終了
-	if (m_isActive == false)return;
+	if (m_isActive == false)
+	{
+		return;
+	}
 
 	//死亡モーション再生中は移動処理を行わず、再生が終わったら消す
 	if (m_isDying == true)
@@ -180,7 +215,10 @@ void Enemy::Step(const VECTOR& playerPos)
 bool Enemy::Request(const VECTOR& pos, const VECTOR& speed)
 {
 	//既に発射されていたら終了
-	if (m_isActive == true)return false;
+	if (m_isActive == true)
+	{
+		return false;
+	}
 
 	m_pos = pos;
 	m_speed = speed;
@@ -194,9 +232,16 @@ bool Enemy::Request(const VECTOR& pos, const VECTOR& speed)
 
 void Enemy::HitCalc(const ObjectBase& other)
 {
-	if (m_invincibleCnt > 0)return;
+	//被弾後の無敵時間中はダメージを受けない
+	if (m_invincibleCnt > 0)
+	{
+		return;
+	}
 	//死亡モーション再生中は追加のダメージ判定をしない
-	if (m_isDying == true)return;
+	if (m_isDying == true)
+	{
+		return;
+	}
 
 	m_status.AddDamage(other.GetAttackPower());
 	m_invincibleCnt = INVINCIBLE_TIME;

@@ -65,12 +65,24 @@ void BossGolem::TurnToward(const VECTOR& moveDir)
 
 	//現在の向きとの差分を-PI〜PIに収め、最短方向で回転させる
 	float diff = targetRot - m_rot.y;
-	while (diff > DX_PI_F)  diff -= DX_PI_F * 2.0f;
-	while (diff < -DX_PI_F) diff += DX_PI_F * 2.0f;
+	while (diff > DX_PI_F)
+	{
+		diff -= DX_PI_F * 2.0f;
+	}
+	while (diff < -DX_PI_F)
+	{
+		diff += DX_PI_F * 2.0f;
+	}
 
 	//1フレームで回れる角度に上限をつける
-	if (diff > ROT_SPEED)       diff = ROT_SPEED;
-	else if (diff < -ROT_SPEED) diff = -ROT_SPEED;
+	if (diff > ROT_SPEED)
+	{
+		diff = ROT_SPEED;
+	}
+	else if (diff < -ROT_SPEED)
+	{
+		diff = -ROT_SPEED;
+	}
 
 	m_rot.y += diff;
 }
@@ -122,7 +134,12 @@ void BossGolem::StepAttack(const VECTOR& playerPos)
 	{
 		isAttackAnim = true;
 	}
-	bool isAttackFinished = (m_animData.m_nowFrm >= m_animData.m_endFrm);
+	//最終フレームまで再生し終えたか
+	bool isAttackFinished = false;
+	if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+	{
+		isAttackFinished = true;
+	}
 	if (isAttackAnim == true && isAttackFinished == false)
 	{
 		return;
@@ -156,7 +173,11 @@ void BossGolem::StepJumpAttack(const VECTOR& playerPos)
 
 	if(m_animData.m_nowFrm >= m_animData.m_endFrm * CHARGE_TIME)
 	{
-		bool isGroundedBeforeGravity = (m_pos.y <= Field::GetGroundHeight(m_pos.x, m_pos.z));
+		bool isGroundedBeforeGravity = false;
+		if (m_pos.y <= Field::GetGroundHeight(m_pos.x, m_pos.z))
+		{
+			isGroundedBeforeGravity = true;
+		}
 
 		if (isGroundedBeforeGravity == true)
 		{
@@ -184,7 +205,10 @@ void BossGolem::Step(const VECTOR& playerPos)
 {
 	
 	//フラグオフなら終了
-	if (m_isActive == false)return;
+	if (m_isActive == false)
+	{
+		return;
+	}
 
 	//死亡モーション再生中は行動せず、再生が終わったら消す
 	if (m_isDying == true)
@@ -225,7 +249,12 @@ void BossGolem::Step(const VECTOR& playerPos)
 	{
 		isAttackAnim = true;
 	}
-	bool isAttackFinished = (m_animData.m_nowFrm >= m_animData.m_endFrm);
+	//最終フレームまで再生し終えたか
+	bool isAttackFinished = false;
+	if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+	{
+		isAttackFinished = true;
+	}
 
 	//「攻撃状態」で「攻撃アニメを再生中」で「まだ振り終わっていない」の3つが全部揃ったときだけtrue
 	bool isMidAttack = false;
@@ -289,7 +318,10 @@ void BossGolem::Step(const VECTOR& playerPos)
 bool BossGolem::Request(const VECTOR& pos)
 {
 	//既に出現中なら終了
-	if (m_isActive == true)return false;
+	if (m_isActive == true)
+	{
+		return false;
+	}
 
 	m_pos = pos;
 	m_status.Init(BOSS_MAX_HP, BOSS_ATTACK_POWER);
@@ -303,9 +335,16 @@ bool BossGolem::Request(const VECTOR& pos)
 
 void BossGolem::HitCalc(const ObjectBase& other)
 {
+	//被弾後の無敵時間中はダメージを受けない
+	if (m_invincibleCnt > 0)
+	{
+		return;
+	}
 	//死亡モーション再生中は追加のダメージ判定をしない
-	if (m_invincibleCnt > 0)return;
-	if (m_isDying == true)return;
+	if (m_isDying == true)
+	{
+		return;
+	}
 
 	m_status.AddDamage(other.GetAttackPower());
 	m_invincibleCnt = INVINCIBLE_TIME;

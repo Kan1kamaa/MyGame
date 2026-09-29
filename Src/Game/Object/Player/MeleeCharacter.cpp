@@ -150,7 +150,14 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 {
 	//isAttackInput(今押されているか)がtrueで、m_prevAttackInput(前フレームで押されていたか)がfalseのとき、
 	//つまり「今フレームで新しく押された」ときだけisAttackTriggerがtrueになる
-	bool isAttackTrigger = (isAttackInput == true && m_prevAttackInput == false);
+	bool isAttackTrigger = false;
+	if (isAttackInput == true)
+	{
+		if (m_prevAttackInput == false)
+		{
+			isAttackTrigger = true;
+		}
+	}
 	m_prevAttackInput = isAttackInput; //次のフレームのために、今回の状態を覚えておく
 
 	//地上にいる(待機・歩き・走り)ときだけジャンプ・スキル・必殺技を受け付ける

@@ -29,7 +29,11 @@ void ActorBase::Init()
 //アニメーション再生(最終フレームで停止)
 void ActorBase::RequestAnim(int index, float animSpeed, int animSrcHndl, bool isCheck)
 {
-	if (index == m_animData.m_index) return;
+	//同じアニメがすでに再生中なら何もしない(最初から再生し直さない)
+	if (index == m_animData.m_index)
+	{
+		return;
+	}
 	//アニメ消去
 	DetachAnim();
 

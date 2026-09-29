@@ -6,7 +6,10 @@ void GameCollision::CheckHitEnemyToShot(EnemyManager& enemyManager, ShotManager&
 	for (int i = 0; i < PL_SHOT_MAX; i++)
 	{
 		Shot& plshot = shotManager.GetPlayerShot(i);
-		if (plshot.GetActive() == false)continue;
+		if (plshot.GetActive() == false)
+		{
+			continue;
+		}
 
 
 		VECTOR shotPos = plshot.GetCollisionPos();
@@ -15,7 +18,10 @@ void GameCollision::CheckHitEnemyToShot(EnemyManager& enemyManager, ShotManager&
 		for (int j = 0; j < ENEMY_MAX; j++)
 		{
 			Enemy& enemy = enemyManager.GetEnemy(j);
-			if (enemy.GetActive() == false)continue;
+			if (enemy.GetActive() == false)
+			{
+				continue;
+			}
 
 			VECTOR enemyPos = enemy.GetCollisionPos();
 			float enemyRad = enemy.GetRadius();
@@ -37,7 +43,10 @@ void GameCollision::CheckHitEnemyToPlayer(EnemyManager& enemyManager,CharacterMa
 	for (int j = 0; j < ENEMY_MAX; j++)
 	{
 		Enemy& enemy = enemyManager.GetEnemy(j);
-		if (enemy.GetActive() == false)continue;
+		if (enemy.GetActive() == false)
+		{
+			continue;
+		}
 
 		VECTOR enemyPos = enemy.GetCollisionPos();
 		float enemyRad = enemy.GetRadius();
@@ -53,7 +62,10 @@ void GameCollision::CheckHitEnemyToPlayer(EnemyManager& enemyManager,CharacterMa
 void GameCollision::CheckHitPlayerAttackToEnemy(CharacterManager& player, EnemyManager& enemyManager)
 {
 	//攻撃モーション中(通常1〜3段・ジャンプ攻撃・スキル・必殺技)でなければ何もしない
-	if (player.IsAttackActive() == false)return;
+	if (player.IsAttackActive() == false)
+	{
+		return;
+	}
 
 	//攻撃判定の球(キャラの前方に出している)
 	VECTOR attackPos = player.GetAttackPos();
@@ -62,7 +74,10 @@ void GameCollision::CheckHitPlayerAttackToEnemy(CharacterManager& player, EnemyM
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
 		Enemy& enemy = enemyManager.GetEnemy(i);
-		if (enemy.GetActive() == false)continue;
+		if (enemy.GetActive() == false)
+		{
+			continue;
+		}
 
 		VECTOR enemyPos = enemy.GetCollisionPos();
 		float enemyRad = enemy.GetRadius();
@@ -78,7 +93,10 @@ void GameCollision::CheckHitPlayerAttackToEnemy(CharacterManager& player, EnemyM
 //プレイヤーの弾とボスの当たり判定
 void GameCollision::CheckHitBossToShot(BossGolem& boss, ShotManager& shotManager)
 {
-	if (boss.GetActive() == false)return;
+	if (boss.GetActive() == false)
+	{
+		return;
+	}
 
 	VECTOR bossPos = boss.GetCollisionPos();
 	float bossRad = boss.GetRadius();
@@ -86,7 +104,10 @@ void GameCollision::CheckHitBossToShot(BossGolem& boss, ShotManager& shotManager
 	for (int i = 0; i < PL_SHOT_MAX; i++)
 	{
 		Shot& plshot = shotManager.GetPlayerShot(i);
-		if (plshot.GetActive() == false)continue;
+		if (plshot.GetActive() == false)
+		{
+			continue;
+		}
 
 		VECTOR shotPos = plshot.GetCollisionPos();
 		float shotRad = plshot.GetRadius();
@@ -102,7 +123,10 @@ void GameCollision::CheckHitBossToShot(BossGolem& boss, ShotManager& shotManager
 //ボスとプレイヤーの接触判定
 void GameCollision::CheckHitBossToPlayer(BossGolem& boss, CharacterManager& player)
 {
-	if (boss.GetActive() == false)return;
+	if (boss.GetActive() == false)
+	{
+		return;
+	}
 
 	VECTOR playerPos = player.GetCollisionPos();
 	float playerRad = player.GetRadius();
@@ -120,8 +144,14 @@ void GameCollision::CheckHitBossToPlayer(BossGolem& boss, CharacterManager& play
 void GameCollision::CheckHitPlayerAttackToBoss(CharacterManager& player, BossGolem& boss)
 {
 	//攻撃モーション中(通常1〜3段・ジャンプ攻撃・スキル・必殺技)でなければ何もしない
-	if (player.IsAttackActive() == false)return;
-	if (boss.GetActive() == false)return;
+	if (player.IsAttackActive() == false)
+	{
+		return;
+	}
+	if (boss.GetActive() == false)
+	{
+		return;
+	}
 
 	VECTOR attackPos = player.GetAttackPos();
 	float attackRad = player.GetAttackRadius();

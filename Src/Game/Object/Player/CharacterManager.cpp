@@ -3,30 +3,49 @@
 #include "math.h"
 
 namespace {
-	const int PLAYER_MAX_HP = 100;					  //プレイヤーの最大HP
+	const int PLAYER_MAX_HP = 100;					//プレイヤーの最大HP
 	const float PLAYER_MAX_STAMINA = 100;			//プレイヤーの最大スタミナ
-	const float JUMP_POWER = 8.0f;					 //ジャンプ初速
+	const float JUMP_POWER = 8.0f;					//ジャンプ初速
 	const float WALK_SPEED = 0.6f;					//歩きの移動速度
-	const float RUN_SPEED = WALK_SPEED * 2.5f;		 //走りの移動速度(歩きの2.5倍)
-	const float MOVE_RANGE_X = 300.0f;				 //移動範囲を制限
-	const float MOVE_RANGE_Z = 300.0f;				 //移動範囲を制限
+	const float RUN_SPEED = WALK_SPEED * 2.5f;		//走りの移動速度(歩きの2.5倍)
+	const float MOVE_RANGE_X = 300.0f;				//移動範囲を制限
+	const float MOVE_RANGE_Z = 300.0f;				//移動範囲を制限
 	const float ROT_SPEED = 0.30f;					//キャラが移動方向へ向き直る速さ(1フレームあたりの最大角度)
-	const float GRAVITY = 0.6f;					  //重力(1フレームごとに上下速度から引く量)
+	const float GRAVITY = 0.6f;					    //重力(1フレームごとに上下速度から引く量)
+	const float DASH_STAMINA_COST = 0.2f;			//ダッシュ中に1フレームで減る量(100なら約3.3秒走れる)
+	const float AVOID_STAMINA_COST = 10.0f;			//回避1回で減る量
+	const float JUMP_STAMINA_COST = 10.0f;			//ジャンプ1回で減る量
+	const float STAMINA_REGEN = 0.3f;				//1フレームで回復する量
+	const int STAMINA_REGENDELAY = 120;				//スタミナが回復を始めるまでの時間
+	const float DASH_RESTART_STAMINA = 30;			//息切れから走れるようになる量
+	const int INVINCIBLE_TIME = 60;					//被弾後の無敵時間(フレーム数。60=約1秒)
 
-	const int STAMINAREGENDELEY;		//スタミナが回復を始めるまでの時間
-	const int INVINCIBLE_TIME = 60;        //被弾後の無敵時間(フレーム数。60=約1秒)
-
-	const float ATTACK_HIT_DIST = 14.0f;   //攻撃判定(球)をキャラの前方どれだけ先に出すか
-	const float ATTACK_HIT_RADIUS = 14.0f; //攻撃判定(球)の半径
-
+	const float ATTACK_HIT_DIST = 14.0f;			//攻撃判定(球)をキャラの前方どれだけ先に出すか
+	const float ATTACK_HIT_RADIUS = 14.0f;			//攻撃判定(球)の半径
 
 	
 	//キーが「今のフレームで押された瞬間」かどうかを返す。
 	//prev には前フレームの押下状態が入っていて、この関数の中で更新する。
 	bool IsPressedNow(int keyCode, bool& prev)
 	{
-		bool now = (CheckHitKey(keyCode) != 0);
-		bool triggered = (now == true && prev == false);
+		//今のフレームで押されているか
+		bool now = false;
+		if (CheckHitKey(keyCode) != 0)
+		{
+			now = true;
+		}
+
+		//「今押されている」かつ「前のフレームでは押されていなかった」なら押した瞬間
+		bool triggered = false;
+		if (now == true)
+		{
+			if (prev == false)
+			{
+				triggered = true;
+			}
+		}
+
+		//次のフレームのために、今回の状態を覚えておく
 		prev = now;
 		return triggered;
 	}
@@ -63,6 +82,7 @@ void CharacterManager::Init()
 	m_stamina = PLAYER_MAX_STAMINA;
 	m_staminaRegenWait = 0;
 	m_invincibleCnt = 0;
+	m_isExhausted = false;
 	m_char.Init();
 }
 
@@ -86,16 +106,69 @@ void CharacterManager::Step(float cameraYaw)
 	{
 		m_invincibleCnt--;
 	}
-
+	if (m_staminaRegenWait > 0)
+	{
+		m_staminaRegenWait--;
+	}
+	else
+	{
+		if (m_stamina < PLAYER_MAX_STAMINA)
+		{
+			m_stamina += STAMINA_REGEN;
+		}
+	}
+	
 	//------ このフレームの入力をすべて読む ------
 	//攻撃中はWASDでの移動を受け付けない(移動方向を0にする)
 	bool isAttacking = m_char.IsAttacking();
-	VECTOR moveDir = (isAttacking == true) ? VGet(0.0f, 0.0f, 0.0f) : ReadMoveDir(cameraYaw);
+	VECTOR moveDir = VGet(0.0f, 0.0f, 0.0f);
+	if (isAttacking == false)
+	{
+		//攻撃中でなければWASDから移動方向を作る
+		moveDir = ReadMoveDir(cameraYaw);
+	}
 
-	bool isMoveInput = (VSize(moveDir) > 0.0001f);
-	bool isRunInput = (isMoveInput == true && CheckHitKey(KEY_INPUT_LSHIFT) != 0);
-	bool isAttackInput = (GetMouseInput() & MOUSE_INPUT_LEFT) != 0;
+	//移動方向の長さが0より大きければ(=WASDが押されていれば)移動入力あり
+	bool isMoveInput = false;
+	if (VSize(moveDir) > 0.0001f)
+	{
+		isMoveInput = true;
+	}
+	//スタミナが0になったら息切れ。30まで回復したら解除
+	if (m_stamina < 0)
+	{
+		m_isExhausted = true;
+	}
+	if (m_stamina >= DASH_RESTART_STAMINA)
+	{
+		m_isExhausted = false;
+	}
+
+	//移動中に左シフトも押されていれば走り(息切れ中は走れない)
+	bool isRunInput = false;
+	if (isMoveInput == true)
+	{
+		if (CheckHitKey(KEY_INPUT_LSHIFT) != 0 &&m_isExhausted == false)
+		{
+			isRunInput = true;
+			m_stamina -= DASH_STAMINA_COST;
+			m_staminaRegenWait = STAMINA_REGENDELAY;
+		}
+	}
+
+	//マウスの左ボタンが押されていれば攻撃入力あり(押している間ずっとtrue)
+	bool isAttackInput = false;
+	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
+	{
+		isAttackInput = true;
+	}
+
+	//ジャンプ・スキル・必殺技はキーを押した瞬間だけtrue
 	bool isJumpTrigger = IsPressedNow(KEY_INPUT_SPACE, m_prevKeySpace);
+	if (m_stamina < JUMP_STAMINA_COST)
+	{
+		isJumpTrigger = false;
+	}
 	bool isSkillTrigger = IsPressedNow(KEY_INPUT_E, m_prevKeyE);
 	bool isUltTrigger = IsPressedNow(KEY_INPUT_R, m_prevKeyR);
 
@@ -113,7 +186,12 @@ void CharacterManager::Step(float cameraYaw)
 
 	//------ ジャンプ・重力(縦移動) ------
 	UpdateVertical(isJumpTrigger);
-	bool isGrounded = (m_pos.y <= Field::GetGroundHeight(m_pos.x, m_pos.z)); //重力適用後の最新の接地状態(アニメーション判定用)
+	//重力適用後の最新の接地状態(アニメーション判定用)
+	bool isGrounded = false;
+	if (m_pos.y <= Field::GetGroundHeight(m_pos.x, m_pos.z))
+	{
+		isGrounded = true;
+	}
 
 	//------ キャラクターへ座標・向きを反映 ------
 	m_char.SetPos(m_pos);
@@ -133,10 +211,26 @@ VECTOR CharacterManager::ReadMoveDir(float cameraYaw) const
 
 	//押されているキーぶんだけ、前後左右のベクトルを足し合わせる
 	VECTOR dir = { 0.0f, 0.0f, 0.0f };
-	if (CheckHitKey(KEY_INPUT_W) != 0) dir = VAdd(dir, forward);
-	if (CheckHitKey(KEY_INPUT_S) != 0) dir = VSub(dir, forward);
-	if (CheckHitKey(KEY_INPUT_D) != 0) dir = VAdd(dir, right);
-	if (CheckHitKey(KEY_INPUT_A) != 0) dir = VSub(dir, right);
+	//Wなら前へ
+	if (CheckHitKey(KEY_INPUT_W) != 0)
+	{
+		dir = VAdd(dir, forward);
+	}
+	//Sなら後ろへ
+	if (CheckHitKey(KEY_INPUT_S) != 0)
+	{
+		dir = VSub(dir, forward);
+	}
+	//Dなら右へ
+	if (CheckHitKey(KEY_INPUT_D) != 0)
+	{
+		dir = VAdd(dir, right);
+	}
+	//Aなら左へ
+	if (CheckHitKey(KEY_INPUT_A) != 0)
+	{
+		dir = VSub(dir, right);
+	}
 
 	//入力が無い、または打ち消し合って0になったらそのまま0を返す
 	if (VSize(dir) <= 0.0001f)
@@ -171,11 +265,25 @@ VECTOR CharacterManager::CalcLungeVelocity() const
 //m_pos を移動可能範囲(フィールド)の中に収める
 void CharacterManager::ClampInsideField()
 {
-	if (m_pos.x < -MOVE_RANGE_X) m_pos.x = -MOVE_RANGE_X;
-	else if (m_pos.x > MOVE_RANGE_X) m_pos.x = MOVE_RANGE_X;
+	//X方向:左端より外なら左端に、右端より外なら右端に戻す
+	if (m_pos.x < -MOVE_RANGE_X)
+	{
+		m_pos.x = -MOVE_RANGE_X;
+	}
+	else if (m_pos.x > MOVE_RANGE_X)
+	{
+		m_pos.x = MOVE_RANGE_X;
+	}
 
-	if (m_pos.z < -MOVE_RANGE_Z) m_pos.z = -MOVE_RANGE_Z;
-	else if (m_pos.z > MOVE_RANGE_Z) m_pos.z = MOVE_RANGE_Z;
+	//Z方向:手前端より外なら手前端に、奥端より外なら奥端に戻す
+	if (m_pos.z < -MOVE_RANGE_Z)
+	{
+		m_pos.z = -MOVE_RANGE_Z;
+	}
+	else if (m_pos.z > MOVE_RANGE_Z)
+	{
+		m_pos.z = MOVE_RANGE_Z;
+	}
 }
 
 //移動している方向へ、m_rot.y を少しずつ回して向き直る
@@ -185,12 +293,24 @@ void CharacterManager::TurnToward(VECTOR moveDir)
 
 	//現在の向きとの差分を -PI〜PI に収め、最短方向で回転させる
 	float diff = targetRot - m_rot.y;
-	while (diff > DX_PI_F)  diff -= DX_PI_F * 2.0f;
-	while (diff < -DX_PI_F) diff += DX_PI_F * 2.0f;
+	while (diff > DX_PI_F)
+	{
+		diff -= DX_PI_F * 2.0f;
+	}
+	while (diff < -DX_PI_F)
+	{
+		diff += DX_PI_F * 2.0f;
+	}
 
 	//1フレームで回れる角度に上限をつける(ROT_SPEED)
-	if (diff > ROT_SPEED)       diff = ROT_SPEED;
-	else if (diff < -ROT_SPEED) diff = -ROT_SPEED;
+	if (diff > ROT_SPEED)
+	{
+		diff = ROT_SPEED;
+	}
+	else if (diff < -ROT_SPEED)
+	{
+		diff = -ROT_SPEED;
+	}
 
 	m_rot.y += diff;
 }
@@ -201,10 +321,16 @@ void CharacterManager::UpdateVertical(bool isJumpTrigger)
 	float groundHeight = Field::GetGroundHeight(m_pos.x, m_pos.z);
 
 	//接地しているときだけジャンプキーを受け付ける
-	bool isGroundedBeforeGravity = (m_pos.y <= groundHeight);
+	bool isGroundedBeforeGravity = false;
+	if (m_pos.y <= groundHeight)
+	{
+		isGroundedBeforeGravity = true;
+	}
 	if (isJumpTrigger == true && isGroundedBeforeGravity == true)
 	{
 		m_velocityY = JUMP_POWER;
+		m_stamina -= JUMP_STAMINA_COST;
+		m_staminaRegenWait = STAMINA_REGENDELAY;
 	}
 
 	//重力を適用して上下移動(接地中は毎フレーム地面の高さに戻るだけなので害はない)
@@ -233,7 +359,11 @@ void CharacterManager::Update()
 //----------------------
 void CharacterManager::DrawPL()
 {
-	if (m_isActive == false) return;
+	//行動不能(HP0)なら描画しない
+	if (m_isActive == false)
+	{
+		return;
+	}
 
 	m_char.Draw();
 	m_char.DrawWeapon();
@@ -260,8 +390,16 @@ void CharacterManager::DrawPL()
 //無敵時間中・回避モーション中でなければダメージを受ける。HPが0になったら行動不能にする
 void CharacterManager::HitCalc(const ObjectBase& other)
 {
-	if (m_invincibleCnt > 0)return;
-	if (m_char.IsDodging() == true)return; //走り出し(回避)モーション中は無敵
+	//被弾後の無敵時間中はダメージを受けない
+	if (m_invincibleCnt > 0)
+	{
+		return;
+	}
+	//走り出し(回避)モーション中は無敵
+	if (m_char.IsDodging() == true)
+	{
+		return;
+	}
 
 	m_status.AddDamage(other.GetAttackPower());
 	m_invincibleCnt = INVINCIBLE_TIME;

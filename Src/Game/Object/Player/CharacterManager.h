@@ -23,6 +23,7 @@ private:
 	float m_stamina;       //現在のスタミナ
 	int   m_staminaRegenWait; //消費してから回復が始まるまでの残りフレーム数
 	bool m_isExhausted;	//スタミナ切れで走れない状態か
+	bool m_wasDodging;	//前フレームで回避(走り出し)モーション中だったか(切り替わった瞬間の検出用)
 	//--- Step() から呼ぶ小さな処理(1つずつ役割を分けている) ---
 
 	//WASD入力を読んで、カメラの向き基準の移動方向を返す

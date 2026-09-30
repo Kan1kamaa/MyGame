@@ -83,6 +83,7 @@ void CharacterManager::Init()
 	m_staminaRegenWait = 0;
 	m_invincibleCnt = 0;
 	m_isExhausted = false;
+	m_wasDodging = false;
 	m_char.Init();
 }
 
@@ -155,7 +156,10 @@ void CharacterManager::Step(float cameraYaw)
 			m_staminaRegenWait = STAMINA_REGENDELAY;
 		}
 	}
-
+	if (m_stamina < AVOID_STAMINA_COST)
+	{
+		isRunInput = false;
+	}
 	//マウスの左ボタンが押されていれば攻撃入力あり(押している間ずっとtrue)
 	bool isAttackInput = false;
 	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
@@ -200,6 +204,15 @@ void CharacterManager::Step(float cameraYaw)
 	//------ アニメーションを処理 ------
 	m_char.UpdateAnimState(isAttackInput, isMoveInput, isRunInput, isGrounded, m_velocityY, isJumpTrigger,
 		isSkillTrigger, isUltTrigger);
+
+	//------ 回避(走り出し)に切り替わった瞬間だけ、まとめてスタミナを引く ------
+	bool isDodging = m_char.IsDodging();
+	if (isDodging == true && m_wasDodging == false)
+	{
+		m_stamina -= AVOID_STAMINA_COST;
+		m_staminaRegenWait = STAMINA_REGENDELAY;
+	}
+	m_wasDodging = isDodging;
 }
 
 //WASD入力を読んで、カメラの向き基準の移動方向を返す(長さ1。入力が無ければ長さ0)
@@ -374,8 +387,9 @@ void CharacterManager::DrawPL()
 		m_char.GetWeaponFrameIndex(), m_char.GetWeaponFrameIndexR());
 
 	//HP表示
-	DrawFormatString(16, 40, GetColor(255, 255, 255), "HP:%d/%d", GetHp(), GetMaxHp());
-
+	DrawFormatString(16, 650, GetColor(255, 0, 0), "HP:%d/%d", GetHp(), GetMaxHp());
+	//スタミナ表示
+	DrawFormatString(16, 670, GetColor(255, 255, 0), "スタミナ:%d/100", (int)m_stamina);
 	//攻撃判定の可視化(デバッグ):攻撃中は前方の当たり判定の球をワイヤーフレームで表示する
 	if (IsAttackActive() == true)
 	{

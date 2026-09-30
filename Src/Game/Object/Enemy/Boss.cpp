@@ -11,8 +11,8 @@ static const float BOSS_RAD = 30.0f;		//当たり判定の半径(通常の敵よ
 static const float BOSS_SCALE = 0.6f;		//BossGolemモデルの表示倍率(見た目が大きすぎ/小さすぎる場合はここを調整)
 static const float ANIM_SPEED = 0.5f;		//アニメーション再生速度
 
-static const float GRAVITY = 0.6f;           //重力(1フレームごとに上下速度から引く量)
-static const float JUMP_POWER = 14.0f;       //ジャンプ初速
+static const float GRAVITY = 0.4f;           //重力(1フレームごとに上下速度から引く量)
+static const float JUMP_POWER = 10.0f;       //ジャンプ初速
 
 static const int   BOSS_MAX_HP = 1000;		//最大HP(通常の敵は100)
 static const int   BOSS_ATTACK_POWER = 40;	//攻撃力(通常の敵は20)
@@ -20,13 +20,13 @@ static const int   BOSS_ATTACK_POWER = 40;	//攻撃力(通常の敵は20)
 static const int INVINCIBLE_TIME = 60;        //被弾後の無敵時間(フレーム数。60=約1秒)
 //プレイヤーの追跡・攻撃の調整用パラメータ
 
-static const float DETECT_RANGE = 200.0f;		//この距離より近づくとプレイヤーを追いかける
+static const float DETECT_RANGE = 300.0f;		//この距離より近づくとプレイヤーを追いかける
 static const float ATTACK_RANGE = 50.0f;		//この距離より近づくと攻撃する
 static const float JUMP_RANGE = 150.0f;          //この距離離れてたらジャンプ攻撃
 static const float CHASE_MOVE_SPEED = 0.4f;	//追いかけているときの1フレームあたりの移動量
-static const float JUMPATTACK_MOVE_SPEED = 0.8f;	//ジャンプ攻撃で追いかけているときの1フレームあたりの移動量
+static const float JUMPATTACK_MOVE_SPEED = 2.0f;	//ジャンプ攻撃で追いかけているときの1フレームあたりの移動量
 static const float ROT_SPEED = 0.06f;			//1フレームで向き直れる最大角度(巨体なのでゆっくり)
-static const int   ATTACK_COOLDOWN = 40;		//攻撃と攻撃の間隔(フレーム数)
+static const int   ATTACK_COOLDOWN = 100;		//攻撃と攻撃の間隔(フレーム数)
 static const int   JUMPATTACK_COOLDOWN = 1200;  //ジャンプ攻撃の間隔
 static const float CHARGE_TIME = 0.35;          //アニメーションの初めのタメ時間を判別するのに使用
 
@@ -51,7 +51,7 @@ void BossGolem::Init()
 	m_speed = VEC_ZERO;
 	m_isDying = false;
 	m_attackCoolCnt = 0;
-	m_JumpatackCoolCnt = 60;
+	m_JumpatackCoolCnt = 0;
 	m_state = Search;
 	m_velocityY = 0;
 	m_invincibleCnt = 0;
@@ -179,7 +179,7 @@ void BossGolem::StepJumpAttack(const VECTOR& playerPos)
 			isGroundedBeforeGravity = true;
 		}
 
-		if (isGroundedBeforeGravity == true)
+		if (isGroundedBeforeGravity == true && m_JumpatackCoolCnt <= 0)
 		{
 			m_velocityY = JUMP_POWER;
 			m_JumpatackCoolCnt = JUMPATTACK_COOLDOWN;
@@ -203,7 +203,7 @@ void BossGolem::Load()
 //毎フレーム計算する処理
 void BossGolem::Step(const VECTOR& playerPos)
 {
-	
+	//攻撃判定の可視化(デバッグ):攻撃中は前方の当たり判定の球をワイヤーフレームで表示する
 	//フラグオフなら終了
 	if (m_isActive == false)
 	{
@@ -311,6 +311,10 @@ void BossGolem::Step(const VECTOR& playerPos)
 		m_velocityY = 0.0f;
 		m_JumpatackCoolCnt = JUMPATTACK_COOLDOWN;
 	}
+	//HP表示
+	DrawFormatString(16, 100, GetColor(255, 0, 0), "HP:%d/%d", GetBossHp(), GetBossMaxHp());
+	//スタミナ表示
+	DrawFormatString(16, 120, GetColor(255, 255, 0), "state:%d", m_state);
 }
 
 

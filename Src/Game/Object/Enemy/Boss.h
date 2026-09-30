@@ -72,5 +72,9 @@ public:
 
 	void HitCalc(const ObjectBase& other);
 
-	float GetAttackPower()const { return m_status.AttackPower; }
+	float GetAttackPower()const { return m_status.AttackPower; };
+	//現在のHP・最大HP(HUD表示用)
+	int GetBossHp() const { return m_status.NowHp; }
+	int GetBossMaxHp() const { return m_status.MaxHp; }
+
 };

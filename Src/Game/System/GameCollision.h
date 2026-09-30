@@ -15,8 +15,8 @@ public:
 	//プレイヤーの弾とボスの当たり判定
 	static void CheckHitBossToShot(BossGolem& boss, ShotManager& shotManager);
 
-	//ボスとプレイヤーの接触判定
-	static void CheckHitBossToPlayer(BossGolem& boss, CharacterManager& player);
+	//ボスの攻撃とプレイヤーの当たり判定
+	static void CheckHitBossAttackToPlayer(BossGolem& boss, CharacterManager& player);
 
 	//プレイヤーの近接攻撃(前方の球)とボスの当たり判定
 	static void CheckHitPlayerAttackToBoss(CharacterManager& player, BossGolem& boss);

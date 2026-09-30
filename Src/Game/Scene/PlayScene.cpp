@@ -65,7 +65,7 @@ void PlayScene::Step()
 	GameCollision::CheckHitEnemyToPlayer(enemy, player);
 	GameCollision::CheckHitPlayerAttackToEnemy(player, enemy);
 	GameCollision::CheckHitBossToShot(boss, shot);
-	GameCollision::CheckHitBossToPlayer(boss, player);
+	GameCollision::CheckHitBossAttackToPlayer(boss, player);
 	GameCollision::CheckHitPlayerAttackToBoss(player, boss);
 
 	if (player.GetActive() == false)

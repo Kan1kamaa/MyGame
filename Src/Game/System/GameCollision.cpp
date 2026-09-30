@@ -120,10 +120,11 @@ void GameCollision::CheckHitBossToShot(BossGolem& boss, ShotManager& shotManager
 	}
 }
 
-//ボスとプレイヤーの接触判定
-void GameCollision::CheckHitBossToPlayer(BossGolem& boss, CharacterManager& player)
+//ボスの攻撃とプレイヤーの当たり判定(体に触れただけではダメージを受けない)
+void GameCollision::CheckHitBossAttackToPlayer(BossGolem& boss, CharacterManager& player)
 {
-	if (boss.GetActive() == false)
+	//攻撃判定を出しているとき(振り下ろしの区間・ジャンプ攻撃の着地直後)でなければ何もしない
+	if (boss.IsAttackActive() == false)
 	{
 		return;
 	}
@@ -131,10 +132,10 @@ void GameCollision::CheckHitBossToPlayer(BossGolem& boss, CharacterManager& play
 	VECTOR playerPos = player.GetCollisionPos();
 	float playerRad = player.GetRadius();
 
-	VECTOR bossPos = boss.GetCollisionPos();
-	float bossRad = boss.GetRadius();
+	VECTOR attackPos = boss.GetAttackPos();
+	float attackRad = boss.GetAttackRadius();
 
-	if (Collsion::CheckHitSphereToSphere(playerPos, playerRad, bossPos, bossRad) == true)
+	if (Collsion::CheckHitSphereToSphere(playerPos, playerRad, attackPos, attackRad) == true)
 	{
 		player.HitCalc(boss);
 	}

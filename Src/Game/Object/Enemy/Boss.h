@@ -13,6 +13,10 @@ private:
 	//現在の上下速度(ジャンプ・重力で使用)
 	float m_velocityY;
 	bool m_IsGround; //地面に足がついているか
+	bool m_isJumping;		//ジャンプ攻撃で空中にいるか
+	VECTOR m_jumpTarget;	//ジャンプ攻撃の着地目標(踏み切った瞬間のプレイヤー位置)
+	VECTOR m_jumpMove;		//ジャンプ攻撃中の1フレームあたりの水平移動量(踏み切った瞬間に固定)
+	int m_landingHitCnt;	//ジャンプ攻撃の着地の衝撃判定を出している残りフレーム数
 	enum EnemyState
 	{
 		Search,
@@ -63,6 +67,8 @@ public:
 	//毎フレーム計算する処理
 	//@playerPos : プレイヤーの現在座標(索敵・追跡・攻撃の判定に使う)
 	void Step(const VECTOR& playerPos);
+	//描画(被弾直後は赤く光らせる)
+	void Draw();
 	//出現させる
 	//@pos : 出現させる座標
 	//@return : true = 成功  false = 失敗(既に出現中)
@@ -73,6 +79,12 @@ public:
 	void HitCalc(const ObjectBase& other);
 
 	float GetAttackPower()const { return m_status.AttackPower; };
+	//攻撃判定を出しているか(攻撃モーションの振り下ろし区間・ジャンプ攻撃の着地直後だけtrue)
+	bool IsAttackActive() const;
+	//攻撃判定(球)の中心座標。通常攻撃はボスの前方、ジャンプ攻撃の着地は足元
+	VECTOR GetAttackPos() const;
+	//攻撃判定(球)の半径
+	float GetAttackRadius() const;
 	//現在のHP・最大HP(HUD表示用)
 	int GetBossHp() const { return m_status.NowHp; }
 	int GetBossMaxHp() const { return m_status.MaxHp; }

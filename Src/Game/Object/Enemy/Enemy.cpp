@@ -7,6 +7,7 @@ static const float ENEMY_RAD = 5.0f;
 static const float ENEMY_SCALE = 0.08f;	//Golemモデルの表示倍率(見た目が大きすぎ/小さすぎる場合はここを調整)
 static const float ANIM_SPEED = 0.3f;		//アニメーション再生速度
 static const int INVINCIBLE_TIME = 60;        //被弾後の無敵時間(フレーム数。60=約1秒)
+static const int HIT_FLASH_TIME = 8;          //被弾してから赤く光らせるフレーム数
 //ランダム移動の調整用パラメータ
 static const float ENEMY_MOVE_SPEED = 0.2f;	//1フレームあたりの移動量
 static const int   DIR_CHANGE_MIN = 30;		//方向転換するまでの最短フレーム数
@@ -208,6 +209,33 @@ void Enemy::Step(const VECTOR& playerPos)
 	case Search: StepSearch();          break;
 	case Chase:  StepChase(playerPos);  break;
 	case Attack: StepAttack(playerPos); break;
+	}
+}
+
+//描画
+void Enemy::Draw()
+{
+	if (m_isActive == false)
+	{
+		return;
+	}
+
+	//被弾直後(無敵時間の最初の数フレーム)だけ赤く染めて、攻撃が当たったことをわかりやすくする
+	bool isFlash = false;
+	if (m_invincibleCnt > INVINCIBLE_TIME - HIT_FLASH_TIME)
+	{
+		isFlash = true;
+	}
+
+	if (isFlash == true)
+	{
+		MV1SetDifColorScale(m_hndl, GetColorF(1.0f, 0.3f, 0.3f, 1.0f));
+	}
+	MV1DrawModel(m_hndl);
+	if (isFlash == true)
+	{
+		//他の描画に影響しないよう元の色に戻す
+		MV1SetDifColorScale(m_hndl, GetColorF(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 }
 

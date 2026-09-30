@@ -48,6 +48,8 @@ public:
 	//毎フレーム計算する処理
 	//@playerPos : プレイヤーの現在座標(索敵・追跡・攻撃の判定に使う)
 	void Step(const VECTOR& playerPos);
+	//描画(被弾直後は赤く光らせる)
+	void Draw();
 	//ショット発射
 	//@pos : 発射する座標
 	//@speed :　移動速度

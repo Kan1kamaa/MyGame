@@ -1,7 +1,7 @@
 ﻿#include"PlayScene.h"
 
 //ボスの出現座標(プレイヤーのスポーン地点から少し離れた場所)
-static const VECTOR BOSS_SPAWN_POS = { 0.0f, 0.0f, 200.0f };
+static const VECTOR BOSS_SPAWN_POS = { 0.0f, 0.0f, 300.0f };
 
 // 描画処理
 void PlayScene::Draw()

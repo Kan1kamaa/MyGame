@@ -34,7 +34,7 @@ Enemy::~Enemy()
 void Enemy::Init()
 {
 	ActorBase::Init();
-	m_status.Init(100,10);
+	m_status.Init(50,10);
 	m_radius = ENEMY_RAD;
 	m_scale = { ENEMY_SCALE, ENEMY_SCALE, ENEMY_SCALE };
 	m_speed = VEC_ZERO;

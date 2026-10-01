@@ -8,31 +8,31 @@ static const VECTOR VEC_ZERO{ 0.0f,0.0f,0.0f };
 static const char FILE_PATH[] = "Data/models/Enemy/BossGolem.mv1";
 
 static const float BOSS_RAD = 30.0f;		//当たり判定の半径(通常の敵より大きめ)
-static const float BOSS_SCALE = 0.6f;		//BossGolemモデルの表示倍率(見た目が大きすぎ/小さすぎる場合はここを調整)
+static const float BOSS_SCALE = 0.8f;		//BossGolemモデルの表示倍率(見た目が大きすぎ/小さすぎる場合はここを調整)
 static const float ANIM_SPEED = 0.5f;		//アニメーション再生速度
 
 static const float GRAVITY = 0.4f;           //重力(1フレームごとに上下速度から引く量)
 static const float JUMP_POWER = 8.0f;       //ジャンプ初速
 
-static const int   BOSS_MAX_HP = 1000;		//最大HP(通常の敵は100)
+static const int   BOSS_MAX_HP = 500;		//最大HP(通常の敵は100)
 static const int   BOSS_ATTACK_POWER = 40;	//攻撃力(通常の敵は20)
 
-static const int INVINCIBLE_TIME = 60;        //被弾後の無敵時間(フレーム数。60=約1秒)
+static const int INVINCIBLE_TIME = 40;        //被弾後の無敵時間(フレーム数。60=約1秒)
 static const int HIT_FLASH_TIME = 8;          //被弾してから赤く光らせるフレーム数
 //プレイヤーの追跡・攻撃の調整用パラメータ
 
 static const float DETECT_RANGE = 300.0f;		//この距離より近づくとプレイヤーを追いかける
 static const float ATTACK_RANGE = 50.0f;		//この距離より近づくと攻撃する
-static const float JUMP_RANGE = 150.0f;          //この距離離れてたらジャンプ攻撃
-static const float CHASE_MOVE_SPEED = 0.4f;	//追いかけているときの1フレームあたりの移動量
-static const float ROT_SPEED = 0.06f;			//1フレームで向き直れる最大角度(巨体なのでゆっくり)
+static const float JUMP_RANGE = 150.0f;         //この距離離れてたらジャンプ攻撃
+static const float CHASE_MOVE_SPEED = 0.4f;	    //追いかけているときの1フレームあたりの移動量
+static const float ROT_SPEED = 0.09f;			//1フレームで向き直れる最大角度(巨体なのでゆっくり)
 static const int   ATTACK_COOLDOWN = 100;		//攻撃と攻撃の間隔(フレーム数)
 static const int   JUMPATTACK_COOLDOWN = 1200;  //ジャンプ攻撃の間隔
 static const float CHARGE_TIME = 0.35;          //アニメーションの初めのタメ時間を判別するのに使用
 
 //ボスの攻撃判定の調整用パラメータ
 static const float ATTACK_HIT_START = 0.6f;     //通常攻撃の判定を出し始めるタイミング(アニメ全体に対する割合)
-static const float ATTACK_HIT_END = 0.7f;       //通常攻撃の判定を消すタイミング(アニメ全体に対する割合)
+static const float ATTACK_HIT_END = 0.8f;       //通常攻撃の判定を消すタイミング(アニメ全体に対する割合)
 static const float ATTACK_HIT_DIST = 20.0f;     //通常攻撃の判定(球)をボスの前方どれだけ先に出すか
 static const float ATTACK_HIT_RADIUS = 30.0f;   //通常攻撃の判定(球)の半径
 static const int   JUMP_HIT_TIME = 6;           //ジャンプ攻撃の着地の衝撃判定を出すフレーム数
@@ -59,7 +59,7 @@ void BossGolem::Init()
 	m_speed = VEC_ZERO;
 	m_isDying = false;
 	m_attackCoolCnt = 0;
-	m_JumpatackCoolCnt = 0;
+	m_JumpatackCoolCnt = 600;
 	m_state = Search;
 	m_velocityY = 0;
 	m_isJumping = false;
@@ -129,7 +129,7 @@ void BossGolem::StepAttack(const VECTOR& playerPos)
 	from.y = 0.0f;
 
 	//攻撃中も向きだけはプレイヤーに合わせ続ける
-	TurnToward(VSub(toPlayer, from));
+	//TurnToward(VSub(toPlayer, from));
 	m_speed = VEC_ZERO;
 
 	//攻撃モーション(通常攻撃1〜3)を再生中ならそのまま最後まで見せる
@@ -167,6 +167,7 @@ void BossGolem::StepAttack(const VECTOR& playerPos)
 
 
 	//クールタイムが明けたら、1〜3段目の攻撃モーションをランダムで出す
+	TurnToward(VSub(toPlayer, from));
 	int pick = ANIM_ATTACK1 + GetRand(2);
 	RequestAnim(pick, ANIM_SPEED);
 	m_attackCoolCnt = ATTACK_COOLDOWN;
@@ -329,6 +330,10 @@ void BossGolem::Step(const VECTOR& playerPos)
 		else if (distToPlayer <= DETECT_RANGE)
 		{
 			m_state = Chase;
+		}
+		else if (m_status.NowHp > m_status.MaxHp / 2)
+		{
+			m_state = Down;
 		}
 		else
 		{

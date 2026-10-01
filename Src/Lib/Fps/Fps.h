@@ -1,12 +1,12 @@
-#pragma once
+ï»¿#pragma once
 
-// •Ï”‰Šú‰»
+// å¤‰æ•°åˆæœŸåŒ–
 void InitFps();
-// ŽŸ‚ÌƒtƒŒ[ƒ€‚Éi‚ß‚Ä‚¢‚¢‚©
+// æ¬¡ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã«é€²ã‚ã¦ã„ã„ã‹
 bool IsNextFrame();
-// FPSXVˆ—
+// FPSæ›´æ–°å‡¦ç†
 void StepFps();
-// FPS•\Ž¦ŠÖ”
+// FPSè¡¨ç¤ºé–¢æ•°
 void PrintFps();
 
 

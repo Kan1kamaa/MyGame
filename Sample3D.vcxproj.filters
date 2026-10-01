@@ -111,14 +111,14 @@
     <ClCompile Include="Src\Game\Scene\PlayScene.cpp">
       <Filter>ソース ファイル\Game\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Lib\Collision\Collision.cpp">
-      <Filter>ソース ファイル\Lib\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Game\Scene\SceneManager.cpp">
       <Filter>ソース ファイル\Game\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Src\Game\Scene\Titltscene.cpp">
       <Filter>ソース ファイル\Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Lib\Collision\Collision.cpp">
+      <Filter>ソース ファイル\Lib\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Src\Lib\Fade\Fade.cpp">
       <Filter>ソース ファイル\Lib\Fade</Filter>
@@ -149,9 +149,6 @@
     </ClCompile>
     <ClCompile Include="Src\Game\Object\Enemy\Boss.cpp">
       <Filter>ソース ファイル\Game\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Game\System\Status.cpp">
-      <Filter>ソース ファイル\Game\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

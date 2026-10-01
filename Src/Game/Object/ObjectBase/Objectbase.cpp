@@ -1,21 +1,21 @@
-#include "ObjectBase.h"
+﻿#include "ObjectBase.h"
 
-//VECTOR�\���̂̒��g��0�ɂ��邽�߂Ɏg�p����
+//VECTOR構造体の中身を0にするために使用する
 static const VECTOR VEC_ZERO{ 0.0f,0.0f,0.0f };
 
-//�R���X�g���N�^
+//コンストラクタ
 ObjectBase::ObjectBase() :m_pos(VEC_ZERO),
 m_rot(VEC_ZERO), m_scale(VEC_ZERO),m_hndl(-1), m_isActive(false)
 {
 }
 
-//�f�X�g���N�^
+//デストラクタ
 ObjectBase::~ObjectBase()
 {
 	Fin();
 }
 
-//������
+//初期化
 void ObjectBase::Init()
 {
 	m_pos = VEC_ZERO;
@@ -25,19 +25,19 @@ void ObjectBase::Init()
 	m_isActive = true;
 }
 
-//���[�h
+//ロード
 void ObjectBase::Load()
 {
 
 }
 
-//���t���[���X�V���鏈��
+//毎フレーム計算する処理
 void ObjectBase::Step()
 {
 
 }
 
-//���X�V
+//更新
 void ObjectBase::Update()
 {
 	MV1SetPosition(m_hndl, m_pos);
@@ -45,7 +45,7 @@ void ObjectBase::Update()
 	MV1SetScale(m_hndl, m_scale);
 }
 
-//�`��
+//描画
 void ObjectBase::Draw()
 {
 	if (m_isActive == false)return;
@@ -55,7 +55,7 @@ void ObjectBase::Draw()
 
 }
 
-//�j��
+//破棄
 void ObjectBase::Fin()
 {
 	if (m_hndl != -1)

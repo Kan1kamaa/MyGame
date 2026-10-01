@@ -1,37 +1,36 @@
 ﻿#pragma once
 #include"Enemy.h"
 
-//�G�̐��̍ő�l
+//敵の数の最大値
 static const int ENEMY_MAX = 50;
 
 class EnemyManager {
 private:
-	Enemy m_Enemy[ENEMY_MAX];		//�G
-	int m_waitCnt;					//���̓G���o��܂ł̎���
+	Enemy m_Enemy[ENEMY_MAX];		//敵
+	int m_waitCnt;					//次の敵が出るまでの時間
 	int m_EnemyCnt;
 public:
-	//�R���X�g���N�^�E�f�X�g���N�^
+	//コンストラクタ・デストラクタ
 	EnemyManager();
 	~EnemyManager();
-	
-	//������
+
+	//初期化
 	void Init();
-	//���[�h
+	//ロード
 	void Load();
-	//���t���[���v�Z���鏈��
+	//毎フレーム計算する処理
 	void Step(const VECTOR& playerPos);
-	//���X�V
+	//更新
 	void Update();
-	//�`��
+	//描画
 	void Draw();
-	//�j��
+	//破棄
 	void Fin();
 
-	
-	//@pos : ���˂�����W
-	//@speed : �ړ����x
-	//@return : true = �������� false = ���s
+
+	//敵を出現させる
+	//@return : true = 成功 false = 失敗
 	bool RequestEnemy();
-	//�ʂ̓G�f�[�^�擾
+	//個別の敵データ取得
 	Enemy& GetEnemy(int index) { return m_Enemy[index]; }
 };

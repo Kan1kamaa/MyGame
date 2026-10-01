@@ -1,46 +1,46 @@
-#include <DxLib.h>
+﻿#include <DxLib.h>
 
-// �������`���Ă����ƁA�t���[�����[�g���̂̕ύX���\��
-#define FRAME_RATE (60)								// 1�b�ӂ�̃t���[����
-#define FRAME_RATE_MILLI_SECOND (1000 / FRAME_RATE)	// ���~���b��1�t���[����
+// これも定義しておくと、フレームレート自体の変更が可能に
+#define FRAME_RATE (60)								// 1秒辺りのフレーム数
+#define FRAME_RATE_MILLI_SECOND (1000 / FRAME_RATE)	// 何ミリ秒で1フレームか
 
-// FPS�\���p�\����
+// FPS表示用構造体
 typedef struct{
-	double m_drawFps;	// ���ۂɕ\������fps
-	int m_nowTime;		// ���݂�PC����
-	int m_prevTime;		// 1�b�O��PC����
-	int m_prevDrawTime;	// 1�O�̕`�悵��PC����
-	int m_count;		// �J�E���g�p
+	double m_drawFps;	// 実際に表示するfps
+	int m_nowTime;		// 現在のPC時間
+	int m_prevTime;		// 1秒前のPC時間
+	int m_prevDrawTime;	// 1つ前の描画したPC時間
+	int m_count;		// カウント用
 }FpsData;
 
-// ��L�\���̂���ɁA�O���[�o���ϐ����쐬
+// 上記構造体を基に、グローバル変数を作成
 static FpsData g_fps = { 0.0 };
 
 
 //-------------------------------
-//		�ϐ�������
+//		変数初期化
 //-------------------------------
 void InitFps()
 {
 	g_fps.m_drawFps = 0.0;
 	g_fps.m_nowTime = 0;
-	// ��UPC���Ԃ�ۑ����Ă���
+	// 一旦PC時間を保存しておく
 	g_fps.m_prevTime = g_fps.m_prevDrawTime = GetNowCount();
 	g_fps.m_count = 0;
 }
 
 
 //-------------------------------
-//		���̃t���[���ɐi�߂Ă�����
+//		次のフレームに進めていいか
 //-------------------------------
 bool IsNextFrame()
 {
-	// �ŐV�̎��Ԃ��擾���X�V
+	// 最新の時間を取得し更新
 	g_fps.m_nowTime = GetNowCount();
-	// �O��̎��Ԃ��獡��܂ł̍������擾
+	// 前回の時間から今回までの差分を取得
 	int difTime = g_fps.m_nowTime - g_fps.m_prevTime;
 
-	// �O��̎��Ԃ���w�肵���t���[�������o�߂������`�F�b�N
+	// 前回の時間から指定したフレーム分を経過したかチェック
 	if (difTime >= FRAME_RATE_MILLI_SECOND)
 	{
 		return true;
@@ -50,40 +50,40 @@ bool IsNextFrame()
 
 
 //-------------------------------
-//		FPS�X�V����
+//		FPS更新処理
 //-------------------------------
 void StepFps()
 {
-	// 1�t���[���O�̎��Ԃ��X�V���邾��
+	// 1フレーム前の時間を更新するだけ
 	g_fps.m_prevTime = g_fps.m_nowTime;
 }
 
 
 //-------------------------------
-//		FPS�\���֐�
+//		FPS表示関数
 //-------------------------------
 void PrintFps()
 {
-	// �z��ʂ�Ȃ�1�t���[���i�񂾂͂�
+	// 想定通りなら1フレーム進んだはず
 	g_fps.m_count++;
-	// �O��`��X�V�����Ƃ��̎��Ԃƍ���̎��Ԃ̍����擾
+	// 前回描画更新したときの時間と今回の時間の差を取得
 	int difTime = g_fps.m_nowTime - g_fps.m_prevDrawTime;
 
-	// ��b�ȏ�o�߂��Ă�����AFPS�v�Z�J�n
+	// 一秒以上経過していたら、FPS計算開始
 	if (difTime >= 1000)
 	{
-		// �z��ʂ�Ȃ�1000�~���b�o�Ă�m_count��60�ɂȂ��Ă���͂�
+		// 想定通りなら1000ミリ秒経てばm_countは60になっているはず
 		float frameCount = (float)(g_fps.m_count * 1000);
-		// ��L�������o�ߎ��Ԃőz���FPS�ɂȂ�
+		// 上記数字÷経過時間で想定のFPSになる
 		g_fps.m_drawFps = frameCount / difTime;
-		// �J�E���g��0�ɖ߂�
+		// カウントは0に戻す
 		g_fps.m_count = 0;
-		// ���ݎ��Ԃ�1�b�O�̎��Ԃ��X�V
+		// 現在時間と1秒前の時間を更新
 		g_fps.m_prevDrawTime = g_fps.m_nowTime;
 		
 	}
 
-	// FPS�͏�ɕ\���𑱂���
+	// FPSは常に表示を続ける
 	DrawFormatString(16, 16, GetColor(255, 255, 255),
 		"FPS:%.1lf", g_fps.m_drawFps);
 }

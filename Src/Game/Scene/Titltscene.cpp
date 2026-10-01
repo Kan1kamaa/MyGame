@@ -1,48 +1,48 @@
-#include"TitleScene.h"
+ï»¿#include"TitleScene.h"
 #include"DxLib.h"
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 TitleScene::TitleScene() : m_hndl(-1)
 {
 
 }
 
-// •`‰æ‘S”Ê
+// æç”»å…¨èˆ¬
 void TitleScene::Draw()
 {
 	DrawGraph(0, 0, m_hndl, TRUE);
 }
 
-// ‰Šú‰»
+// åˆæœŸåŒ–
 void TitleScene::Init()
 {
 	m_state = LOAD;
 }
-// ƒf[ƒ^ƒ[ƒh
+// ãƒ‡ãƒ¼ã‚¿ãƒ­ãƒ¼ãƒ‰
 void TitleScene::Load()
 {
 	m_hndl = LoadGraph("Data/Texture/Title/title.png");
-	// ƒ[ƒh‚ªI‚í‚Á‚½‚çƒQ[ƒ€–{•Ò‚Ö
+	// ãƒ­ãƒ¼ãƒ‰ãŒçµ‚ã‚ã£ãŸã‚‰ã‚²ãƒ¼ãƒ æœ¬ç·¨ã¸
 	m_state = START;
 }
-// ƒƒCƒ“ˆ—
+// ãƒ¡ã‚¤ãƒ³å‡¦ç†
 void TitleScene::Step()
 {
-	// ƒGƒ“ƒ^[ƒL[‚ğ‰Ÿ‚µ‚½‚çI—¹
+	// ã‚¨ãƒ³ã‚¿ãƒ¼ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸã‚‰çµ‚äº†
 	if (CheckHitKey(KEY_INPUT_RETURN))
 	{
 		m_nextScene = 0;
 		m_state = END_WAIT;
 	}
 }
-// ƒf[ƒ^XV
+// ãƒ‡ãƒ¼ã‚¿æ›´æ–°
 void TitleScene::Update()
 {
 }
-// ”jŠü
+// ç ´æ£„
 void TitleScene::Fin()
 {
 	DeleteGraph(m_hndl);
 
-	// Å‰‚É–ß‚·
+	// æœ€åˆã«æˆ»ã™
 	m_state = INIT;
 }

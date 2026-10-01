@@ -1,38 +1,38 @@
-#pragma once
+ï»¿#pragma once
 class SceneBase
 {
 
 protected:
-	//ƒV[ƒ“‚Ìˆê˜A‚Ì—¬‚ê
+	//ã‚·ãƒ¼ãƒ³ã®ä¸€é€£ã®æµã‚Œ
 	enum tagState {
-		INIT,		//‰Šú‰»
-		LOAD,		//ƒ[ƒh
-		START,		//ƒQ[ƒ€ŠJn‘O‚És‚­ƒV[ƒ“
-		MAIN,		//ƒQ[ƒ€–{•Ò
-		END_WAIT,    //–{•ÒI—¹Œã‚Ìˆ—
-		END,		//I—¹‘Oˆ—
+		INIT,		//åˆæœŸåŒ–
+		LOAD,		//ãƒ­ãƒ¼ãƒ‰
+		START,		//ã‚²ãƒ¼ãƒ é–‹å§‹å‰ã«è¡Œãã‚·ãƒ¼ãƒ³
+		MAIN,		//ã‚²ãƒ¼ãƒ æœ¬ç·¨
+		END_WAIT,    //æœ¬ç·¨çµ‚äº†å¾Œã®å‡¦ç†
+		END,		//çµ‚äº†å‰å‡¦ç†
 	};
 
-	tagState m_state;	//Œ»İ‚ÌƒV[ƒ“‚Ìó‘Ô
-	int m_nextScene;	//Ÿ‚ÌƒV[ƒ“‚ª‚Ç‚±‚É‚È‚é‚©
+	tagState m_state;	//ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³ã®çŠ¶æ…‹
+	int m_nextScene;	//æ¬¡ã®ã‚·ãƒ¼ãƒ³ãŒã©ã“ã«ãªã‚‹ã‹
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	SceneBase();
-	//ƒƒCƒ“ƒ‹[ƒv
+	//ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
 	virtual int Loop();
-	//•`‰æ
+	//æç”»
 	virtual void Draw() = 0;
 
 private:
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	virtual void Init() = 0;
-	//ƒ[ƒh
+	//ãƒ­ãƒ¼ãƒ‰
 	virtual void Load() = 0;
-	//–ˆƒtƒŒ[ƒ€ŒvZ‚·‚éˆ—
+	//æ¯ãƒ•ãƒ¬ãƒ¼ãƒ è¨ˆç®—ã™ã‚‹å‡¦ç†
 	virtual void Step() = 0;
-	//î•ñXV
+	//æƒ…å ±æ›´æ–°
 	virtual void Update() = 0;
-	//”jŠü
+	//ç ´æ£„
 	virtual void Fin() = 0;
 };
 

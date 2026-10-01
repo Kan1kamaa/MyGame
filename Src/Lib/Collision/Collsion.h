@@ -1,27 +1,27 @@
-#pragma once
+ï»¿#pragma once
 #include"DxLib.h"
 
 class Collsion {
 public:
-	//“_‚ÆlŠp‚Ì“–‚½‚è”»’è
+	//ç‚¹ã¨å››è§’ã®å½“ãŸã‚Šåˆ¤å®š
 	static bool ChekHitDotToSquare(VECTOR pos1,VECTOR pos2,int w, int h);
-	//‰~“¯m‚Ì“–‚½‚è”»’è
+	//å††åŒå£«ã®å½“ãŸã‚Šåˆ¤å®š
 	static bool CheckHitCircleToCircle(VECTOR pos1,float radius1,VECTOR pos2,float radius2);
-	//’ZŒ`“¯m‚Ì“–‚½‚è”»’è(3D)
-	//@x      : ‰¡‚ÌˆÊ’u
-	//@y      : c‚ÌˆÊ’u
-	//@w      : ‰¡•(”¼•ª‚ÌƒTƒCƒY)
-	//@h      : c•(”¼•ª‚ÌƒTƒCƒY)
+	//çŸ­å½¢åŒå£«ã®å½“ãŸã‚Šåˆ¤å®š(3D)
+	//@x      : æ¨ªã®ä½ç½®
+	//@y      : ç¸¦ã®ä½ç½®
+	//@w      : æ¨ªå¹…(åŠåˆ†ã®ã‚µã‚¤ã‚º)
+	//@h      : ç¸¦å¹…(åŠåˆ†ã®ã‚µã‚¤ã‚º)
 	static bool CheckHitSquareToSquare(VECTOR pos1,  int w1, int h1, VECTOR pos2, int w2, int h2);
 
-	//” “¯m‚Ì“–‚½‚è”»’è(3D)
-	//@pos    : ” ‚Ì’†SÀ•W
-	//@size   : ” ‚ÌƒTƒCƒY(”¼•ªƒTƒCƒY)
+	//ç®±åŒå£«ã®å½“ãŸã‚Šåˆ¤å®š(3D)
+	//@pos    : ç®±ã®ä¸­å¿ƒåº§æ¨™
+	//@size   : ç®±ã®ã‚µã‚¤ã‚º(åŠåˆ†ã‚µã‚¤ã‚º)
 	static bool CheckHitBoxToBox(VECTOR pos1, VECTOR size1, VECTOR pos2, VECTOR size2);
 
-	//‹…“¯m‚Ì“–‚½‚è”»’è(3D)
-	//@pos    ; ‹…‚Ì’†SÀ•W
-	//@radius : ‹…‚Ì”¼Œa
+	//çƒåŒå£«ã®å½“ãŸã‚Šåˆ¤å®š(3D)
+	//@pos    ; çƒã®ä¸­å¿ƒåº§æ¨™
+	//@radius : çƒã®åŠå¾„
 	static bool CheckHitSphereToSphere(VECTOR pos1, float radius1, VECTOR pos2, float radius2);
 
 };

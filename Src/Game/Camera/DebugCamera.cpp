@@ -1,21 +1,21 @@
-#include"DebugCamera.h"
+ï»¿#include"DebugCamera.h"
 #include"math.h"
 
 static const VECTOR VEC_ZERO = { 0.0f,0.0f,0.0f };
 static const float CAMERA_NEAR = 1.0f;
 static const float CAMERA_FAR = 1000.0f;
 
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 DebugCamera::DebugCamera() : m_camerapos(VEC_ZERO), m_focuspos(VEC_ZERO), m_upvec(VEC_ZERO),m_speed(VEC_ZERO),m_camerarot(VEC_ZERO)
 {
 }
 
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 DebugCamera::~DebugCamera()
 {
 }
 
-//‰Šú‰»
+//åˆæœŸåŒ–
 void DebugCamera::Init()
 {
 	m_camerapos = { 0,0,0 };
@@ -28,13 +28,13 @@ void DebugCamera::Draw()
 
 {
 	DrawFormatString(16, 32, GetColor(255, 255, 255),
-		"ƒfƒoƒbƒOƒ‚[ƒh");
+		"ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰");
 	DrawFormatString(16, 48, GetColor(255, 255, 255),
-		"À•WF%.0f,%.0f,%.0f", m_camerapos.x,m_camerapos.y,m_camerapos.z);
+		"åº§æ¨™ï¼š%.0f,%.0f,%.0f", m_camerapos.x,m_camerapos.y,m_camerapos.z);
 	DrawFormatString(16, 64, GetColor(255, 255, 255),
-		"Šp“xF%.0f,%.0f,%.0f", m_camerarot.x, m_camerarot.y, m_camerarot.z);
+		"è§’åº¦ï¼š%.0f,%.0f,%.0f", m_camerarot.x, m_camerarot.y, m_camerarot.z);
 }
-//XV
+//æ›´æ–°
 void DebugCamera::Step(VECTOR pos, float roty)
 {
 	VECTOR dir = VEC_ZERO;

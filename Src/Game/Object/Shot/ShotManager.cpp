@@ -1,20 +1,20 @@
-#include"ShotManager.h"
+ï»¿#include"ShotManager.h"
 
-//ƒIƒŠƒWƒiƒ‹‚Æ‚È‚é’e‚ÌƒpƒX
+//ã‚ªãƒªã‚¸ãƒŠãƒ«ã¨ãªã‚‹å¼¾ã®ãƒ‘ã‚¹
 static const char FILE_PATH[] = "Data/models/Shot/Shot.mv1";
 
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 ShotManager::ShotManager()
 {
 }
 
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 ShotManager::~ShotManager()
 {
 	Fin();
 }
 
-//‰Šú‰»
+//åˆæœŸåŒ–
 void ShotManager::Init()
 {
 	for (int i = 0; i < PL_SHOT_MAX; i++)
@@ -23,17 +23,17 @@ void ShotManager::Init()
 	}
 }
 
-//ƒ[ƒh
+//ãƒ­ãƒ¼ãƒ‰
 void ShotManager::Load()
 {
-	//‚Ü‚¸‚ÍƒIƒŠƒWƒiƒ‹‚Ìƒ‚ƒfƒ‹ƒf[ƒ^‚ğƒ[ƒh
+	//ã¾ãšã¯ã‚ªãƒªã‚¸ãƒŠãƒ«ã®ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ­ãƒ¼ãƒ‰
 	int originhndl = MV1LoadModel(FILE_PATH);
-	//•¡»‚µ‚Ä‚¢‚­
+	//è¤‡è£½ã—ã¦ã„ã
 	for (int i = 0; i < PL_SHOT_MAX; i++)
 	{
 		m_playerShot[i].Load(originhndl);
 	}
-	//•¡»‚ªI‚í‚Á‚½‚çŒ³ƒf[ƒ^‚Ííœ
+	//è¤‡è£½ãŒçµ‚ã‚ã£ãŸã‚‰å…ƒãƒ‡ãƒ¼ã‚¿ã¯å‰Šé™¤
 	MV1DeleteModel(originhndl);
 }
 
@@ -72,13 +72,13 @@ bool ShotManager::RequestPlayerAttack(const VECTOR& pos, const VECTOR& speed)
 {
 	for (int i = 0; i < PL_SHOT_MAX; i++)
 	{
-		//ˆê”­ƒŠƒNƒGƒXƒg‚É¬Œ÷‚µ‚½‚çI—¹
+		//ä¸€ç™ºãƒªã‚¯ã‚¨ã‚¹ãƒˆã«æˆåŠŸã—ãŸã‚‰çµ‚äº†
 		if (m_playerShot[i].Request(pos, speed) == true)
 		{
 			return true;
 		}
 	}
-	//‚±‚±‚Ü‚Å—ˆ‚½‚çƒŠƒNƒGƒXƒg‚É¸”s
+	//ã“ã“ã¾ã§æ¥ãŸã‚‰ãƒªã‚¯ã‚¨ã‚¹ãƒˆã«å¤±æ•—
 	return false;
 }
 bool ShotManager::RequestPlayerShot(const VECTOR& pos, const VECTOR& speed)

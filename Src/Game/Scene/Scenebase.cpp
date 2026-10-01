@@ -1,4 +1,4 @@
-#include "Scenebase.h"
+ï»¿#include "Scenebase.h"
 #include "../../Lib/Fade/Fade.h"
 SceneBase::SceneBase():m_state(INIT),m_nextScene(0)
 {
@@ -33,8 +33,8 @@ int SceneBase::Loop()
 			m_state = END;
 	case SceneBase::END:
 		Fin();
-		//‚±‚±‚Ü‚Å—ˆ‚½‚çI‚í‚è‚È‚Ì‚ÅA–ß‚è’l‚ğ•ÏX
-		//ŠeƒV[ƒ“‚Ì‚Ç‚±‚©‚Åm_nextScene‚ğ•ÏX‚µ‚Ä‚à‚ç‚¤
+		//ã“ã“ã¾ã§æ¥ãŸã‚‰çµ‚ã‚ã‚Šãªã®ã§ã€æˆ»ã‚Šå€¤ã‚’å¤‰æ›´
+		//å„ã‚·ãƒ¼ãƒ³ã®ã©ã“ã‹ã§m_nextSceneã‚’å¤‰æ›´ã—ã¦ã‚‚ã‚‰ã†
 		result = m_nextScene;
 		break;
 	}

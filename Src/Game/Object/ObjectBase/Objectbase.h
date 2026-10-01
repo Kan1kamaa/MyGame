@@ -1,49 +1,49 @@
-#pragma once
+ï»¿#pragma once
 #include<DxLib.h>
-//•¨‘Ì‘€ì‚ÌŠî–{ƒNƒ‰ƒX
+//ç‰©ä½“æ“ä½œã®åŸºæœ¬ã‚¯ãƒ©ã‚¹
 class ObjectBase {
 public:
-	VECTOR m_pos;		//À•W
-	VECTOR m_rot;		//Šg‘åŠp“x
-	VECTOR m_scale;		//Šg‘åk¬—¦
-	float m_radius;     //“–‚½‚è”»’è—p”¼Œa(‹…)
-	int m_hndl;			//ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
-	bool m_isActive;	//¶‘¶ƒtƒ‰ƒO
+	VECTOR m_pos;		//åº§æ¨™
+	VECTOR m_rot;		//æ‹¡å¤§è§’åº¦
+	VECTOR m_scale;		//æ‹¡å¤§ç¸®å°ç‡
+	float m_radius;     //å½“ãŸã‚Šåˆ¤å®šç”¨åŠå¾„(çƒ)
+	int m_hndl;			//ãƒ¢ãƒ‡ãƒ«ãƒãƒ³ãƒ‰ãƒ«
+	bool m_isActive;	//ç”Ÿå­˜ãƒ•ãƒ©ã‚°
 
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^EƒfƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ»ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	ObjectBase();
 	~ObjectBase();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Init();
-	//ƒ[ƒh
+	//ãƒ­ãƒ¼ãƒ‰
 	void Load();
-	//–ˆƒtƒŒ[ƒ€ŒvZ‚·‚éˆ—
+	//æ¯ãƒ•ãƒ¬ãƒ¼ãƒ è¨ˆç®—ã™ã‚‹å‡¦ç†
 	void Step();
-	//î•ñXV
+	//æƒ…å ±æ›´æ–°
 	void Update();
-	//•`‰æ
+	//æç”»
 	void Draw();
-	//”jŠü
+	//ç ´æ£„
 	void Fin();
 
-	//ŠeíƒAƒNƒZƒT
-	//À•W
+	//å„ç¨®ã‚¢ã‚¯ã‚»ã‚µ
+	//åº§æ¨™
 	void SetPos(VECTOR pos) { m_pos = pos; }
 	VECTOR GetPos() { return m_pos; }
-	//Šp“x
+	//è§’åº¦
 	void SetRot(VECTOR rot) { m_rot = rot; }
 	VECTOR GetRot() { return m_rot; }
-	//Šg‘åk¬—¦
+	//æ‹¡å¤§ç¸®å°ç‡
 	void SetScale(VECTOR scale) { m_scale = scale; }
 	VECTOR GetScale() { return m_scale; }
-	//¶‘¶ƒtƒ‰ƒO
+	//ç”Ÿå­˜ãƒ•ãƒ©ã‚°
 	void SetActive(bool isActive) { m_isActive = isActive; }
 	bool GetActive() { return m_isActive; }
-	//”¼Œa
+	//åŠå¾„
 	float GetRadius() { return m_radius; }
-	//“–‚½‚è”»’è‚Ì’†S‚ğæ“¾
+	//å½“ãŸã‚Šåˆ¤å®šã®ä¸­å¿ƒã‚’å–å¾—
 	virtual VECTOR GetCollisionPos() { return{ m_pos.x, m_pos.y + m_radius, m_pos.z };}
 
 	virtual void HitCalc(const ObjectBase& other);

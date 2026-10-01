@@ -1,48 +1,48 @@
 ﻿#include"Shot.h"
 #include"../../System/SoundManager.h"
 static const VECTOR VEC_ZERO{ 0.0f,0.0f,0.0f };
-static const float MOVE_RANGE = 2000.0f;	//�ړ��\�͈�
+static const float MOVE_RANGE = 2000.0f;	//移動可能範囲
 static const float SHOT_RAD = 5.0f;
 static const float SHOT_ATTACK_POWER = 15.0f;	//プレイヤーの弾1発あたりの攻撃力
-//�R���X�g���N�^
+//コンストラクタ
 Shot::Shot() :m_speed(VEC_ZERO)
 {
 }
 
-//�f�X�g���N�^
+//デストラクタ
 Shot::~Shot()
 {
 	Fin();
 }
 
-//������
+//初期化
 void Shot::Init()
 {
 	ObjectBase::Init();
 	m_radius = SHOT_RAD;
 	m_speed = VEC_ZERO;
-	m_isActive = false;		//�ŏ��͌����Ȃ��悤�ɏ����Ă���
+	m_isActive = false;		//最初は見えないようにしておく
 }
 
-//���[�h
+//ロード
 void Shot::Load(int origiinhndl)
 {
 	if (m_hndl == -1)
 	{
-		//���f���͕�������
+		//モデルは複製する
 		m_hndl = MV1DuplicateModel(origiinhndl);
 	}
 }
 
-//���t���[���v�Z���鏈��
+//毎フレーム計算する処理
 void Shot::Step()
 {
-	//�t���O�I�t�Ȃ�I��
+	//フラグオフなら終了
 	if (m_isActive == false)return;
 
-	//���݂̍��W�ɑ��x���v�Z
+	//現在の座標に速度を加算
 	m_pos = VAdd(m_pos, m_speed);
-	//���͈͂𒴂��������
+	//移動可能範囲を超えたら消す
 	if (m_pos.x < -MOVE_RANGE || m_pos.x > MOVE_RANGE
 		|| m_pos.z < -MOVE_RANGE || m_pos.z > MOVE_RANGE)
 	{
@@ -50,10 +50,10 @@ void Shot::Step()
 	}
 }
 
-//�V���b�g����
+//ショット発射
 bool Shot::Request(const VECTOR& pos, const VECTOR& speed)
 {
-	//���ɔ��˂���Ă�����I��
+	//既に発射されていたら終了
 	if (m_isActive == true)return false;
 
 	m_pos = pos;

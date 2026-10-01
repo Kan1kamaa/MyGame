@@ -1,21 +1,21 @@
-#include "SceneManager.h"
+ï»¿#include "SceneManager.h"
 #include "../../Lib/Fade/Fade.h"
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-SceneManager::SceneManager() : m_state(TITLE)
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+SceneManager::SceneManager() : m_state(MAIN)
 {
-	// ’ño‚ÍMAIN‚©‚çTITLE‚É•Ï‚¦‚é
+	// æå‡ºæ™‚ã¯MAINã‹ã‚‰TITLEã«å¤‰ãˆã‚‹
 	FADE::Init();
-	//ƒQ[ƒ€‹N“®‚ÉƒTƒEƒ“ƒh‚Ì‰Šú‰»•ƒ[ƒh
+	//ã‚²ãƒ¼ãƒ èµ·å‹•æ™‚ã«ã‚µã‚¦ãƒ³ãƒ‰ã®åˆæœŸåŒ–ï¼†ãƒ­ãƒ¼ãƒ‰
 	SoundManager::Init();
 	SoundManager::Load();
 }
 
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 SceneManager::~SceneManager()
 {
 	SoundManager::Exit();
 }
-// ƒQ[ƒ€‚ÌŒvZ‚à‚ë‚à‚ë 
+// ã‚²ãƒ¼ãƒ ã®è¨ˆç®—ã‚‚ã‚ã‚‚ã‚ 
 void SceneManager::Loop()
 {
 	int ret = 0;
@@ -30,7 +30,7 @@ void SceneManager::Loop()
 		break;
 	case MAIN:
 		ret = m_play.Loop();
-		// ƒQ[ƒ€‚ªI—¹‚µ‚½ê‡A–ß‚è’l‚Í-1ˆÈŠO
+		// ã‚²ãƒ¼ãƒ ãŒçµ‚äº†ã—ãŸå ´åˆã€æˆ»ã‚Šå€¤ã¯-1ä»¥å¤–
 		if (ret != -1)
 		{
 			m_state = RESULT;
@@ -38,7 +38,7 @@ void SceneManager::Loop()
 		break;
 	case RESULT:
 		ret = m_result.Loop();
-		// ƒQ[ƒ€‚ªI—¹‚µ‚½ê‡A–ß‚è’l‚Í-1ˆÈŠO
+		// ã‚²ãƒ¼ãƒ ãŒçµ‚äº†ã—ãŸå ´åˆã€æˆ»ã‚Šå€¤ã¯-1ä»¥å¤–
 		if (ret != -1)
 		{
 			m_state = TITLE;
@@ -48,7 +48,7 @@ void SceneManager::Loop()
 	FADE::Update();
 }
 
-// •`‰æ‘S”Ê
+// æç”»å…¨èˆ¬
 void SceneManager::Draw()
 {
 	switch (m_state) {

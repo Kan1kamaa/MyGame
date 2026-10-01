@@ -1,46 +1,46 @@
-#include"Effect.h"
+ï»¿#include"Effect.h"
 static const VECTOR VEC_ZERO{ 0.0f,0.0f,0.0f };
-static const float MOVE_RANGE = 2000.0f;	//ˆÚ“®‰Â”\”ÍˆÍ
+static const float MOVE_RANGE = 2000.0f;	//ç§»å‹•å¯èƒ½ç¯„å›²
 static const float SHOT_RAD = 5.0f;
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Effect::Effect() :m_speed(VEC_ZERO)
 {
 }
 
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Effect::~Effect()
 {
 	Fin();
 }
 
-//‰Šú‰»
+//åˆæœŸåŒ–
 void Effect::Init()
 {
 	ObjectBase::Init();
 	m_radius = SHOT_RAD;
 	m_speed = VEC_ZERO;
-	m_isActive = false;		//Å‰‚ÍŒ©‚¦‚È‚¢‚æ‚¤‚ÉÁ‚µ‚Ä‚¨‚­
+	m_isActive = false;		//æœ€åˆã¯è¦‹ãˆãªã„ã‚ˆã†ã«æ¶ˆã—ã¦ãŠã
 }
 
-//ƒ[ƒh
+//ãƒ­ãƒ¼ãƒ‰
 void Effect::Load(int origiinhndl)
 {
 	if (m_hndl == -1)
 	{
-		//ƒ‚ƒfƒ‹‚Í•¡»‚·‚é
+		//ãƒ¢ãƒ‡ãƒ«ã¯è¤‡è£½ã™ã‚‹
 		m_hndl = MV1DuplicateModel(origiinhndl);
 	}
 }
 
-//–ˆƒtƒŒ[ƒ€ŒvZ‚·‚éˆ—
+//æ¯ãƒ•ãƒ¬ãƒ¼ãƒ è¨ˆç®—ã™ã‚‹å‡¦ç†
 void Effect::Step()
 {
-	//ƒtƒ‰ƒOƒIƒt‚È‚çI—¹
+	//ãƒ•ãƒ©ã‚°ã‚ªãƒ•ãªã‚‰çµ‚äº†
 	if (m_isActive == false)return;
 
-	//Œ»İ‚ÌÀ•W‚É‘¬“x‚ğŒvZ
+	//ç¾åœ¨ã®åº§æ¨™ã«é€Ÿåº¦ã‚’è¨ˆç®—
 	m_pos = VAdd(m_pos, m_speed);
-	//ˆê’è”ÍˆÍ‚ğ’´‚¦‚½‚çÁ‚·
+	//ä¸€å®šç¯„å›²ã‚’è¶…ãˆãŸã‚‰æ¶ˆã™
 	if (m_pos.x < -MOVE_RANGE || m_pos.x > MOVE_RANGE
 		|| m_pos.z < -MOVE_RANGE || m_pos.z > MOVE_RANGE)
 	{
@@ -48,10 +48,10 @@ void Effect::Step()
 	}
 }
 
-//ƒGƒtƒFƒNƒgoŒ»
+//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆå‡ºç¾
 bool Effect::Request(const VECTOR& pos, const VECTOR& speed)
 {
-	//Šù‚É”­Ë‚³‚ê‚Ä‚¢‚½‚çI—¹
+	//æ—¢ã«ç™ºå°„ã•ã‚Œã¦ã„ãŸã‚‰çµ‚äº†
 	if (m_isActive == true)return false;
 
 	m_pos = pos;

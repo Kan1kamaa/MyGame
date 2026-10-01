@@ -1,28 +1,28 @@
-#pragma once
+ï»¿#pragma once
 #include "SceneBase.h"
 
 
-// ƒQ[ƒ€–{•ÒŠÇ—ƒV[ƒ“
+// ã‚²ãƒ¼ãƒ æœ¬ç·¨ç®¡ç†ã‚·ãƒ¼ãƒ³
 class TitleScene : public SceneBase {
 protected:
-	int m_hndl;		// ˆê–‡ŠG‚Ìƒ^ƒCƒgƒ‹‰æ‘œ‚ğg‚¤
+	int m_hndl;		// ä¸€æšçµµã®ã‚¿ã‚¤ãƒˆãƒ«ç”»åƒã‚’ä½¿ã†
 
 public:
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	TitleScene();
 
-	// •`‰æ‘S”Ê
+	// æç”»å…¨èˆ¬
 	void Draw();
 
 protected:
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	void Init();
-	// ƒf[ƒ^ƒ[ƒh
+	// ãƒ‡ãƒ¼ã‚¿ãƒ­ãƒ¼ãƒ‰
 	void Load();
-	// ƒƒCƒ“ˆ—
+	// ãƒ¡ã‚¤ãƒ³å‡¦ç†
 	void Step();
-	// ƒf[ƒ^XV
+	// ãƒ‡ãƒ¼ã‚¿æ›´æ–°
 	void Update();
-	// ”jŠü
+	// ç ´æ£„
 	void Fin();
 };

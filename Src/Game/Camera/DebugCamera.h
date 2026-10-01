@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include<DxLib.h>
 
 class DebugCamera {
@@ -9,7 +9,7 @@ private:
 	VECTOR m_speed;
 	VECTOR m_camerarot;
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^EƒfƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ»ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	DebugCamera();
 	~DebugCamera();
 

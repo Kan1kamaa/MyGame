@@ -1,29 +1,29 @@
-#pragma once
+ï»¿#pragma once
 #include "TitleScene.h"
 #include "PlayScene.h"
 #include "resultScene.h"
-// ŠeíƒV[ƒ“ŠÇ—ƒNƒ‰ƒX
+// å„ç¨®ã‚·ãƒ¼ãƒ³ç®¡ç†ã‚¯ãƒ©ã‚¹
 class SceneManager {
 private:
 	enum tagState {
-		TITLE,	// ƒ^ƒCƒgƒ‹‰æ–Ê
-		MAIN,	// ƒQ[ƒ€–{•Ò
-		RESULT,	// ƒŠƒUƒ‹ƒg‰æ–Ê
+		TITLE,	// ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢
+		MAIN,	// ã‚²ãƒ¼ãƒ æœ¬ç·¨
+		RESULT,	// ãƒªã‚¶ãƒ«ãƒˆç”»é¢
 	};
 
-	TitleScene m_title;	// ƒ^ƒCƒgƒ‹‰æ–Ê
-	PlayScene m_play;	// ƒQ[ƒ€–{•Ò
-	ResultScene m_result; //ƒŠƒUƒ‹ƒg‰æ–Ê
-	tagState m_state;	// ¡‚Ç‚ÌƒV[ƒ“‚©
+	TitleScene m_title;	// ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢
+	PlayScene m_play;	// ã‚²ãƒ¼ãƒ æœ¬ç·¨
+	ResultScene m_result; //ãƒªã‚¶ãƒ«ãƒˆç”»é¢
+	tagState m_state;	// ä»Šã©ã®ã‚·ãƒ¼ãƒ³ã‹
 
 public:
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	SceneManager();
-	//ƒfƒXƒgƒ‰ƒNƒ^
+	//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	~SceneManager();
-	// ƒQ[ƒ€‚ÌŒvZ‚à‚ë‚à‚ë 
+	// ã‚²ãƒ¼ãƒ ã®è¨ˆç®—ã‚‚ã‚ã‚‚ã‚ 
 	void Loop();
-	// •`‰æ‘S”Ê
+	// æç”»å…¨èˆ¬
 	void Draw();
 };
 

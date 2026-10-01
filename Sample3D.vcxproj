@@ -156,7 +156,6 @@
     <ClCompile Include="Src\Game\Scene\Titltscene.cpp" />
     <ClCompile Include="Src\Game\System\GameCollision.cpp" />
     <ClCompile Include="Src\Game\System\SoundManager.cpp" />
-    <ClCompile Include="Src\Game\System\Status.cpp" />
     <ClCompile Include="Src\Lib\Collision\Collision.cpp" />
     <ClCompile Include="Src\Lib\Effect\Effect.cpp" />
     <ClCompile Include="Src\Lib\Effect\EffectManager.cpp" />

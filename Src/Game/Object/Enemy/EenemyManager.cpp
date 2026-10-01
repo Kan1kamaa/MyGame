@@ -5,7 +5,7 @@ static const char FILE_PATH[] = "Data/models/Enemy/Golem.mv1";
 
 static const int WAIT_COUNT(60);
 //同時に出現させておく敵の数
-static const int ACTIVE_ENEMY_MAX = 10;
+static const int ACTIVE_ENEMY_MAX = 5;
 //コンストラクタ
 EnemyManager::EnemyManager()
 {

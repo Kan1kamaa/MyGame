@@ -1,44 +1,44 @@
-#pragma once
+ï»¿#pragma once
 #include"Shot.h"
 
-//ƒvƒŒƒCƒ„[‚Ì’e‚ÌÅ‘å’l
+//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¼¾ã®æœ€å¤§å€¤
 static const int PL_SHOT_MAX = 500;
 static const int SHOT_SPEED = -5;
 class ShotManager {
 private:
-	//ƒvƒŒƒCƒ„[—p‚Ì’e
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç”¨ã®å¼¾
 	Shot m_playerShot[PL_SHOT_MAX];
 
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^EƒfƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ»ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	ShotManager();
 	~ShotManager();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Init();
-	//ƒ[ƒh
+	//ãƒ­ãƒ¼ãƒ‰
 	void Load();
-	//–ˆƒtƒŒ[ƒ€ŒvZ‚·‚éˆ—
+	//æ¯ãƒ•ãƒ¬ãƒ¼ãƒ è¨ˆç®—ã™ã‚‹å‡¦ç†
 	void Step();
-	//î•ñXV
+	//æƒ…å ±æ›´æ–°
 	void Update();
-	//•`‰æ
+	//æç”»
 	void Draw();
-	//”jŠü
+	//ç ´æ£„
 	void Fin();
 
 
-	//ƒvƒŒƒCƒ„[UŒ‚ˆ—
-	//@pos	: ”­Ë‚·‚éÀ•W
-	//@speed: ˆÚ“®‘¬“x
-	//return: ture = ¶¬¬Œ÷@false = ¸”s
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ”»æ’ƒå‡¦ç†
+	//@pos	: ç™ºå°„ã™ã‚‹åº§æ¨™
+	//@speed: ç§»å‹•é€Ÿåº¦
+	//return: ture = ç”ŸæˆæˆåŠŸã€€false = å¤±æ•—
 	bool RequestPlayerAttack(const VECTOR& pos, const VECTOR& speed);
-	//ƒvƒŒƒCƒ„[ƒVƒ‡ƒbƒg”­Ë
-	//@pos : ”­Ë‚·‚éÀ•W
-	//@speed : ˆÚ“®‘¬“x
-	//@return : true = ¶¬¬Œ÷ false = ¸”s
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚·ãƒ§ãƒƒãƒˆç™ºå°„
+	//@pos : ç™ºå°„ã™ã‚‹åº§æ¨™
+	//@speed : ç§»å‹•é€Ÿåº¦
+	//@return : true = ç”ŸæˆæˆåŠŸ false = å¤±æ•—
 	bool RequestPlayerShot(const VECTOR& pos, const VECTOR& speed);
-	//ŒÂ•Ê‚Ì’eƒf[ƒ^æ“¾
+	//å€‹åˆ¥ã®å¼¾ãƒ‡ãƒ¼ã‚¿å–å¾—
 	Shot & GetPlayerShot(int index){return m_playerShot[index];}
 
 

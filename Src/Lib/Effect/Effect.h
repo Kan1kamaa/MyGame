@@ -1,25 +1,25 @@
-#pragma once
+ï»¿#pragma once
 #include"../../Game/Object/ObjectBase/Objectbase.h"
 
 class Effect : public ObjectBase {
 private:
-	VECTOR m_speed;		//ˆÚ“®‘¬“x
+	VECTOR m_speed;		//ç§»å‹•é€Ÿåº¦
 public:
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^EƒfƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ãƒ»ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Effect();
 	~Effect();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Init();
-	//ƒ[ƒh
+	//ãƒ­ãƒ¼ãƒ‰
 	void Load(int originhndl);
-	//–ˆƒtƒŒ[ƒ€ŒvZ‚·‚éˆ—
+	//æ¯ãƒ•ãƒ¬ãƒ¼ãƒ è¨ˆç®—ã™ã‚‹å‡¦ç†
 	void Step();
-	//ƒGƒtƒFƒNƒgoŒ»
-	//@pos : ƒGƒtƒFƒNƒg‚ªo‚éÀ•W
-	//@sped :@ˆÚ“®‘¬“x
-	//@return : true = ¶¬¬Œ÷ false = ¸”s
+	//ã‚¨ãƒ•ã‚§ã‚¯ãƒˆå‡ºç¾
+	//@pos : ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãŒå‡ºã‚‹åº§æ¨™
+	//@sped :ã€€ç§»å‹•é€Ÿåº¦
+	//@return : true = ç”ŸæˆæˆåŠŸ false = å¤±æ•—
 	bool Request(const VECTOR& pos, const VECTOR& speed);
-	//“–‚½‚è”»’è‚Ì’†S‚ğæ“¾
+	//å½“ãŸã‚Šåˆ¤å®šã®ä¸­å¿ƒã‚’å–å¾—
 	VECTOR GetCollisionPos() { return m_pos; }
 };

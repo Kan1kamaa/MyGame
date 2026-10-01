@@ -3,25 +3,25 @@
 
 class Shot : public ObjectBase {
 private:
-	VECTOR m_speed;		//�ړ����x
+	VECTOR m_speed;		//移動速度
 public:
-	//�R���X�g���N�^�E�f�X�g���N�^
+	//コンストラクタ・デストラクタ
 	Shot();
 	~Shot();
 
-	//������
+	//初期化
 	void Init();
-	//���[�h
+	//ロード
 	void Load(int originhndl);
-	//���t���[���v�Z���鏈��
+	//毎フレーム計算する処理
 	void Step();
-	//�V���b�g����
-	//@pos : ���˂�����W
-	//@sped :�@�ړ����x
-	//@return : true = �������� false = ���s
+	//ショット発射
+	//@pos : 発射する座標
+	//@speed : 移動速度
+	//@return : true = 成功 false = 失敗
 	bool Request(const VECTOR& pos, const VECTOR& speed);
-	//�����蔻��̒��S���擾
+	//当たり判定の中心を取得
 	VECTOR GetCollisionPos(){ return m_pos; }
-	//�U����
+	//攻撃力
 	float GetAttackPower() const override;
 };

@@ -1,23 +1,23 @@
-#pragma once
-//g—p‚·‚éƒ{ƒ^ƒ“‚Éƒrƒbƒg‚ğŠ„‚è“–‚Ä‚é
-#define KEY_UP		(0b1)				//ã
-#define KEY_DOWN	(0b10)				//‰º
-#define KEY_RIGHT	(0b100)				//‰E
-#define KEY_LEFT	(0b1000)			//¶
-#define KEY_DASH	(0b10000)			//ƒ_ƒbƒVƒ…
-#define KEY_JUMP	(0b100000)			//ƒWƒƒƒ“ƒv
-#define KEY_ATTACK	(0b1000000)			//ƒAƒ^ƒbƒN
-//“ü—ÍƒNƒ‰ƒX
+ï»¿#pragma once
+//ä½¿ç”¨ã™ã‚‹ãƒœã‚¿ãƒ³ã«ãƒ“ãƒƒãƒˆã‚’å‰²ã‚Šå½“ã¦ã‚‹
+#define KEY_UP		(0b1)				//ä¸Š
+#define KEY_DOWN	(0b10)				//ä¸‹
+#define KEY_RIGHT	(0b100)				//å³
+#define KEY_LEFT	(0b1000)			//å·¦
+#define KEY_DASH	(0b10000)			//ãƒ€ãƒƒã‚·ãƒ¥
+#define KEY_JUMP	(0b100000)			//ã‚¸ãƒ£ãƒ³ãƒ—
+#define KEY_ATTACK	(0b1000000)			//ã‚¢ã‚¿ãƒƒã‚¯
+//å…¥åŠ›ã‚¯ãƒ©ã‚¹
 class Input {
 private:
-	static unsigned int m_nowkey;	//¡‰ñ“ü—Í‚µ‚½ƒL[
-	static unsigned int m_prekey;	//‘O‰ñ“ü—Í‚µ‚½ƒL[
+	static unsigned int m_nowkey;	//ä»Šå›å…¥åŠ›ã—ãŸã‚­ãƒ¼
+	static unsigned int m_prekey;	//å‰å›å…¥åŠ›ã—ãŸã‚­ãƒ¼
 public:
-	//ƒL[“ü—Í”»’è(’Êí”»’è)
+	//ã‚­ãƒ¼å…¥åŠ›åˆ¤å®š(é€šå¸¸åˆ¤å®š)
 	static bool IsKeyInput(unsigned int key);
-	//ƒL[“ü—Í”»’è(ƒgƒŠƒK[”»’è)
+	//ã‚­ãƒ¼å…¥åŠ›åˆ¤å®š(ãƒˆãƒªã‚¬ãƒ¼åˆ¤å®š)
 	static bool IsKeyInputTrg(unsigned int key);
-	//ƒL[“ü—ÍXV
+	//ã‚­ãƒ¼å…¥åŠ›æ›´æ–°
 	void UpdataKeyInput();
 
 };

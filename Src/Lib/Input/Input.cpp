@@ -1,33 +1,33 @@
-#include <DxLib.h>
+ï»¿#include <DxLib.h>
 #include"input.h"
 
 unsigned int Input::m_nowkey;
 unsigned int Input::m_prekey;
 
-//ƒL[“ü—ÍXV
+//ã‚­ãƒ¼å…¥åŠ›æ›´æ–°
 void Input::UpdataKeyInput()
 {
-	//‘O‰ñ‚Ìƒf[ƒ^XV
+	//å‰å›ã®ãƒ‡ãƒ¼ã‚¿æ›´æ–°
 	m_prekey = m_nowkey;
-	//ˆê“xƒf[ƒ^‚ğ0‚É‚·‚é
+	//ä¸€åº¦ãƒ‡ãƒ¼ã‚¿ã‚’0ã«ã™ã‚‹
 	m_nowkey = 0;
 
-	//w‚ğ‰Ÿ‚µ‚½
+	//wã‚’æŠ¼ã—ãŸ
 	if (CheckHitKey(KEY_INPUT_W))
 	{
 		m_nowkey |= KEY_UP;
 	}
-	//a‚ğ‰Ÿ‚µ‚½
+	//aã‚’æŠ¼ã—ãŸ
 	if (CheckHitKey(KEY_INPUT_S))
 	{
 		m_nowkey |= KEY_DOWN;
 	}
-	//d‚ğ‰Ÿ‚µ‚½
+	//dã‚’æŠ¼ã—ãŸ
 	if (CheckHitKey(KEY_INPUT_D))
 	{
 		m_nowkey |= KEY_RIGHT;
 	}
-	//s‚ğ‰Ÿ‚µ‚½
+	//sã‚’æŠ¼ã—ãŸ
 	if (CheckHitKey(KEY_INPUT_A))
 	{
 		m_nowkey |= KEY_LEFT;
@@ -36,7 +36,7 @@ void Input::UpdataKeyInput()
 	{
 		m_nowkey |= KEY_DASH;
 	}
-	//SPACE‚ğ‰Ÿ‚µ‚½
+	//SPACEã‚’æŠ¼ã—ãŸ
 	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
 		m_nowkey |= KEY_JUMP;
@@ -48,13 +48,13 @@ void Input::UpdataKeyInput()
 	
 
 }
-//w’è‚³‚ê‚½ƒL[‚ğ“ü—Í‚µ‚Ä‚¢‚é‚©
+//æŒ‡å®šã•ã‚ŒãŸã‚­ãƒ¼ã‚’å…¥åŠ›ã—ã¦ã„ã‚‹ã‹
 bool Input::IsKeyInput(unsigned int key)
 {
 	if (m_nowkey & key) return true;
 	else return false;
 }
-//w’è‚³‚ê‚½ƒL[‚ğ“ü—Í‚µ‚Ä‚¢‚é‚©(ƒgƒŠƒK[”»’è)
+//æŒ‡å®šã•ã‚ŒãŸã‚­ãƒ¼ã‚’å…¥åŠ›ã—ã¦ã„ã‚‹ã‹(ãƒˆãƒªã‚¬ãƒ¼åˆ¤å®š)
 bool Input::IsKeyInputTrg(unsigned int key)
 {
 	if (((m_nowkey & key) != 0) && ((m_prekey & key) == 0))

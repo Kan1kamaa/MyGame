@@ -1,31 +1,31 @@
-#include <DxLib.h>
+﻿#include <DxLib.h>
 #include"Fade.h"
-#define WINDOW_SIZE_X (1280)	// �E�B���h�E�T�C�Y(��)
-#define WINDOW_SIZE_Y (720)	// �E�B���h�E�T�C�Y(�c)
-#define FADE_SPEED (10)		// �t�F�[�h���x
+#define WINDOW_SIZE_X (1280)	// ウィンドウサイズ(横)
+#define WINDOW_SIZE_Y (720)	// ウィンドウサイズ(縦)
+#define FADE_SPEED (10)		// フェード速度
 
 FADE::tagFade FADE::m_state;
 int FADE::m_count;
 
 //-------------------------------
-//		�t�F�[�h������
+//		フェード初期化
 //-------------------------------
 void FADE::Init()
 {
-	// �ŏ��͂ЂƂ܂���ʂ��\�������NON��
+	// 最初はひとまず画面が表示されるNONに
 	m_state = FADE_NON;
 	m_count = 0;
 }
 
 
 //-------------------------------
-//		�t�F�[�h�X�V
+//		フェード更新
 //-------------------------------
 void FADE::Update()
 {
 	switch (m_state)
 	{
-		// ���X�ɖ��邭���Ă���
+		// 徐々に明るくしていく
 	case FADE_IN:
 		m_count -= FADE_SPEED;
 		if (m_count <= 0)
@@ -34,7 +34,7 @@ void FADE::Update()
 			m_state = FADE_NON;
 		}
 		break;
-		// ���X�ɈÂ����Ă���
+		// 徐々に暗くしていく
 	case FADE_OUT:
 		m_count += FADE_SPEED;
 		if (m_count >= 255)
@@ -48,24 +48,24 @@ void FADE::Update()
 
 
 //-------------------------------
-//		�t�F�[�h�`��
+//		フェード描画
 //-------------------------------
 void FADE::Draw()
 {
-	// FADE_NON�̎������͉����\�����Ȃ��Ă悢
+	// FADE_NONの時だけは何も表示しなくてよい
 	switch (m_state)
 	{
 	case FADE_IN:
 	case FADE_OUT:
 	case FADE_OUT_WAIT:
-		// �����ŃA���t�@�l���Z�b�g����
+		// ここでアルファ値をセットする
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_count);
 
-		// �t�F�[�h�p�̍����l�p��\��
+		// フェード用の黒い四角を表示
 		DrawBox(0, 0, WINDOW_SIZE_X, WINDOW_SIZE_Y,
 			GetColor(0, 0, 0), TRUE);
 
-		// ���ɉe�����y�ڂ��Ȃ��悤�ɁA�A���t�@�l�ݒ�𖳌���
+		// 他に影響を及ぼさないように、アルファ値設定を無効化
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
 		break;
@@ -74,44 +74,44 @@ void FADE::Draw()
 
 
 //-------------------------------
-//		�t�F�[�h�C�����N�G�X�g
+//		フェードインリクエスト
 //-------------------------------
 void FADE::RequestFadeIn()
 {
-	// ��Ԑݒ�Ɖ�ʂ������Ȃ����邽�߂̐ݒ�
+	// 状態設定と画面を見えなくするための設定
 	m_state = FADE_IN;
 	m_count = 255;
 }
 
 
 //-------------------------------
-//		�t�F�[�h�A�E�g���N�G�X�g
+//		フェードアウトリクエスト
 //-------------------------------
 void FADE::RequestFadeOut()
 {
-	// ��Ԑݒ�Ɖ�ʂ�������悤�ɂ��邽�߂̐ݒ�
+	// 状態設定と画面を見えるようにするための設定
 	m_state = FADE_OUT;
 	m_count = 0;
 }
 
 
 //-------------------------------
-//		�t�F�[�h�C�����I���������H
+//		フェードインが終了したか？
 //-------------------------------
 bool FADE::IsEndFadeIn()
 {
-	// �t�F�[�h�C����ԈȊO�͏I���Ɣ��f
+	// フェードイン状態以外は終了と判断
 	if (m_state == FADE_IN) return false;
 	else return true;
 }
 
 
 //-------------------------------
-//		�t�F�[�h�A�E�g���I���������H
+//		フェードアウトが終了したか？
 //-------------------------------
 bool FADE::IsEndFadeOut()
 {
-	// �t�F�[�h�A�E�g��ԈȊO�͏I���Ɣ��f
+	// フェードアウト状態以外は終了と判断
 	if (m_state == FADE_OUT) return false;
 	else return true;
 }

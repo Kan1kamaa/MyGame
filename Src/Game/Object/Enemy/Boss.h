@@ -23,6 +23,8 @@ private:
 		Chase,
 		Attack,
 		JumpAttack,
+		RockPillar,
+		Down,
 
 	};
 	EnemyState m_state;	//現在の行動状態

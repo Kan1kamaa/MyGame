@@ -9,7 +9,7 @@ int  WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	// メモリリーク確認用
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	ChangeWindowMode(TRUE);			// ウィンドウモードで起動
+	ChangeWindowMode(false);			// ウィンドウモードで起動
 	SetGraphMode(1280, 720, 32);
 
 	// ＤＸライブラリ初期化処理

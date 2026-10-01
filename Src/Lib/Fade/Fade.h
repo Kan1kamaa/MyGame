@@ -1,36 +1,36 @@
-#pragma once
-// ƒtƒF[ƒhˆê˜A‚Ì—¬‚ê
-// FADE_NON¨FADE_OUT¨FADE_OUT_WAIT‚Ì‡‚Å‰æ–Ê‚ªÁ‚¦A
-// FADE_OUT_WAIT¨FADE_IN¨FADE_NON‚Ì‡‚Å‰æ–Ê‚ªŒ»‚ê‚é
+ï»¿#pragma once
+// ãƒ•ã‚§ãƒ¼ãƒ‰ä¸€é€£ã®æµã‚Œ
+// FADE_NONâ†’FADE_OUTâ†’FADE_OUT_WAITã®é †ã§ç”»é¢ãŒæ¶ˆãˆã€
+// FADE_OUT_WAITâ†’FADE_INâ†’FADE_NONã®é †ã§ç”»é¢ãŒç¾ã‚Œã‚‹
 class FADE
 {
 private:
 	
 	enum tagFade {
-		FADE_NON,		// ƒtƒF[ƒh‚È‚µ‚Ì‘f‚Ìó‘Ô
-		FADE_IN,		// ƒtƒF[ƒhƒCƒ“’†(™X‚É–¾‚é‚­)
-		FADE_OUT,		// ƒtƒF[ƒhƒAƒEƒg’†
-		FADE_OUT_WAIT,	// ƒtƒF[ƒhƒAƒEƒgŠ®—¹Œã‚Ì‰½‚à•\Ž¦‚³‚ê‚È‚¢ó‘Ô
+		FADE_NON,		// ãƒ•ã‚§ãƒ¼ãƒ‰ãªã—ã®ç´ ã®çŠ¶æ…‹
+		FADE_IN,		// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ä¸­(å¾ã€…ã«æ˜Žã‚‹ã)
+		FADE_OUT,		// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆä¸­
+		FADE_OUT_WAIT,	// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆå®Œäº†å¾Œã®ä½•ã‚‚è¡¨ç¤ºã•ã‚Œãªã„çŠ¶æ…‹
 	};
-	static tagFade m_state;	// ƒtƒF[ƒhó‘Ô
-	static int m_count;		// ƒtƒF[ƒhŽžŠÔ‚ÌƒJƒEƒ“ƒg
+	static tagFade m_state;	// ãƒ•ã‚§ãƒ¼ãƒ‰çŠ¶æ…‹
+	static int m_count;		// ãƒ•ã‚§ãƒ¼ãƒ‰æ™‚é–“ã®ã‚«ã‚¦ãƒ³ãƒˆ
 public:
 	FADE();
 	~FADE();
-	// ƒtƒF[ƒh‰Šú‰»
+	// ãƒ•ã‚§ãƒ¼ãƒ‰åˆæœŸåŒ–
 	static void Init();
-	// ƒtƒF[ƒhXV
+	// ãƒ•ã‚§ãƒ¼ãƒ‰æ›´æ–°
 	static void Update();
-	// ƒtƒF[ƒh•`‰æ
+	// ãƒ•ã‚§ãƒ¼ãƒ‰æç”»
 	static void Draw();
 
-	// ƒtƒF[ƒhƒCƒ“ƒŠƒNƒGƒXƒg
+	// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ãƒªã‚¯ã‚¨ã‚¹ãƒˆ
 	static void RequestFadeIn();
-	// ƒtƒF[ƒhƒAƒEƒgƒŠƒNƒGƒXƒg
+	// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆãƒªã‚¯ã‚¨ã‚¹ãƒˆ
 	static void RequestFadeOut();
-	// ƒtƒF[ƒhƒCƒ“‚ªI—¹‚µ‚½‚©H
+	// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ãŒçµ‚äº†ã—ãŸã‹ï¼Ÿ
 	static bool IsEndFadeIn();
-	// ƒtƒF[ƒhƒAƒEƒg‚ªI—¹‚µ‚½‚©H
+	// ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆãŒçµ‚äº†ã—ãŸã‹ï¼Ÿ
 	static bool IsEndFadeOut();
 
 };

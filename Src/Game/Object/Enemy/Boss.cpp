@@ -331,10 +331,10 @@ void BossGolem::Step(const VECTOR& playerPos)
 		{
 			m_state = Chase;
 		}
-		else if (m_status.NowHp > m_status.MaxHp / 2)
+		/*else if (m_status.NowHp > m_status.MaxHp / 2)
 		{
 			m_state = Down;
-		}
+		}*/
 		else
 		{
 			m_state = Search;
@@ -365,10 +365,7 @@ void BossGolem::Step(const VECTOR& playerPos)
 		}
 		m_isJumping = false;	//着地したらジャンプ終了
 	}
-	//HP表示
-	DrawFormatString(16, 100, GetColor(255, 0, 0), "HP:%d/%d", GetBossHp(), GetBossMaxHp());
-	//スタミナ表示
-	DrawFormatString(16, 120, GetColor(255, 255, 0), "state:%d", m_state);
+	
 }
 
 
@@ -379,7 +376,10 @@ void BossGolem::Draw()
 	{
 		return;
 	}
-
+	//HP表示
+	DrawFormatString(16, 100, GetColor(255, 0, 0), "HP:%d/%d", GetBossHp(), GetBossMaxHp());
+	//スタミナ表示
+	DrawFormatString(16, 120, GetColor(255, 255, 0), "state:%d", m_state);
 	//被弾直後(無敵時間の最初の数フレーム)だけ赤く染めて、攻撃が当たったことをわかりやすくする
 	bool isFlash = false;
 	if (m_invincibleCnt > INVINCIBLE_TIME - HIT_FLASH_TIME)

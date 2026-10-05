@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Game\\Object\\Enemy\\Boss.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\src\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:src\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\Boss.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Game\\Object\\Enemy\\Boss.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\src\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:src\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\CharacterManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -279,7 +279,7 @@
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Enemy\\Boss.cpp",
               "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\Boss.cpp",
               "RelativeToolTip": "Src\\Game\\Object\\Enemy\\Boss.cpp",
-              "ViewState": "AgIAAJIBAAAAAAAAAAAAAKkBAAACAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAB0AAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-09-28T06:37:33.806Z",
               "EditorCaption": ""
@@ -298,15 +298,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Boss.h",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\Boss.h",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Enemy\\Boss.h",
               "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\Boss.h",
               "RelativeToolTip": "Src\\Game\\Object\\Enemy\\Boss.h",
-              "ViewState": "AgIAACEAAAAAAAAAAAAAACkAAAASAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAAAkAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-09-28T06:37:33.806Z"
+              "WhenOpened": "2026-09-28T06:37:33.806Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -346,7 +347,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Main.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Main.cpp",
               "RelativeDocumentMoniker": "Src\\Main.cpp",
@@ -354,8 +355,7 @@
               "RelativeToolTip": "Src\\Main.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-09-30T00:51:29.777Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-30T00:51:29.777Z"
             },
             {
               "$type": "Document",

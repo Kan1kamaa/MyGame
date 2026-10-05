@@ -28,6 +28,7 @@ static const float CHASE_MOVE_SPEED = 0.4f;	    //追いかけているときの
 static const float ROT_SPEED = 0.09f;			//1フレームで向き直れる最大角度(巨体なのでゆっくり)
 static const int   ATTACK_COOLDOWN = 100;		//攻撃と攻撃の間隔(フレーム数)
 static const int   JUMPATTACK_COOLDOWN = 1200;  //ジャンプ攻撃の間隔
+static const int   ROCKPILLAR_COOLDOWN = 1800;  //ロックピラー攻撃の間隔
 static const float CHARGE_TIME = 0.35;          //アニメーションの初めのタメ時間を判別するのに使用
 
 //ボスの攻撃判定の調整用パラメータ
@@ -146,6 +147,7 @@ void BossGolem::StepAttack(const VECTOR& playerPos)
 	{
 		isAttackAnim = true;
 	}
+	
 	//最終フレームまで再生し終えたか
 	bool isAttackFinished = false;
 	if (m_animData.m_nowFrm >= m_animData.m_endFrm)
@@ -232,6 +234,19 @@ void BossGolem::StepJumpAttack(const VECTOR& playerPos)
 	}
 }
 
+void BossGolem::StepRockPillar(const VECTOR& playerPos)
+{
+	RequestLoopAnim(ANIM_ROCKPILLAR, ANIM_SPEED);
+	m_speed = VEC_ZERO;
+	m_RockPillarCoolCnt
+	//最終フレームまで再生し終えたか
+	bool isAttackFinished = false;
+	if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+	{
+		isAttackFinished = true;
+	}
+
+}
 //ロード
 void BossGolem::Load()
 {

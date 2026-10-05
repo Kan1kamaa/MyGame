@@ -8,6 +8,7 @@ private:
 	bool m_isDying;			//死亡モーション再生中かどうか
 	int m_attackCoolCnt;	//次の攻撃を出すまでのフレーム数
 	int m_JumpatackCoolCnt;//ジャンプ攻撃のクールダウン
+	int m_RockPillarCoolCnt;//ロックピラー攻撃のクールダウン
 	//被弾後、無敵時間として残っているフレーム数(この間はHitCalcでダメージを受けない)
 	int m_invincibleCnt;
 	//現在の上下速度(ジャンプ・重力で使用)
@@ -17,6 +18,7 @@ private:
 	VECTOR m_jumpTarget;	//ジャンプ攻撃の着地目標(踏み切った瞬間のプレイヤー位置)
 	VECTOR m_jumpMove;		//ジャンプ攻撃中の1フレームあたりの水平移動量(踏み切った瞬間に固定)
 	int m_landingHitCnt;	//ジャンプ攻撃の着地の衝撃判定を出している残りフレーム数
+	
 	enum EnemyState
 	{
 		Search,
@@ -57,6 +59,8 @@ private:
 	void StepAttack(const VECTOR& playerPos);
 	//ジャンプ攻撃でプレイヤーを攻撃する
 	void StepJumpAttack(const VECTOR& playerPos);
+	//地面から棘を出して攻撃する
+	void StepRockPillar(const VECTOR& playerPos);
 public:
 	//コンストラクタ・デストラクタ
 	BossGolem();

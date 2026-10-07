@@ -238,7 +238,7 @@ void BossGolem::StepRockPillar(const VECTOR& playerPos)
 {
 	RequestLoopAnim(ANIM_ROCKPILLAR, ANIM_SPEED);
 	m_speed = VEC_ZERO;
-	m_RockPillarCoolCnt
+	m_RockPillarCoolCnt;
 	//最終フレームまで再生し終えたか
 	bool isAttackFinished = false;
 	if (m_animData.m_nowFrm >= m_animData.m_endFrm)

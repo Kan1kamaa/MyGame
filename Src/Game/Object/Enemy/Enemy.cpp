@@ -6,7 +6,7 @@ static const float MOVE_RANGE = 300.0f;	//移動可能範囲(プレイヤーのM
 static const float ENEMY_RAD = 5.0f;
 static const float ENEMY_SCALE = 0.08f;	//Golemモデルの表示倍率(見た目が大きすぎ/小さすぎる場合はここを調整)
 static const float ANIM_SPEED = 0.3f;		//アニメーション再生速度
-static const int INVINCIBLE_TIME = 60;        //被弾後の無敵時間(フレーム数。60=約1秒)
+static const int INVINCIBLE_TIME = 30;        //被弾後の無敵時間(フレーム数。60=約1秒)
 static const int HIT_FLASH_TIME = 8;          //被弾してから赤く光らせるフレーム数
 //ランダム移動の調整用パラメータ
 static const float ENEMY_MOVE_SPEED = 0.2f;	//1フレームあたりの移動量
@@ -159,6 +159,20 @@ void Enemy::StepAttack(const VECTOR& playerPos)
 	RequestLoopAnim(ANIM_ATTACK, ANIM_SPEED);
 }
 
+//ノックバック
+void Enemy::StepKnockBack()
+{
+	m_pos = VAdd(m_pos, m_speed);
+	m_speed = VScale(m_speed, 0.9f);
+	//一定速度を下回るとノックバック終了
+	if (VSquareSize(m_speed) < 0.01f)
+	{
+		//ひとまず追いかけるモードへ
+		m_state = Chase;
+		m_speed.x = m_speed.z = 0.0f;
+	}
+}
+
 //ロード
 void Enemy::Load(int origiinhndl)
 {
@@ -191,24 +205,27 @@ void Enemy::Step(const VECTOR& playerPos)
 	m_invincibleCnt--;
 	//プレイヤーとの距離で状態を決める
 	float distToPlayer = VSize(VSub(playerPos, m_pos));
-	if (distToPlayer <= ATTACK_RANGE)
+	if (m_state != KnockBack)
 	{
-		m_state = Attack;
+		if (distToPlayer <= ATTACK_RANGE)
+		{
+			m_state = Attack;
+		}
+		else if (distToPlayer <= DETECT_RANGE)
+		{
+			m_state = Chase;
+		}
+		else
+		{
+			m_state = Search;
+		}
 	}
-	else if (distToPlayer <= DETECT_RANGE)
-	{
-		m_state = Chase;
-	}
-	else
-	{
-		m_state = Search;
-	}
-
 	switch (m_state)
 	{
 	case Search: StepSearch();          break;
 	case Chase:  StepChase(playerPos);  break;
 	case Attack: StepAttack(playerPos); break;
+	case KnockBack: StepKnockBack(); break;
 	}
 }
 
@@ -273,6 +290,19 @@ void Enemy::HitCalc(const ObjectBase& other)
 
 	m_status.AddDamage(other.GetAttackPower());
 	m_invincibleCnt = INVINCIBLE_TIME;
+	//ノックバック状態へ
+	m_state = KnockBack;
+
+	//自分とプレイヤーの攻撃位置から吹き飛ぶ方向を計算
+	VECTOR backDir = VSub(m_pos,other.GetPos());
+	backDir.y = 0.0f;		//高さは別途計算
+	//いったん正規化して、吹き飛ぶ強さを決める
+	backDir = VNorm(backDir);
+	backDir = VScale(backDir, 1.5f);
+	backDir.y = 0.0f;		//上に飛ぶ力は別で設定
+
+	//計算結果を速度にセット
+	m_speed = backDir;
 	if (m_status.IsAlive() == false)
 	{
 		SoundManager::Play(SoundManager::SE_EXPLORE);

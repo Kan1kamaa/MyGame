@@ -31,16 +31,16 @@ public:
 	//各種アクセサ
 	//座標
 	void SetPos(VECTOR pos) { m_pos = pos; }
-	VECTOR GetPos() { return m_pos; }
+	VECTOR GetPos() const { return m_pos; }
 	//角度
 	void SetRot(VECTOR rot) { m_rot = rot; }
-	VECTOR GetRot() { return m_rot; }
+	VECTOR GetRot() const { return m_rot; }
 	//拡大縮小率
 	void SetScale(VECTOR scale) { m_scale = scale; }
-	VECTOR GetScale() { return m_scale; }
+	VECTOR GetScale() const { return m_scale; }
 	//生存フラグ
 	void SetActive(bool isActive) { m_isActive = isActive; }
-	bool GetActive() { return m_isActive; }
+	bool GetActive() const { return m_isActive; }
 	//半径
 	float GetRadius() { return m_radius; }
 	//当たり判定の中心を取得

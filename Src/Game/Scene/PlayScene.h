@@ -24,6 +24,10 @@ private:
 	//カメラ
 	CameraManager camera;
 
+	//シャドウマップのハンドル(Init()で作成、Fin()で破棄する。-1=未作成)
+	int shadowHndl = -1;
+
+	
 public:
 	//描画
 	void Draw();

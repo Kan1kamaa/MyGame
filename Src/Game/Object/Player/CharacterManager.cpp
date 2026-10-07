@@ -380,6 +380,18 @@ void CharacterManager::DrawPL()
 
 	m_char.Draw();
 	m_char.DrawWeapon();
+}
+
+//----------------------
+//	HUD・デバッグ表示の描画(モデルとは別。影用の描画には含めない)
+//----------------------
+void CharacterManager::DrawHUD()
+{
+	//行動不能(HP0)なら描画しない
+	if (m_isActive == false)
+	{
+		return;
+	}
 
 	//デバッグ表示:このモデルのアニメーション数と、直前のアタッチが成功したかを確認する
 	/*DrawFormatString(16, 16, GetColor(255, 255, 0), "AnimNum:%d Index:%d AttachID:%d WeaponFrameL:%d WeaponFrameR:%d",

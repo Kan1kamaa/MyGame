@@ -54,8 +54,10 @@ public:
 	void Step(float cameraYaw);
 	//毎更新
 	void Update();
-	//描画
+	//キャラクターのモデルと刀の描画(影用の描画にも使う)
 	void DrawPL();
+	//HP・スタミナ・操作説明・攻撃判定の球などの表示
+	void DrawHUD();
 	//破棄
 	void Fin();
 

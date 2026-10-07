@@ -12,7 +12,8 @@ private:
 	{
 		Search,
 		Chase,
-		Attack
+		Attack,
+		KnockBack
 	};
 	EnemyState m_state;	//現在の行動状態
 
@@ -34,6 +35,8 @@ private:
 	void StepChase(const VECTOR& playerPos);
 	//プレイヤーを攻撃する
 	void StepAttack(const VECTOR& playerPos);
+	//ノックバック
+	void StepKnockBack();
 	//moveDirの方向へ少しずつ向き直る
 	void TurnToward(const VECTOR& moveDir);
 public:

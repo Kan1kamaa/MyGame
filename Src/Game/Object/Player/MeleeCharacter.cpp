@@ -1,4 +1,5 @@
 ﻿#include "MeleeCharacter.h"
+#include "../../System/ModelUtil.h"
 
 namespace {
 	const float ANIM_SPEED = 0.55f;	  //アニメーションの速度
@@ -76,6 +77,7 @@ void MeleeCharacter::Load()
 	if (m_hndl == -1)
 	{
 		m_hndl = MV1LoadModel("Data/Models/Player/charcter1/Kan1kama.mv1");
+		BrightenModelAmbient(m_hndl);
 		RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
 
 		//左手・右手のボーン番号を調べておく(見つからなければ-1のまま)
@@ -88,6 +90,8 @@ void MeleeCharacter::Load()
 		m_weaponHndl = MV1LoadModel(WEAPON_FILE_PATH);
 		//右手用はデータを共有した複製を作る(ジャンプ攻撃の両手持ちで使う)
 		m_weaponHndl2 = MV1DuplicateModel(m_weaponHndl);
+		BrightenModelAmbient(m_weaponHndl);
+		BrightenModelAmbient(m_weaponHndl2);
 	}
 }
 

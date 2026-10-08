@@ -2,6 +2,7 @@
 #include"Boss.h"
 #include"../Field/Field.h"
 #include"../../System/SoundManager.h"
+#include"../../System/ModelUtil.h"
 static const VECTOR VEC_ZERO{ 0.0f,0.0f,0.0f };
 
 //オリジナルとなるボスのパス
@@ -26,8 +27,8 @@ static const float ATTACK_RANGE = 50.0f;		//この距離より近づくと攻撃
 static const float JUMP_RANGE = 150.0f;         //この距離離れてたらジャンプ攻撃
 static const float CHASE_MOVE_SPEED = 0.4f;	    //追いかけているときの1フレームあたりの移動量
 static const float ROT_SPEED = 0.09f;			//1フレームで向き直れる最大角度(巨体なのでゆっくり)
-static const int   ATTACK_COOLDOWN = 100;		//攻撃と攻撃の間隔(フレーム数)
-static const int   JUMPATTACK_COOLDOWN = 1200;  //ジャンプ攻撃の間隔
+static const int   ATTACK_COOLDOWN = 80;		//攻撃と攻撃の間隔(フレーム数)
+static const int   JUMPATTACK_COOLDOWN = 300;  //ジャンプ攻撃の間隔
 static const int   ROCKPILLAR_COOLDOWN = 1800;  //ロックピラー攻撃の間隔
 static const float CHARGE_TIME = 0.35;          //アニメーションの初めのタメ時間を判別するのに使用
 
@@ -60,7 +61,7 @@ void BossGolem::Init()
 	m_speed = VEC_ZERO;
 	m_isDying = false;
 	m_attackCoolCnt = 0;
-	m_JumpatackCoolCnt = 600;
+	m_JumpatackCoolCnt = 100;
 	m_state = Search;
 	m_velocityY = 0;
 	m_isJumping = false;
@@ -253,6 +254,7 @@ void BossGolem::Load()
 	if (m_hndl == -1)
 	{
 		m_hndl = MV1LoadModel(FILE_PATH);
+		BrightenModelAmbient(m_hndl);
 	}
 }
 

@@ -19,8 +19,7 @@ int  WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	SetDrawScreen(DX_SCREEN_BACK);
 	SetUseZBuffer3D(TRUE);
 	SetWriteZBuffer3D(TRUE);
-	SetUseLighting(TRUE);	// シャドウマップはライティングが有効でないと影が出ない
-	SetGlobalAmbientLight(GetColorF(0.4f, 0.4f, 0.4f, 1.0f));	// 影の部分が真っ黒にならないようにする環境光
+	SetUseLighting(FALSE);	// モデルの明るさ確認用にライティングを無効化
 	// 初期化
 	InitFps();
 	SceneManager scene;

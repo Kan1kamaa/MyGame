@@ -1,6 +1,7 @@
 ﻿#include<math.h>
 #include"Enemy.h"
 #include"../../System/SoundManager.h"
+#include"../../System/ModelUtil.h"
 static const VECTOR VEC_ZERO{ 0.0f,0.0f,0.0f };
 static const float MOVE_RANGE = 300.0f;	//移動可能範囲(プレイヤーのMOVE_RANGE_X / MOVE_RANGE_Zと同じ)
 static const float ENEMY_RAD = 5.0f;
@@ -180,6 +181,7 @@ void Enemy::Load(int origiinhndl)
 	{
 		//モデルは複製する
 		m_hndl = MV1DuplicateModel(origiinhndl);
+		BrightenModelAmbient(m_hndl);
 	}
 }
 

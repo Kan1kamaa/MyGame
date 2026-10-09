@@ -23,6 +23,10 @@ private:
 	void StartSkill();
 	//必殺技モーションを再生する
 	void StartUlt();
+	//被弾モーションを再生する
+	void StartDamege();
+	//被弾モーション大を再生する
+	void StartDamege2();
 	//地上の通常攻撃(1〜3段目)モーションを再生中かどうか
 	bool IsGroundAttackMotion() const;
 	//攻撃モーション(地上1〜3段目、空中攻撃)を再生中かどうか。刀を持たせるかどうかの判定にも使う
@@ -46,6 +50,9 @@ public:
 	bool IsAttackActive() const;
 	//走り出し(=回避)モーション中かどうか。この間は無敵にする
 	bool IsDodging() const;
+	bool IsDamageMotion()const;
+	//被弾ダメージが大きいか
+	bool OnDamage(bool isBig);
 	float GetLungeSpeed() const;
 	void UpdateWeapon();
 	void DrawWeapon();

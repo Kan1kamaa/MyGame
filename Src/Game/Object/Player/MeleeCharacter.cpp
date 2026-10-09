@@ -36,6 +36,8 @@ namespace {
 		ANIMID_ATTACK1,		//攻撃1モーション
 		ANIMID_ATTACK2,		//攻撃2モーション
 		ANIMID_ATTACK3,		//攻撃3モーション
+		ANIMID_DAMAGE,		//被弾モーション
+		ANIMID_DAMAGE2,		//被弾モーション大
 		ANIMID_IDLE,	    //待機モーション
 		ANIMID_JUMPATTACK,	//ジャンプ攻撃モーション
 		ANIMID_JUMPFALL,    //落下モーション
@@ -76,7 +78,7 @@ void MeleeCharacter::Load()
 {
 	if (m_hndl == -1)
 	{
-		m_hndl = MV1LoadModel("Data/Models/Player/charcter1/Kan1kama.mv1");
+		m_hndl = MV1LoadModel("Data/Models/Player/charcter1/Kan1kama2.mv1");
 		BrightenModelAmbient(m_hndl);
 		RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
 
@@ -147,6 +149,17 @@ void MeleeCharacter::StartUlt()
 	RequestAnim(ANIMID_ULT, ANIM_SPEED);
 }
 
+//被弾モーションを再生する
+void MeleeCharacter::StartDamege()
+{
+	RequestAnim(ANIMID_DAMAGE, ANIM_SPEED);
+}
+
+//被弾モーション大を再生する
+void MeleeCharacter::StartDamege2()
+{
+	RequestAnim(ANIMID_DAMAGE2, ANIM_SPEED);
+}
 //アニメーション状態の更新
 void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool isRunInput,
 	bool isGrounded, float& velocityY, bool isJumpTrigger,
@@ -200,6 +213,8 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 		StartUlt();
 		return;
 	}
+
+	
 
 	//m_animData.m_indexは「今再生中のアニメ番号」。これで今の状態(待機/歩き/走り/攻撃/ジャンプ)を判断している
 	switch (m_animData.m_index)
@@ -357,7 +372,19 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 			RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
 		}
 		break;
-
+	case ANIMID_DAMAGE: //今は被弾モーション中
+		//被弾モーションを最後まで再生し終えたら待機に戻る
+		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		{
+			RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
+		}
+	case ANIMID_DAMAGE2: //今は被弾モーション大中
+		//被弾モーション大を最後まで再生し終えたら待機に戻る
+		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		{
+			RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
+		}
+		break;
 	case ANIMID_ULT: //今は必殺技モーション中
 		//必殺技モーションを最後まで再生し終えたら待機に戻る
 		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
@@ -467,6 +494,29 @@ bool MeleeCharacter::IsDodging() const
 	return false;
 }
 
+//被弾モーション中かどうか
+bool MeleeCharacter::IsDamageMotion() const
+{
+	if (m_animData.m_index == ANIMID_DAMAGE || m_animData.m_index == ANIMID_DAMAGE2)
+	{
+		return true;
+	}
+	return false;
+}
+//ダメージが大きいかどうか
+bool MeleeCharacter::OnDamage(bool isBig) 
+{
+	m_comboStage = 0;
+	m_comboQueued = false;
+	if(isBig == false)
+	{
+		StartDamege();
+	}
+	else
+	{
+		StartDamege2();
+	}
+}
 
 float MeleeCharacter::GetAttackPower()const
 {

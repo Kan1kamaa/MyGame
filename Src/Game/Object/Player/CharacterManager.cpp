@@ -19,6 +19,7 @@ namespace {
 	const int STAMINA_REGENDELAY = 120;				//スタミナが回復を始めるまでの時間
 	const float DASH_RESTART_STAMINA = 30;			//息切れから走れるようになる量
 	const int INVINCIBLE_TIME = 60;					//被弾後の無敵時間(フレーム数。60=約1秒)
+	const int BIGDAMAGE_LINE = 30;					//被弾モーションが変わるライン(この値以上ならモーション大)
 
 	const float ATTACK_HIT_DIST = 14.0f;			//攻撃判定(球)をキャラの前方どれだけ先に出すか
 	const float ATTACK_HIT_RADIUS = 14.0f;			//攻撃判定(球)の半径
@@ -430,10 +431,17 @@ void CharacterManager::HitCalc(const ObjectBase& other)
 	{
 		return;
 	}
-
 	m_status.AddDamage(other.GetAttackPower());
 	m_invincibleCnt = INVINCIBLE_TIME;
-
+	bool isBig;
+	if(other.GetAttackPower() > BIGDAMAGE_LINE)
+	{
+		isBig = true;
+	}
+	else
+	{
+		false;
+	}
 	if (m_status.IsAlive() == false)
 	{
 		m_isActive = false;

@@ -38,6 +38,7 @@ namespace {
 		ANIMID_ATTACK3,		//攻撃3モーション
 		ANIMID_DAMAGE,		//被弾モーション
 		ANIMID_DAMAGE2,		//被弾モーション大
+		ANIMID_DEATH,		//死亡モーション
 		ANIMID_IDLE,	    //待機モーション
 		ANIMID_JUMPATTACK,	//ジャンプ攻撃モーション
 		ANIMID_JUMPFALL,    //落下モーション
@@ -160,6 +161,13 @@ void MeleeCharacter::StartDamege2()
 {
 	RequestAnim(ANIMID_DAMAGE2, ANIM_SPEED);
 }
+
+//死亡モーションを再生する
+void MeleeCharacter::StartDeath()
+{
+	RequestAnim(ANIMID_DEATH, ANIM_SPEED);
+}
+
 //アニメーション状態の更新
 void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool isRunInput,
 	bool isGrounded, float& velocityY, bool isJumpTrigger,
@@ -393,6 +401,13 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 			RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
 		}
 		break;
+	case ANIMID_DEATH: //今は死亡モーション中
+		//死亡モーションを最後まで再生し終えたら待機に戻る
+		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		{
+			RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
+		}
+		break;
 
 	case ANIMID_ATTACK1: //1〜3段目のどれかを攻撃中(3つとも同じ処理でまとめて扱う)
 	case ANIMID_ATTACK2:
@@ -514,8 +529,19 @@ bool MeleeCharacter::IsDamage2Motion() const
 	}
 	return false;
 }
+
+//死亡モーション中かどうか
+bool MeleeCharacter::IsDeathMotion() const
+{
+	if (m_animData.m_index == ANIMID_DEATH)
+	{
+		return true;
+	}
+	return false;
+}
+
 //ダメージが大きいかどうか
-bool MeleeCharacter::OnDamage(bool isBig) 
+void MeleeCharacter::OnDamage(bool isBig) 
 {
 	m_comboStage = 0;
 	m_comboQueued = false;

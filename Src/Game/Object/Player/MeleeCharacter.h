@@ -27,6 +27,8 @@ private:
 	void StartDamege();
 	//被弾モーション大を再生する
 	void StartDamege2();
+	//死亡モーションを再生する
+	void StartDeath();
 	//地上の通常攻撃(1〜3段目)モーションを再生中かどうか
 	bool IsGroundAttackMotion() const;
 	//攻撃モーション(地上1〜3段目、空中攻撃)を再生中かどうか。刀を持たせるかどうかの判定にも使う
@@ -52,8 +54,9 @@ public:
 	bool IsDodging() const;
 	bool IsDamageMotion()const;
 	bool IsDamage2Motion()const;
+	bool IsDeathMotion()const;
 	//被弾ダメージが大きいか
-	bool OnDamage(bool isBig);
+	void OnDamage(bool isBig);
 	float GetLungeSpeed() const;
 	void UpdateWeapon();
 	void DrawWeapon();

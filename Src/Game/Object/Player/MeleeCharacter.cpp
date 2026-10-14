@@ -378,6 +378,7 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 		{
 			RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
 		}
+		break;
 	case ANIMID_DAMAGE2: //今は被弾モーション大中
 		//被弾モーション大を最後まで再生し終えたら待機に戻る
 		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
@@ -497,7 +498,17 @@ bool MeleeCharacter::IsDodging() const
 //被弾モーション中かどうか
 bool MeleeCharacter::IsDamageMotion() const
 {
-	if (m_animData.m_index == ANIMID_DAMAGE || m_animData.m_index == ANIMID_DAMAGE2)
+	if (m_animData.m_index == ANIMID_DAMAGE)
+	{
+		return true;
+	}
+	return false;
+}
+
+//被弾モーション大中かどうか
+bool MeleeCharacter::IsDamage2Motion() const
+{
+	if (m_animData.m_index == ANIMID_DAMAGE2)
 	{
 		return true;
 	}

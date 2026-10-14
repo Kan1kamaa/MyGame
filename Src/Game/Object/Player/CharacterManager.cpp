@@ -20,7 +20,9 @@ namespace {
 	const float DASH_RESTART_STAMINA = 30;			//息切れから走れるようになる量
 	const int INVINCIBLE_TIME = 60;					//被弾後の無敵時間(フレーム数。60=約1秒)
 	const int BIGDAMAGE_LINE = 30;					//被弾モーションが変わるライン(この値以上ならモーション大)
-
+	const float KNOCKBACK_POWER_BACK = 1.0f;			//ノックバックの後ろ方向への初速
+	const float KNOCKBACK_POWER_Y = 3.0f;			//ノックバック大の上方向への初速
+	const float KNOCKBACK_POWER_BACK2 = 3.0f;			//ノックバック大の後ろ方向への初速
 	const float ATTACK_HIT_DIST = 14.0f;			//攻撃判定(球)をキャラの前方どれだけ先に出すか
 	const float ATTACK_HIT_RADIUS = 14.0f;			//攻撃判定(球)の半径
 
@@ -76,6 +78,7 @@ void CharacterManager::Init()
 	ObjectBase::Init();
 	m_radius = 5.0f;
 	m_velocityY = 0.0f;
+	m_Knockbackvel = { 0.0f,0.0f,0.0f };
 	m_prevKeySpace = false;
 	m_prevKeyE = false;
 	m_prevKeyR = false;
@@ -123,8 +126,13 @@ void CharacterManager::Step(float cameraYaw)
 	//------ このフレームの入力をすべて読む ------
 	//攻撃中はWASDでの移動を受け付けない(移動方向を0にする)
 	bool isAttacking = m_char.IsAttacking();
+	bool isTakingDamage = false;
+	if (m_char.IsDamageMotion() == true || m_char.IsDamage2Motion() == true)
+	{
+		isTakingDamage = true;
+	}
 	VECTOR moveDir = VGet(0.0f, 0.0f, 0.0f);
-	if (isAttacking == false)
+	if (isAttacking == false && isTakingDamage == false)
 	{
 		//攻撃中でなければWASDから移動方向を作る
 		moveDir = ReadMoveDir(cameraYaw);
@@ -181,6 +189,13 @@ void CharacterManager::Step(float cameraYaw)
 	VECTOR velocity = CalcMoveVelocity(moveDir, isRunInput);
 	velocity = VAdd(velocity, CalcLungeVelocity());
 	m_pos = VAdd(m_pos, velocity);
+	m_pos = VAdd(m_pos, m_Knockbackvel);
+	m_Knockbackvel = VScale(m_Knockbackvel, 0.9f);
+	//一定速度を下回るとノックバック終了
+	if (VSquareSize(m_Knockbackvel) < 0.01f)
+	{
+		m_Knockbackvel.x = m_Knockbackvel.z = 0.0f;
+	}
 	ClampInsideField();
 
 	//------ 移動している方向へ向き直る ------
@@ -436,12 +451,37 @@ void CharacterManager::HitCalc(const ObjectBase& other)
 	bool isBig;
 	if(other.GetAttackPower() > BIGDAMAGE_LINE)
 	{
-		isBig = true;
+		isBig = false;
+		m_char.OnDamage(isBig);
+		//自分とプレイヤーの攻撃位置から吹き飛ぶ方向を計算
+		VECTOR backDir = VSub(m_pos, other.GetPos());
+		backDir.y = 0.0f;		//高さは別途計算
+		//いったん正規化して、吹き飛ぶ強さを決める
+		backDir = VNorm(backDir);
+		backDir = VScale(backDir, KNOCKBACK_POWER_BACK);
+		backDir.y = 0.0f;		//上に飛ぶ力は別で設定
+
+		//計算結果を速度にセット
+		m_Knockbackvel = backDir;
 	}
 	else
 	{
-		false;
+		isBig = true;
+		m_char.OnDamage(isBig);
+		//自分とプレイヤーの攻撃位置から吹き飛ぶ方向を計算
+		VECTOR backDir = VSub(m_pos, other.GetPos());
+		backDir.y = 0.0f;		//高さは別途計算
+		//いったん正規化して、吹き飛ぶ強さを決める
+		backDir = VNorm(backDir);
+		backDir = VScale(backDir, KNOCKBACK_POWER_BACK2);
+		m_velocityY = KNOCKBACK_POWER_Y;		//上に飛ぶ力は別で設定
+		//計算結果を速度にセット
+		m_Knockbackvel = backDir;
 	}
+	//ノックバック状態へ
+
+
+
 	if (m_status.IsAlive() == false)
 	{
 		m_isActive = false;

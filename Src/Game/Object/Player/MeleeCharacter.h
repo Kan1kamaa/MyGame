@@ -51,6 +51,7 @@ public:
 	//走り出し(=回避)モーション中かどうか。この間は無敵にする
 	bool IsDodging() const;
 	bool IsDamageMotion()const;
+	bool IsDamage2Motion()const;
 	//被弾ダメージが大きいか
 	bool OnDamage(bool isBig);
 	float GetLungeSpeed() const;

@@ -9,6 +9,8 @@ private:
 	MeleeCharacter m_char;
 	//現在の上下速度(ジャンプ・重力で使用)
 	float m_velocityY;
+	//ノックバック時の移動
+	VECTOR m_Knockbackvel;
 	//前フレームのジャンプキー入力状態(押した瞬間だけジャンプさせるための判定用)
 	bool m_prevKeySpace;
 	//前フレームのスキル/必殺技キー入力状態(押した瞬間だけ発動させるための判定用)

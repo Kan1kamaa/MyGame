@@ -81,6 +81,9 @@ public:
 
 
 	bool Request(const VECTOR& pos);
+	//出現中・倒された後に関係なく、状態を初期に戻して指定座標に出し直す(プレイヤーのリスポーン時に使う)
+	//@pos : 出現させる座標
+	void Reset(const VECTOR& pos);
 
 	void HitCalc(const ObjectBase& other);
 

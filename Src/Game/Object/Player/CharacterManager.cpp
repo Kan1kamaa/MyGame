@@ -26,6 +26,10 @@ namespace {
 	const float ATTACK_HIT_DIST = 14.0f;			//攻撃判定(球)をキャラの前方どれだけ先に出すか
 	const float ATTACK_HIT_RADIUS = 14.0f;			//攻撃判定(球)の半径
 
+	const VECTOR PLAYER_SPAWN_POS = { 0.0f, 0.0f, 0.0f };	//スポーン地点(リスポーンもここ)
+	const int RESPAWN_WAIT = 60;					//死亡モーションが終わってからリスポーンするまでのフレーム数
+	const int RESPAWN_INVINCIBLE_TIME = 180;		//リスポーン直後の無敵時間(フレーム数。180=約3秒)
+
 	
 	//キーが「今のフレームで押された瞬間」かどうかを返す。
 	//prev には前フレームの押下状態が入っていて、この関数の中で更新する。
@@ -76,6 +80,7 @@ CharacterManager::~CharacterManager()
 void CharacterManager::Init()
 {
 	ObjectBase::Init();
+	m_pos = PLAYER_SPAWN_POS;
 	m_radius = 5.0f;
 	m_velocityY = 0.0f;
 	m_Knockbackvel = { 0.0f,0.0f,0.0f };
@@ -88,6 +93,9 @@ void CharacterManager::Init()
 	m_invincibleCnt = 0;
 	m_isExhausted = false;
 	m_wasDodging = false;
+	m_isDying = false;
+	m_respawnWaitCnt = 0;
+	m_hasRespawned = false;
 	m_char.Init();
 }
 
@@ -106,6 +114,13 @@ void CharacterManager::Load()
 //それぞれの中身は下の小さな関数に分けてある。
 void CharacterManager::Step(float cameraYaw)
 {
+	//死亡中は操作を受け付けず、リスポーンを待つだけ
+	if (m_isDying == true)
+	{
+		StepDying();
+		return;
+	}
+
 	//無敵時間を減らす
 	if (m_invincibleCnt > 0)
 	{
@@ -374,6 +389,63 @@ void CharacterManager::UpdateVertical(bool isJumpTrigger)
 	}
 }
 
+//死亡中の処理
+void CharacterManager::StepDying()
+{
+	//吹っ飛びながら倒れたときのために、ノックバックと重力だけは続ける
+	m_pos = VAdd(m_pos, m_Knockbackvel);
+	m_Knockbackvel = VScale(m_Knockbackvel, 0.9f);
+	if (VSquareSize(m_Knockbackvel) < 0.01f)
+	{
+		m_Knockbackvel.x = m_Knockbackvel.z = 0.0f;
+	}
+	ClampInsideField();
+	UpdateVertical(false);
+
+	m_char.SetPos(m_pos);
+	m_char.SetRot(m_rot);
+
+	//死亡モーションを最後まで見せてから、少し待ってリスポーンする
+	if (m_char.IsDeathFinished() == true)
+	{
+		m_respawnWaitCnt--;
+		if (m_respawnWaitCnt <= 0)
+		{
+			Respawn();
+		}
+	}
+}
+
+//スポーン地点にHP・スタミナ全回復で復活させる
+void CharacterManager::Respawn()
+{
+	m_pos = PLAYER_SPAWN_POS;
+	m_rot = VGet(0.0f, 0.0f, 0.0f);
+	m_velocityY = 0.0f;
+	m_Knockbackvel = VGet(0.0f, 0.0f, 0.0f);
+	m_status.Init(PLAYER_MAX_HP, 0);
+	m_stamina = PLAYER_MAX_STAMINA;
+	m_staminaRegenWait = 0;
+	m_isExhausted = false;
+	m_wasDodging = false;
+	//復活した瞬間に袋叩きにされないよう、しばらく無敵にする
+	m_invincibleCnt = RESPAWN_INVINCIBLE_TIME;
+	m_isDying = false;
+	m_hasRespawned = true;
+
+	m_char.ResetToIdle();
+	m_char.SetPos(m_pos);
+	m_char.SetRot(m_rot);
+}
+
+//リスポーンした直後ならtrueを返す(1回呼ぶとfalseに戻る)
+bool CharacterManager::CheckRespawned()
+{
+	bool result = m_hasRespawned;
+	m_hasRespawned = false;
+	return result;
+}
+
 //----------------------
 //	毎更新
 //----------------------
@@ -436,6 +508,11 @@ void CharacterManager::DrawHUD()
 //無敵時間中・回避モーション中でなければダメージを受ける。HPが0になったら行動不能にする
 void CharacterManager::HitCalc(const ObjectBase& other)
 {
+	//死亡中は追加のダメージを受けない
+	if (m_isDying == true)
+	{
+		return;
+	}
 	//被弾後の無敵時間中はダメージを受けない
 	if (m_invincibleCnt > 0)
 	{
@@ -481,9 +558,12 @@ void CharacterManager::HitCalc(const ObjectBase& other)
 		m_Knockbackvel = VScale(backDir, KNOCKBACK_SMALL_BACK);
 	}
 
+	//HPが0になったら死亡モーションへ。描画は続けたいのでm_isActiveはtrueのまま
 	if (m_status.IsAlive() == false)
 	{
-		m_isActive = false;
+		m_isDying = true;
+		m_respawnWaitCnt = RESPAWN_WAIT;
+		m_char.StartDeath();
 	}
 }
 

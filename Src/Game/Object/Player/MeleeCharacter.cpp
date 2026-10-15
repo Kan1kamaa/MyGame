@@ -165,6 +165,8 @@ void MeleeCharacter::StartDamege2()
 //死亡モーションを再生する
 void MeleeCharacter::StartDeath()
 {
+	m_comboStage = 0;
+	m_comboQueued = false;
 	RequestAnim(ANIMID_DEATH, ANIM_SPEED);
 }
 
@@ -402,11 +404,7 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 		}
 		break;
 	case ANIMID_DEATH: //今は死亡モーション中
-		//死亡モーションを最後まで再生し終えたら待機に戻る
-		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
-		{
-			RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
-		}
+		//倒れたまま最終フレームで止めておく(待機に戻すのはリスポーン時のResetToIdle)
 		break;
 
 	case ANIMID_ATTACK1: //1〜3段目のどれかを攻撃中(3つとも同じ処理でまとめて扱う)
@@ -534,6 +532,20 @@ bool MeleeCharacter::IsDamage2Motion() const
 bool MeleeCharacter::IsDeathMotion() const
 {
 	if (m_animData.m_index == ANIMID_DEATH)
+	{
+		return true;
+	}
+	return false;
+}
+
+//死亡モーションを最後まで再生し終えたか
+bool MeleeCharacter::IsDeathFinished() const
+{
+	if (IsDeathMotion() == false)
+	{
+		return false;
+	}
+	if (m_animData.m_nowFrm >= m_animData.m_endFrm)
 	{
 		return true;
 	}

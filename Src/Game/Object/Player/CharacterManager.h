@@ -26,6 +26,9 @@ private:
 	int   m_staminaRegenWait; //消費してから回復が始まるまでの残りフレーム数
 	bool m_isExhausted;	//スタミナ切れで走れない状態か
 	bool m_wasDodging;	//前フレームで回避(走り出し)モーション中だったか(切り替わった瞬間の検出用)
+	bool m_isDying;			//死亡中か(死亡モーション再生〜リスポーンまで。この間は操作・被弾を受け付けない)
+	int  m_respawnWaitCnt;	//死亡モーションが終わってからリスポーンするまでの残りフレーム数
+	bool m_hasRespawned;	//リスポーンした直後か(PlaySceneがボスをリセットするのに使う)
 	//--- Step() から呼ぶ小さな処理(1つずつ役割を分けている) ---
 
 	//WASD入力を読んで、カメラの向き基準の移動方向を返す
@@ -41,6 +44,10 @@ private:
 	void TurnToward(VECTOR moveDir);
 	//ジャンプ入力と重力を処理して m_pos.y / m_velocityY を更新する
 	void UpdateVertical(bool isJumpTrigger);
+	//死亡中の処理(操作は受け付けず、死亡モーションが終わって少し待ったらリスポーンする)
+	void StepDying();
+	//スポーン地点にHP・スタミナ全回復で復活させる
+	void Respawn();
 
 public:
 	//コンストラクタ・デストラクタ
@@ -80,4 +87,6 @@ public:
 	//現在のHP・最大HP(HUD表示用)
 	int GetHp() const { return m_status.NowHp; }
 	int GetMaxHp() const { return m_status.MaxHp; }
+	//リスポーンした直後ならtrueを返す(1回呼ぶとfalseに戻る)
+	bool CheckRespawned();
 };

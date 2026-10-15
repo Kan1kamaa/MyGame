@@ -29,12 +29,18 @@ static const float CHASE_MOVE_SPEED = 0.4f;	    //追いかけているときの
 static const float ROT_SPEED = 0.09f;			//1フレームで向き直れる最大角度(巨体なのでゆっくり)
 static const int   ATTACK_COOLDOWN = 80;		//攻撃と攻撃の間隔(フレーム数)
 static const int   JUMPATTACK_COOLDOWN = 300;  //ジャンプ攻撃の間隔
+static const int   JUMPATTACK_FIRST_WAIT = 100; //出現してから最初のジャンプ攻撃を出せるまでのフレーム数
 static const int   ROCKPILLAR_COOLDOWN = 1800;  //ロックピラー攻撃の間隔
 static const float CHARGE_TIME = 0.35;          //アニメーションの初めのタメ時間を判別するのに使用
 
 //ボスの攻撃判定の調整用パラメータ
-static const float ATTACK_HIT_START = 0.6f;     //通常攻撃の判定を出し始めるタイミング(アニメ全体に対する割合)
-static const float ATTACK_HIT_END = 0.8f;       //通常攻撃の判定を消すタイミング(アニメ全体に対する割合)
+//通常攻撃の判定を出す区間(アニメ全体に対する割合。STARTからENDの間だけ判定が出る)
+static const float ATTACK1_HIT_START = 0.6f;    //攻撃1の判定を出し始めるタイミング
+static const float ATTACK1_HIT_END = 0.8f;      //攻撃1の判定を消すタイミング
+static const float ATTACK2_HIT_START = 0.6f;    //攻撃2の判定を出し始めるタイミング
+static const float ATTACK2_HIT_END = 0.8f;      //攻撃2の判定を消すタイミング
+static const float ATTACK3_HIT_START = 0.6f;    //攻撃3の判定を出し始めるタイミング
+static const float ATTACK3_HIT_END = 0.8f;      //攻撃3の判定を消すタイミング
 static const float ATTACK_HIT_DIST = 20.0f;     //通常攻撃の判定(球)をボスの前方どれだけ先に出すか
 static const float ATTACK_HIT_RADIUS = 30.0f;   //通常攻撃の判定(球)の半径
 static const int   JUMP_HIT_TIME = 6;           //ジャンプ攻撃の着地の衝撃判定を出すフレーム数
@@ -61,7 +67,7 @@ void BossGolem::Init()
 	m_speed = VEC_ZERO;
 	m_isDying = false;
 	m_attackCoolCnt = 0;
-	m_JumpatackCoolCnt = 100;
+	m_JumpatackCoolCnt = JUMPATTACK_FIRST_WAIT;
 	m_state = Search;
 	m_velocityY = 0;
 	m_isJumping = false;
@@ -438,26 +444,32 @@ bool BossGolem::IsAttackActive() const
 	}
 
 	//通常攻撃1〜3は、振りかぶりと振り終わりを除いた振り下ろしの区間だけ判定を出す
-	bool isAttackAnim = false;
+	//モーションごとに振り下ろすタイミングが違うので、区間は攻撃ごとに決める
+	float hitStart = 0.0f;
+	float hitEnd = 0.0f;
 	if (m_animData.m_index == ANIM_ATTACK1)
 	{
-		isAttackAnim = true;
+		hitStart = ATTACK1_HIT_START;
+		hitEnd = ATTACK1_HIT_END;
 	}
-	if (m_animData.m_index == ANIM_ATTACK2)
+	else if (m_animData.m_index == ANIM_ATTACK2)
 	{
-		isAttackAnim = true;
+		hitStart = ATTACK2_HIT_START;
+		hitEnd = ATTACK2_HIT_END;
 	}
-	if (m_animData.m_index == ANIM_ATTACK3)
+	else if (m_animData.m_index == ANIM_ATTACK3)
 	{
-		isAttackAnim = true;
+		hitStart = ATTACK3_HIT_START;
+		hitEnd = ATTACK3_HIT_END;
 	}
-	if (isAttackAnim == false)
+	else
 	{
+		//通常攻撃のモーション中でなければ判定は出さない
 		return false;
 	}
 
-	float startFrm = m_animData.m_endFrm * ATTACK_HIT_START;
-	float endFrm = m_animData.m_endFrm * ATTACK_HIT_END;
+	float startFrm = m_animData.m_endFrm * hitStart;
+	float endFrm = m_animData.m_endFrm * hitEnd;
 	if (m_animData.m_nowFrm >= startFrm && m_animData.m_nowFrm <= endFrm)
 	{
 		return true;
@@ -512,6 +524,22 @@ bool BossGolem::Request(const VECTOR& pos)
 	m_isActive = true;
 
 	return true;
+}
+
+//状態を初期に戻して指定座標に出し直す
+void BossGolem::Reset(const VECTOR& pos)
+{
+	//Request()は出現中だと何もしないので、いったん非表示にしてから出し直す
+	m_isActive = false;
+	m_rot = VEC_ZERO;
+	m_speed = VEC_ZERO;
+	m_velocityY = 0.0f;
+	m_JumpatackCoolCnt = JUMPATTACK_FIRST_WAIT;
+	m_jumpTarget = VEC_ZERO;
+	m_jumpMove = VEC_ZERO;
+	m_invincibleCnt = 0;
+	//HP・行動状態・攻撃クールダウン・死亡中フラグなどはRequest()の中で戻す
+	Request(pos);
 }
 
 void BossGolem::HitCalc(const ObjectBase& other)

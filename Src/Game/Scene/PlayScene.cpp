@@ -43,7 +43,8 @@ void PlayScene::Load()
 	boss.Request(BOSS_SPAWN_POS);
 	Step();
 	Update();
-	SoundManager::Play(SoundManager::GAME_BGM, DX_PLAYTYPE_LOOP);
+	//BGMは一旦オフ(戻すときはこの行のコメントを外す)
+	//SoundManager::Play(SoundManager::GAME_BGM, DX_PLAYTYPE_LOOP);
 	m_state = START;
 }
 
@@ -70,10 +71,10 @@ void PlayScene::Step()
 	GameCollision::CheckHitBossAttackToPlayer(boss, player);
 	GameCollision::CheckHitPlayerAttackToBoss(player, boss);
 
-	if (player.GetActive() == false)
+	//プレイヤーがリスポーンしたら、ボスも最初の状態に戻して出し直す
+	if (player.CheckRespawned() == true)
 	{
-		SoundManager::StopAll();
-		m_state = END_WAIT;
+		boss.Reset(BOSS_SPAWN_POS);
 	}
 }
 

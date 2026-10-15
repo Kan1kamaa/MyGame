@@ -483,7 +483,6 @@ void CharacterManager::HitCalc(const ObjectBase& other)
 
 	if (m_status.IsAlive() == false)
 	{
-		m_char.StartDeath();
 		m_isActive = false;
 	}
 }

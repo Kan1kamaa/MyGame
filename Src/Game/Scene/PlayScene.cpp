@@ -43,7 +43,7 @@ void PlayScene::Load()
 	boss.Request(BOSS_SPAWN_POS);
 	Step();
 	Update();
-	//BGMは一旦オフ(戻すときはこの行のコメントを外す)
+	//BGMは一旦オフ
 	//SoundManager::Play(SoundManager::GAME_BGM, DX_PLAYTYPE_LOOP);
 	m_state = START;
 }

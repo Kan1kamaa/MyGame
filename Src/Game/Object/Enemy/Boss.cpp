@@ -39,8 +39,10 @@ static const float ATTACK1_HIT_START = 0.6f;    //攻撃1の判定を出し始�
 static const float ATTACK1_HIT_END = 0.8f;      //攻撃1の判定を消すタイミング
 static const float ATTACK2_HIT_START = 0.6f;    //攻撃2の判定を出し始めるタイミング
 static const float ATTACK2_HIT_END = 0.8f;      //攻撃2の判定を消すタイミング
-static const float ATTACK3_HIT_START = 0.5f;    //攻撃3の判定を出し始めるタイミング
-static const float ATTACK3_HIT_END = 0.6f;      //攻撃3の判定を消すタイミング
+//攻撃3は三段攻撃なので、振り下ろしごとに判定の区間を3つ持つ(BossGolem.blendのAttack3の叩きつけ位置に合わせている)
+static const int   ATTACK3_HIT_NUM = 3;         //攻撃3の判定を出す回数
+static const float ATTACK3_HIT_START[ATTACK3_HIT_NUM] = { 0.43f, 0.60f, 0.77f };    //1〜3回目の判定を出し始めるタイミング
+static const float ATTACK3_HIT_END[ATTACK3_HIT_NUM] = { 0.50f, 0.67f, 0.84f };      //1〜3回目の判定を消すタイミング
 static const float ATTACK_HIT_DIST = 20.0f;     //通常攻撃の判定(球)をボスの前方どれだけ先に出すか
 static const float ATTACK_HIT_RADIUS = 30.0f;   //通常攻撃の判定(球)の半径
 static const int   JUMP_HIT_TIME = 6;           //ジャンプ攻撃の着地の衝撃判定を出すフレーム数
@@ -459,8 +461,17 @@ bool BossGolem::IsAttackActive() const
 	}
 	else if (m_animData.m_index == ANIM_ATTACK3)
 	{
-		hitStart = ATTACK3_HIT_START;
-		hitEnd = ATTACK3_HIT_END;
+		//三段攻撃は、3回の振り下ろしのどれか1つでも区間に入っていれば判定を出す
+		for (int i = 0; i < ATTACK3_HIT_NUM; i++)
+		{
+			float startFrm3 = m_animData.m_endFrm * ATTACK3_HIT_START[i];
+			float endFrm3 = m_animData.m_endFrm * ATTACK3_HIT_END[i];
+			if (m_animData.m_nowFrm >= startFrm3 && m_animData.m_nowFrm <= endFrm3)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	else
 	{

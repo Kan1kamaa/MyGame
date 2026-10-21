@@ -1,9 +1,12 @@
 ﻿#pragma once
 #include "../ActorBase/ActorBase.h"
+#include "../../../Lib/Effect/EffectManager.h"
 
 //近接攻撃キャラクター(操作キャラクター)
 class MeleeCharacter : public ActorBase {
 private:
+	int  m_effectRequest;   //モーション開始時に出したいエフェクト(EffectManager::EffectId。無ければ-1)
+
 	int  m_comboStage;      //現在のコンボ段階(0=攻撃していない、1〜3=攻撃中の段)
 	bool m_prevAttackInput; //前フレームの攻撃キー入力状態(トリガー判定用)
 	bool m_comboQueued;     //次の段への攻撃入力を予約しているか(モーション終盤でつなげる)
@@ -66,4 +69,8 @@ public:
 	int GetWeaponFrameIndexR() const { return m_handFrameIndexR; }
 
 	float GetAttackPower() const override;
+
+	//モーション開始時に出したいエフェクトを取り出す(取り出すと要求は消える)
+	//@return : true = 要求あり(idに種類が入る) false = 要求なし
+	bool PopEffectRequest(EffectManager::EffectId& id);
 };

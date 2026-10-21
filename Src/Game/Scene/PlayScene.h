@@ -8,8 +8,11 @@
 #include"../Object/Enemy/Boss.h"
 #include"../System/GameCollision.h"
 #include"../System/SoundManager.h"
+#include"../../Lib/Effect/EffectManager.h"
 class PlayScene : public SceneBase {
 private:
+	//エフェクト(Effekseer)
+	EffectManager effect;
 	//プレイヤー
 	CharacterManager player;
 	//弾

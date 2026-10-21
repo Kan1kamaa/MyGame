@@ -61,7 +61,8 @@ namespace {
 //	コンストラクタ
 //----------------------
 MeleeCharacter::MeleeCharacter() : m_comboStage(0), m_prevAttackInput(false), m_comboQueued(false),
-m_weaponHndl(-1), m_weaponHndl2(-1), m_handFrameIndexL(-1), m_handFrameIndexR(-1)
+m_weaponHndl(-1), m_weaponHndl2(-1), m_handFrameIndexL(-1), m_handFrameIndexR(-1),
+m_effectRequest(-1)
 {
 }
 
@@ -69,6 +70,7 @@ m_weaponHndl(-1), m_weaponHndl2(-1), m_handFrameIndexL(-1), m_handFrameIndexR(-1
 void MeleeCharacter::Init()
 {
 	ActorBase::Init();
+	m_effectRequest = -1;
 	m_comboStage = 0;
 	m_prevAttackInput = false;
 	m_comboQueued = false;
@@ -123,6 +125,7 @@ void MeleeCharacter::StartAttack(int stage)
 	m_comboQueued = false;
 	//ANIMID_ATTACK1を基準に段数分ずらして再生(ループさせず最終フレームで止める)
 	RequestAnim(ANIMID_ATTACK1 + (stage - 1), ANIM_SPEED);
+	m_effectRequest = EffectManager::EFFECT_ATTACK;
 }
 
 //ジャンプ開始モーションを再生する
@@ -135,19 +138,22 @@ void MeleeCharacter::StartJump()
 void MeleeCharacter::StartJumpAttack(float& velocityY)
 {
 	RequestAnim(ANIMID_JUMPATTACK, ANIM_SPEED);
-	velocityY = JUMP_ATTACK_BOOST; 
+	m_effectRequest = EffectManager::EFFECT_ATTACK;
+	velocityY = JUMP_ATTACK_BOOST;
 }
 
 //スキルモーションを再生する
 void MeleeCharacter::StartSkill()
 {
 	RequestAnim(ANIMID_SKILL, ANIM_SPEED);
+	m_effectRequest = EffectManager::EFFECT_SKILL;
 }
 
 //必殺技モーションを再生する
 void MeleeCharacter::StartUlt()
 {
 	RequestAnim(ANIMID_ULT, ANIM_SPEED);
+	m_effectRequest = EffectManager::EFFECT_ULT;
 }
 
 //被弾モーションを再生する
@@ -565,6 +571,18 @@ void MeleeCharacter::OnDamage(bool isBig)
 	{
 		StartDamege2();
 	}
+}
+
+//モーション開始時に出したいエフェクトを取り出す(取り出すと要求は消える)
+bool MeleeCharacter::PopEffectRequest(EffectManager::EffectId& id)
+{
+	if (m_effectRequest == -1)
+	{
+		return false;
+	}
+	id = (EffectManager::EffectId)m_effectRequest;
+	m_effectRequest = -1;
+	return true;
 }
 
 float MeleeCharacter::GetAttackPower()const

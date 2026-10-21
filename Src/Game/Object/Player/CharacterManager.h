@@ -89,4 +89,8 @@ public:
 	int GetMaxHp() const { return m_status.MaxHp; }
 	//リスポーンした直後ならtrueを返す(1回呼ぶとfalseに戻る)
 	bool CheckRespawned();
+	//攻撃・スキル・必殺技の開始時に出したいエフェクトを取り出す(PlaySceneがEffectManagerへ渡す)
+	//@id : 出すエフェクト  @pos : 出す基準座標(足元)  @rotY : キャラの向き
+	//@return : true = 要求あり false = 要求なし
+	bool PopEffectRequest(EffectManager::EffectId& id, VECTOR& pos, float& rotY);
 };

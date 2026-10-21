@@ -15,6 +15,7 @@ void PlayScene::Draw()
 	camera.Draw();
 	enemy.Draw();
 	boss.Draw();
+	effect.Draw();
 }
 
 //初期化
@@ -27,6 +28,7 @@ void PlayScene::Init()
 	shot.Init();
 	enemy.Init();
 	boss.Init();
+	effect.Init();
 
 	m_state = LOAD;
 }
@@ -40,6 +42,7 @@ void PlayScene::Load()
 	boss.Load();
 	player.Load();
 	shot.Load();
+	effect.Load();
 	boss.Request(BOSS_SPAWN_POS);
 	Step();
 	Update();
@@ -60,6 +63,15 @@ void PlayScene::Step()
 		enemy.Step(player.GetPos());
 		boss.Step(player.GetPos());
 		sky.Step();
+
+		//攻撃・スキル・必殺技が始まったらエフェクトを出す
+		EffectManager::EffectId effectId;
+		VECTOR effectPos;
+		float effectRotY;
+		if (player.PopEffectRequest(effectId, effectPos, effectRotY) == true)
+		{
+			effect.Play(effectId, effectPos, effectRotY);
+		}
 	}
 	//カメラの更新
 	camera.Step(player.GetPos());
@@ -88,6 +100,7 @@ void PlayScene::Update()
 	enemy.Update();
 	boss.Update();
 	camera.Update();
+	effect.Update();
 }
 
 // 終了処理
@@ -99,6 +112,7 @@ void PlayScene::Fin()
 	shot.Fin();
 	enemy.Fin();
 	boss.Fin();
+	effect.Fin();
 
 	m_nextScene = 0;	//とりあえずリザルトに
 	m_state = INIT;		//念のため最初に戻す

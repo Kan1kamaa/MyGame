@@ -573,6 +573,18 @@ float CharacterManager::GetAttackPower() const
 	return m_char.GetAttackPower();
 }
 
+//攻撃・スキル・必殺技の開始時に出したいエフェクトを取り出す
+bool CharacterManager::PopEffectRequest(EffectManager::EffectId& id, VECTOR& pos, float& rotY)
+{
+	if (m_char.PopEffectRequest(id) == false)
+	{
+		return false;
+	}
+	pos = m_pos;
+	rotY = m_rot.y;
+	return true;
+}
+
 //----------------------
 //	近接攻撃の当たり判定
 //----------------------

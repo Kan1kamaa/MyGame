@@ -1,7 +1,7 @@
 ﻿#include"Effect.h"
 static const VECTOR VEC_ZERO{ 0.0f,0.0f,0.0f };
 static const float MOVE_RANGE = 2000.0f;	//移動可能範囲
-static const float SHOT_RAD = 5.0f;
+static const float EFFECT_RADIUS = 5.0f;
 //コンストラクタ
 Effect::Effect() :m_speed(VEC_ZERO)
 {
@@ -17,18 +17,18 @@ Effect::~Effect()
 void Effect::Init()
 {
 	ObjectBase::Init();
-	m_radius = SHOT_RAD;
+	m_radius = EFFECT_RADIUS;
 	m_speed = VEC_ZERO;
 	m_isActive = false;		//最初は見えないように消しておく
 }
 
 //ロード
-void Effect::Load(int origiinhndl)
+void Effect::Load(int originalModelHandle)
 {
 	if (m_hndl == -1)
 	{
 		//モデルは複製する
-		m_hndl = MV1DuplicateModel(origiinhndl);
+		m_hndl = MV1DuplicateModel(originalModelHandle);
 	}
 }
 
@@ -51,7 +51,7 @@ void Effect::Step()
 //エフェクト出現
 bool Effect::Request(const VECTOR& pos, const VECTOR& speed)
 {
-	//既に発射されていたら終了
+	//既に出現中なら終了
 	if (m_isActive == true)return false;
 
 	m_pos = pos;

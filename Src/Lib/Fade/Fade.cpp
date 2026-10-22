@@ -5,7 +5,7 @@
 #define FADE_SPEED (10)		// フェード速度
 
 FADE::tagFade FADE::m_state;
-int FADE::m_count;
+int FADE::m_alpha;
 
 //-------------------------------
 //		フェード初期化
@@ -14,7 +14,7 @@ void FADE::Init()
 {
 	// 最初はひとまず画面が表示されるNONに
 	m_state = FADE_NON;
-	m_count = 0;
+	m_alpha = 0;
 }
 
 
@@ -27,19 +27,19 @@ void FADE::Update()
 	{
 		// 徐々に明るくしていく
 	case FADE_IN:
-		m_count -= FADE_SPEED;
-		if (m_count <= 0)
+		m_alpha -= FADE_SPEED;
+		if (m_alpha <= 0)
 		{
-			m_count = 0;
+			m_alpha = 0;
 			m_state = FADE_NON;
 		}
 		break;
 		// 徐々に暗くしていく
 	case FADE_OUT:
-		m_count += FADE_SPEED;
-		if (m_count >= 255)
+		m_alpha += FADE_SPEED;
+		if (m_alpha >= 255)
 		{
-			m_count = 255;
+			m_alpha = 255;
 			m_state = FADE_OUT_WAIT;
 		}
 		break;
@@ -59,7 +59,7 @@ void FADE::Draw()
 	case FADE_OUT:
 	case FADE_OUT_WAIT:
 		// ここでアルファ値をセットする
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_count);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_alpha);
 
 		// フェード用の黒い四角を表示
 		DrawBox(0, 0, WINDOW_SIZE_X, WINDOW_SIZE_Y,
@@ -80,7 +80,7 @@ void FADE::RequestFadeIn()
 {
 	// 状態設定と画面を見えなくするための設定
 	m_state = FADE_IN;
-	m_count = 255;
+	m_alpha = 255;
 }
 
 
@@ -91,7 +91,7 @@ void FADE::RequestFadeOut()
 {
 	// 状態設定と画面を見えるようにするための設定
 	m_state = FADE_OUT;
-	m_count = 0;
+	m_alpha = 0;
 }
 
 

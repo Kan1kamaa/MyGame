@@ -1,5 +1,5 @@
 ﻿#include"GameCollision.h"
-#include"../../Lib/Collision/Collsion.h"
+#include"../../Lib/Collision/Collision.h"
 
 void GameCollision::CheckHitEnemyToShot(EnemyManager& enemyManager, ShotManager& shotManager)
 {
@@ -26,7 +26,7 @@ void GameCollision::CheckHitEnemyToShot(EnemyManager& enemyManager, ShotManager&
 			VECTOR enemyPos = enemy.GetCollisionPos();
 			float enemyRad = enemy.GetRadius();
 
-			if (Collsion::CheckHitSphereToSphere(shotPos, shotRad, enemyPos, enemyRad) == true)
+			if (Collision::CheckHitSphereToSphere(shotPos, shotRad, enemyPos, enemyRad) == true)
 			{
 				plshot.HitCalc(enemy);
 				enemy.HitCalc(plshot);
@@ -51,7 +51,7 @@ void GameCollision::CheckHitEnemyToPlayer(EnemyManager& enemyManager,CharacterMa
 		VECTOR enemyPos = enemy.GetCollisionPos();
 		float enemyRad = enemy.GetRadius();
 
-		if (Collsion::CheckHitSphereToSphere(playerPos, playerRad, enemyPos, enemyRad) == true)
+		if (Collision::CheckHitSphereToSphere(playerPos, playerRad, enemyPos, enemyRad) == true)
 		{
 			player.HitCalc(enemy);
 		}
@@ -83,7 +83,7 @@ void GameCollision::CheckHitPlayerAttackToEnemy(CharacterManager& player, EnemyM
 		float enemyRad = enemy.GetRadius();
 
 		//球どうしが当たっていれば、その敵を倒す(既存のHitCalcを使う)
-		if (Collsion::CheckHitSphereToSphere(attackPos, attackRad, enemyPos, enemyRad) == true)
+		if (Collision::CheckHitSphereToSphere(attackPos, attackRad, enemyPos, enemyRad) == true)
 		{
 			enemy.HitCalc(player);
 		}
@@ -112,7 +112,7 @@ void GameCollision::CheckHitBossToShot(BossGolem& boss, ShotManager& shotManager
 		VECTOR shotPos = plshot.GetCollisionPos();
 		float shotRad = plshot.GetRadius();
 
-		if (Collsion::CheckHitSphereToSphere(shotPos, shotRad, bossPos, bossRad) == true)
+		if (Collision::CheckHitSphereToSphere(shotPos, shotRad, bossPos, bossRad) == true)
 		{
 			plshot.HitCalc(boss);
 			boss.HitCalc(plshot);
@@ -135,7 +135,7 @@ void GameCollision::CheckHitBossAttackToPlayer(BossGolem& boss, CharacterManager
 	VECTOR attackPos = boss.GetAttackPos();
 	float attackRad = boss.GetAttackRadius();
 
-	if (Collsion::CheckHitSphereToSphere(playerPos, playerRad, attackPos, attackRad) == true)
+	if (Collision::CheckHitSphereToSphere(playerPos, playerRad, attackPos, attackRad) == true)
 	{
 		player.HitCalc(boss);
 	}
@@ -160,7 +160,7 @@ void GameCollision::CheckHitPlayerAttackToBoss(CharacterManager& player, BossGol
 	VECTOR bossPos = boss.GetCollisionPos();
 	float bossRad = boss.GetRadius();
 
-	if (Collsion::CheckHitSphereToSphere(attackPos, attackRad, bossPos, bossRad) == true)
+	if (Collision::CheckHitSphereToSphere(attackPos, attackRad, bossPos, bossRad) == true)
 	{
 		boss.HitCalc(player);
 	}

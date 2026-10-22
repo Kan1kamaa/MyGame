@@ -13,7 +13,7 @@ private:
 		FADE_OUT_WAIT,	// フェードアウト完了後の何も表示されない状態
 	};
 	static tagFade m_state;	// フェード状態
-	static int m_count;		// フェード時間のカウント
+	static int m_alpha;		// フェード用の黒幕の不透明度(0=透明, 255=真っ黒)
 public:
 	FADE();
 	~FADE();

@@ -14,9 +14,12 @@ namespace {
 
 	//EffectId と同じ並びで書くこと
 	const EffectInfo EFFECT_INFO[EffectManager::EFFECT_NUM] = {
-		{ "Data/Effect/SwordAttack/SwordAttack.efkefc", 12.0f, 10.0f, 5.0f, DX_PI_F },	//EFFECT_ATTACK
-		{ "Data/Effect/SwordSkill/SwordSkill.efkefc",   30.0f,  0.0f, 5.0f, DX_PI_F },	//EFFECT_SKILL
-		{ "Data/Effect/SwordUlt/SwordUlt.efkefc",        0.0f,  0.0f, 5.0f, DX_PI_F },	//EFFECT_ULT
+		{ "Data/Effect/SwordAttack/SwordAttack1.efkefc", 12.0f, 10.0f, 4.0f, DX_PI_F },	
+		{ "Data/Effect/SwordAttack/SwordAttack2.efkefc", 12.0f, 10.0f, 4.0f, DX_PI_F },
+		{ "Data/Effect/SwordAttack/SwordAttack3.efkefc", 12.0f, 10.0f, 4.0f, DX_PI_F },
+		{ "Data/Effect/SwordAttack/SwordJumpAttack.efkefc", 5.0f, -20.0f, 4.0f, DX_PI_F },
+		{ "Data/Effect/SwordSkill/SwordSkill.efkefc",   30.0f,  0.0f, 5.0f, DX_PI_F },
+		{ "Data/Effect/SwordUlt/SwordUlt.efkefc",        0.0f,  0.0f, 5.0f, 1.5 },	
 	};
 }
 

@@ -1,61 +1,14 @@
-﻿  CharacterManager.cpp
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\Object\Player\CharacterManager.cpp(208,42): warning C4305: '引数': 'double' から 'float' へ切り詰めます。
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\Object\Player\CharacterManager.cpp(526,41): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-  MeleeCharacter.cpp
-  Shot.cpp
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
-  (ソース ファイル 'Src/Game/Object/Shot/Shot.cpp' をコンパイルしています)
-  
-  PlayScene.cpp
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
-  (ソース ファイル 'Src/Game/Scene/PlayScene.cpp' をコンパイルしています)
-  
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\Object\Enemy\Enemy.h(64,47): warning C4244: 'return': 'const int' から 'float' への変換です。データが失われる可能性があります。
-  (ソース ファイル 'Src/Game/Scene/PlayScene.cpp' をコンパイルしています)
-  
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\Object\Enemy\Boss.h(90,47): warning C4244: 'return': 'const int' から 'float' への変換です。データが失われる可能性があります。
-  (ソース ファイル 'Src/Game/Scene/PlayScene.cpp' をコンパイルしています)
-  
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
-  (ソース ファイル 'Src/Game/Scene/PlayScene.cpp' をコンパイルしています)
-  
-  resultscene.cpp
-  SceneManager.cpp
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
-  (ソース ファイル 'Src/Game/Scene/SceneManager.cpp' をコンパイルしています)
-  
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\Object\Enemy\Enemy.h(64,47): warning C4244: 'return': 'const int' から 'float' への変換です。データが失われる可能性があります。
-  (ソース ファイル 'Src/Game/Scene/SceneManager.cpp' をコンパイルしています)
-  
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\Object\Enemy\Boss.h(90,47): warning C4244: 'return': 'const int' から 'float' への変換です。データが失われる可能性があります。
-  (ソース ファイル 'Src/Game/Scene/SceneManager.cpp' をコンパイルしています)
-  
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
-  (ソース ファイル 'Src/Game/Scene/SceneManager.cpp' をコンパイルしています)
-  
-  Titltscene.cpp
-  GameCollision.cpp
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\Object\Enemy\Enemy.h(64,47): warning C4244: 'return': 'const int' から 'float' への変換です。データが失われる可能性があります。
-  (ソース ファイル 'Src/Game/System/GameCollision.cpp' をコンパイルしています)
-  
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\Object\Enemy\Boss.h(90,47): warning C4244: 'return': 'const int' から 'float' への変換です。データが失われる可能性があります。
-  (ソース ファイル 'Src/Game/System/GameCollision.cpp' をコンパイルしています)
-  
-  EffectManager.cpp
-  Fade.cpp
-  Main.cpp
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
+﻿  Main.cpp
+C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
   (ソース ファイル 'src/Main.cpp' をコンパイルしています)
   
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\Object\Enemy\Enemy.h(64,47): warning C4244: 'return': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Enemy\Enemy.h(64,47): warning C4244: 'return': 'const int' から 'float' への変換です。データが失われる可能性があります。
   (ソース ファイル 'src/Main.cpp' をコンパイルしています)
   
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\Object\Enemy\Boss.h(90,47): warning C4244: 'return': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Enemy\Boss.h(90,47): warning C4244: 'return': 'const int' から 'float' への変換です。データが失われる可能性があります。
   (ソース ファイル 'src/Main.cpp' をコンパイルしています)
   
-C:\Users\sun20\OneDrive\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
+C:\Users\2509413\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
   (ソース ファイル 'src/Main.cpp' をコンパイルしています)
   
-  Fps.cpp
-  コードを生成中...
-  Sample3D.vcxproj -> C:\Users\sun20\OneDrive\Desktop\MyGame\x64\Debug\Sample3D.exe
+  Sample3D.vcxproj -> C:\Users\2509413\Desktop\MyGame\x64\Debug\Sample3D.exe

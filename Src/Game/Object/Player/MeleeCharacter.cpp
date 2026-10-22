@@ -81,7 +81,7 @@ void MeleeCharacter::Load()
 {
 	if (m_hndl == -1)
 	{
-		m_hndl = MV1LoadModel("Data/Models/Player/charcter1/Kan1kama2.mv1");
+		m_hndl = MV1LoadModel("Data/Models/Player/Charcter/charcter.mv1");
 		BrightenModelAmbient(m_hndl);
 		RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
 
@@ -125,7 +125,7 @@ void MeleeCharacter::StartAttack(int stage)
 	m_comboQueued = false;
 	//ANIMID_ATTACK1を基準に段数分ずらして再生(ループさせず最終フレームで止める)
 	RequestAnim(ANIMID_ATTACK1 + (stage - 1), ANIM_SPEED);
-	m_effectRequest = EffectManager::EFFECT_ATTACK;
+	m_effectRequest = stage -= 1;
 }
 
 //ジャンプ開始モーションを再生する
@@ -138,7 +138,7 @@ void MeleeCharacter::StartJump()
 void MeleeCharacter::StartJumpAttack(float& velocityY)
 {
 	RequestAnim(ANIMID_JUMPATTACK, ANIM_SPEED);
-	m_effectRequest = EffectManager::EFFECT_ATTACK;
+	m_effectRequest = EffectManager::EFFECT_SWORDJUMPATTACK;
 	velocityY = JUMP_ATTACK_BOOST;
 }
 
@@ -146,14 +146,14 @@ void MeleeCharacter::StartJumpAttack(float& velocityY)
 void MeleeCharacter::StartSkill()
 {
 	RequestAnim(ANIMID_SKILL, ANIM_SPEED);
-	m_effectRequest = EffectManager::EFFECT_SKILL;
+	m_effectRequest = EffectManager::EFFECT_SWORDSKILL;
 }
 
 //必殺技モーションを再生する
 void MeleeCharacter::StartUlt()
 {
 	RequestAnim(ANIMID_ULT, ANIM_SPEED);
-	m_effectRequest = EffectManager::EFFECT_ULT;
+	m_effectRequest = EffectManager::EFFECT_SWORDULT;
 }
 
 //被弾モーションを再生する
@@ -589,17 +589,17 @@ float MeleeCharacter::GetAttackPower()const
 {
 	switch (m_animData.m_index)
 	{
-	case 0:
+	case ANIMID_ATTACK1:
 		return ATTACK1_POWER;
-	case 1:
+	case ANIMID_ATTACK2:
 		return ATTACK2_POWER;
-	case 2:
+	case ANIMID_ATTACK3:
 		return ATTACK3_POWER;
-	case 4:
+	case ANIMID_JUMPATTACK:
 		return JUMPATTACK_POWER;
-	case 11:
+	case ANIMID_SKILL:
 		return SKILL_POWER;
-	case 13:
+	case ANIMID_ULT:
 		return ULT_POWER;
 	}
 	return 0;

@@ -7,9 +7,12 @@ class EffectManager {
 public:
 	//エフェクトの種類
 	enum EffectId {
-		EFFECT_ATTACK,		//通常攻撃・ジャンプ攻撃の斬撃
-		EFFECT_SKILL,		//スキル(氷の柱)
-		EFFECT_ULT,			//必殺技
+		EFFECT_SWORDATTACK1,		//通常攻撃1
+		EFFECT_SWORDATTACK2,		//通常攻撃1
+		EFFECT_SWORDATTACK3,		//通常攻撃1
+		EFFECT_SWORDJUMPATTACK,		//通常攻撃1
+		EFFECT_SWORDSKILL,		//スキル(氷の柱)
+		EFFECT_SWORDULT,			//必殺技
 
 		EFFECT_NUM			// 全エフェクト数
 	};

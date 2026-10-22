@@ -32,7 +32,6 @@ int  WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	SetDrawScreen(DX_SCREEN_BACK);
 	SetUseZBuffer3D(TRUE);
 	SetWriteZBuffer3D(TRUE);
-	SetUseLighting(FALSE);	// モデルの明るさ確認用にライティングを無効化
 	// 初期化
 	InitFps();
 	SceneManager scene;

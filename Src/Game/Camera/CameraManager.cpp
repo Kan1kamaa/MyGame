@@ -31,7 +31,7 @@ void CameraManager::UpdateLook()
 }
 
 //毎フレーム計算する処理
-void CameraManager::Step(VECTOR tergetPos)
+void CameraManager::Step(VECTOR targetPos)
 {
 	if (CheckHitKey(KEY_INPUT_V) == true)
 	{
@@ -45,10 +45,10 @@ void CameraManager::Step(VECTOR tergetPos)
 	switch(m_state)
 	{
 		case MAIN:
-			m_mainCam.Step(tergetPos);
+			m_mainCam.Step(targetPos);
 			break;
 		case DEBUG:
-			m_debugCam.Step(tergetPos, 0.0f);
+			m_debugCam.Step(targetPos, 0.0f);
 			break;
 
 	}

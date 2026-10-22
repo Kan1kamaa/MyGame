@@ -54,7 +54,7 @@ void PlayScene::Load()
 //毎フレーム計算する処理
 void PlayScene::Step()
 {
-	if (m_camera.GetCameraID() == 0)
+	if (m_camera.GetCameraID() == CameraManager::MAIN)
 	{
 		//先にマウスでカメラを回し、移動がこのフレームのカメラ向きを使うようにする
 		m_camera.UpdateLook();

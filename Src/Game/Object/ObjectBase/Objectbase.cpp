@@ -5,7 +5,7 @@ static const VECTOR VEC_ZERO{ 0.0f,0.0f,0.0f };
 
 //コンストラクタ
 ObjectBase::ObjectBase() :m_pos(VEC_ZERO),
-m_rot(VEC_ZERO), m_scale(VEC_ZERO),m_hndl(-1), m_isActive(false)
+m_rot(VEC_ZERO), m_scale(VEC_ZERO),m_modelHandle(-1), m_isActive(false)
 {
 }
 
@@ -40,9 +40,9 @@ void ObjectBase::Step()
 //更新
 void ObjectBase::Update()
 {
-	MV1SetPosition(m_hndl, m_pos);
-	MV1SetRotationXYZ(m_hndl, m_rot);
-	MV1SetScale(m_hndl, m_scale);
+	MV1SetPosition(m_modelHandle, m_pos);
+	MV1SetRotationXYZ(m_modelHandle, m_rot);
+	MV1SetScale(m_modelHandle, m_scale);
 }
 
 //描画
@@ -50,7 +50,7 @@ void ObjectBase::Draw()
 {
 	if (m_isActive == false)return;
 
-	MV1DrawModel(m_hndl);
+	MV1DrawModel(m_modelHandle);
 
 
 }
@@ -58,10 +58,10 @@ void ObjectBase::Draw()
 //破棄
 void ObjectBase::Fin()
 {
-	if (m_hndl != -1)
+	if (m_modelHandle != -1)
 	{
-		MV1DeleteModel(m_hndl);
-		m_hndl = -1;
+		MV1DeleteModel(m_modelHandle);
+		m_modelHandle = -1;
 	}
 }
 

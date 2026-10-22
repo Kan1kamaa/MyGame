@@ -177,11 +177,11 @@ void Enemy::StepKnockBack()
 //ロード
 void Enemy::Load(int origiinhndl)
 {
-	if (m_hndl == -1)
+	if (m_modelHandle == -1)
 	{
 		//モデルは複製する
-		m_hndl = MV1DuplicateModel(origiinhndl);
-		BrightenModelAmbient(m_hndl);
+		m_modelHandle = MV1DuplicateModel(origiinhndl);
+		BrightenModelAmbient(m_modelHandle);
 	}
 }
 
@@ -197,7 +197,7 @@ void Enemy::Step(const VECTOR& playerPos)
 	//死亡モーション再生中は移動処理を行わず、再生が終わったら消す
 	if (m_isDying == true)
 	{
-		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		if (m_animData.m_currentFrame >= m_animData.m_totalFrames)
 		{
 			m_isActive = false;
 			m_isDying = false;
@@ -248,13 +248,13 @@ void Enemy::Draw()
 
 	if (isFlash == true)
 	{
-		MV1SetDifColorScale(m_hndl, GetColorF(1.0f, 0.3f, 0.3f, 1.0f));
+		MV1SetDifColorScale(m_modelHandle, GetColorF(1.0f, 0.3f, 0.3f, 1.0f));
 	}
-	MV1DrawModel(m_hndl);
+	MV1DrawModel(m_modelHandle);
 	if (isFlash == true)
 	{
 		//他の描画に影響しないよう元の色に戻す
-		MV1SetDifColorScale(m_hndl, GetColorF(1.0f, 1.0f, 1.0f, 1.0f));
+		MV1SetDifColorScale(m_modelHandle, GetColorF(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 }
 

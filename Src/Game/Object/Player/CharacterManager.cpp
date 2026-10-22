@@ -483,7 +483,7 @@ void CharacterManager::DrawHUD()
 
 	//デバッグ表示:このモデルのアニメーション数と、直前のアタッチが成功したかを確認する
 	/*DrawFormatString(16, 16, GetColor(255, 255, 0), "AnimNum:%d Index:%d AttachID:%d WeaponFrameL:%d WeaponFrameR:%d",
-		MV1GetAnimNum(m_char.m_hndl), m_char.GetAnimIndex(), m_char.GetAnimAttachID(),
+		MV1GetAnimNum(m_char.m_modelHandle), m_char.GetAnimIndex(), m_char.GetAnimAttachID(),
 		m_char.GetWeaponFrameIndex(), m_char.GetWeaponFrameIndexR());*/
 	DrawFormatString(1100, 610, GetColor(255, 255, 255), "操作方法" );
 	DrawFormatString(1100, 630, GetColor(255, 255, 255), "WASD：移動");

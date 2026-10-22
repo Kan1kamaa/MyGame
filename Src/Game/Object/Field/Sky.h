@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include<DxLib.h>
 #include"../ObjectBase/ObjectBase.h"
-//地面を表示
+//空(天球)を表示
 class Sky :public ObjectBase {
 private:
 

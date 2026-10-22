@@ -6,17 +6,17 @@
 static const float MODEL_AMBIENT_BRIGHTNESS = 0.5f;
 
 //モデルの全マテリアルのアンビエント色を明るくする(モデルを読み込んだ直後に呼ぶ)
-inline void BrightenModelAmbient(int modelHndl)
+inline void BrightenModelAmbient(int modelHandle)
 {
-	if (modelHndl == -1)
+	if (modelHandle == -1)
 	{
 		return;
 	}
 
-	int materialNum = MV1GetMaterialNum(modelHndl);
+	int materialNum = MV1GetMaterialNum(modelHandle);
 	for (int i = 0; i < materialNum; i++)
 	{
-		MV1SetMaterialAmbColor(modelHndl, i,
+		MV1SetMaterialAmbColor(modelHandle, i,
 			GetColorF(MODEL_AMBIENT_BRIGHTNESS, MODEL_AMBIENT_BRIGHTNESS, MODEL_AMBIENT_BRIGHTNESS, 1.0f));
 	}
 }

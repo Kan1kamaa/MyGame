@@ -27,10 +27,10 @@ void Shot::Init()
 //ロード
 void Shot::Load(int origiinhndl)
 {
-	if (m_hndl == -1)
+	if (m_modelHandle == -1)
 	{
 		//モデルは複製する
-		m_hndl = MV1DuplicateModel(origiinhndl);
+		m_modelHandle = MV1DuplicateModel(origiinhndl);
 	}
 }
 

@@ -28,7 +28,7 @@ public:
 	void Update();
 
 	//カメラタイプのセットゲット
-	void setCameraID(tagCameraID& state) { m_state&  state; }
+	void SetCameraID(tagCameraID cameraId) { m_state = cameraId; }
 	tagCameraID GetCameraID(){ return m_state; }
 	//プレイヤーの移動をカメラ基準にするために使う、現在のカメラの水平回転角
 	float GetYaw() const { return m_mainCam.GetYaw(); }

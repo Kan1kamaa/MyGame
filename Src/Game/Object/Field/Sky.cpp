@@ -5,9 +5,9 @@
 //ロード
 void Sky::Load()
 {
-	if (m_hndl == -1)
+	if (m_modelHandle == -1)
 	{
-		m_hndl = MV1LoadModel("Data/Models/Sky/Sky.MV1");
+		m_modelHandle = MV1LoadModel("Data/Models/Sky/Sky.MV1");
 	}
 }
 void Sky::Step()
@@ -23,7 +23,7 @@ void Sky::Update(VECTOR followPos)
 	m_pos.x = followPos.x;
 	m_pos.z = followPos.z;
 
-	MV1SetPosition(m_hndl, m_pos);
-	MV1SetRotationXYZ(m_hndl, m_rot);
-	MV1SetScale(m_hndl, m_scale);
+	MV1SetPosition(m_modelHandle, m_pos);
+	MV1SetRotationXYZ(m_modelHandle, m_rot);
+	MV1SetScale(m_modelHandle, m_scale);
 }

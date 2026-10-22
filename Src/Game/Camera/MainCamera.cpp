@@ -20,7 +20,7 @@ namespace {
 }
 
 //コンストラクタ
-MainCamera::MainCamera() : m_camerapos(VEC_ZERO), m_focuspos(VEC_ZERO), m_upvec(VEC_ZERO),
+MainCamera::MainCamera() : m_cameraPos(VEC_ZERO), m_focusPos(VEC_ZERO), m_upVec(VEC_ZERO),
 m_yaw(0.0f), m_pitch(CAMERA_INITIAL_PITCH), m_distance(CAMERA_DEFAULT_DISTANCE)
 {
 }
@@ -33,9 +33,9 @@ MainCamera::~MainCamera()
 //初期化
 void MainCamera::Init()
 {
-	m_camerapos = VEC_ZERO;
-	m_focuspos = VEC_ZERO;
-	m_upvec = { 0.0f,1.0f,0.0f };
+	m_cameraPos = VEC_ZERO;
+	m_focusPos = VEC_ZERO;
+	m_upVec = { 0.0f,1.0f,0.0f };
 	m_yaw = 0.0f;
 	m_pitch = CAMERA_INITIAL_PITCH;
 	m_distance = CAMERA_DEFAULT_DISTANCE;
@@ -76,19 +76,19 @@ void MainCamera::UpdateLook()
 //注視点を中心に、現在の向きに応じたカメラ座標を計算する
 void MainCamera::Step(VECTOR targetPos)
 {
-	m_focuspos = targetPos;
-	m_focuspos.y += FOCUS_HEIGHT;
+	m_focusPos = targetPos;
+	m_focusPos.y += FOCUS_HEIGHT;
 
 	VECTOR offset;
 	offset.x = sinf(m_yaw) * cosf(m_pitch) * m_distance;
 	offset.y = sinf(m_pitch) * m_distance;
 	offset.z = cosf(m_yaw) * cosf(m_pitch) * m_distance;
 
-	m_camerapos = VAdd(m_focuspos, offset);
+	m_cameraPos = VAdd(m_focusPos, offset);
 }
 
 void MainCamera::Update()
 {
 	//カメラの情報をDxLibに反映
-	SetCameraPositionAndTargetAndUpVec(m_camerapos, m_focuspos, m_upvec);
+	SetCameraPositionAndTargetAndUpVec(m_cameraPos, m_focusPos, m_upVec);
 }

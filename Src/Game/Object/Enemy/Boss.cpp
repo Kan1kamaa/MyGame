@@ -144,22 +144,22 @@ void BossGolem::StepAttack(const VECTOR& playerPos)
 
 	//攻撃モーション(通常攻撃1〜3)を再生中ならそのまま最後まで見せる
 	bool isAttackAnim = false;
-	if (m_animData.m_index == ANIM_ATTACK1)
+	if (m_animData.m_animIndex == ANIM_ATTACK1)
 	{
 		isAttackAnim = true;
 	}
-	if (m_animData.m_index == ANIM_ATTACK2)
+	if (m_animData.m_animIndex == ANIM_ATTACK2)
 	{
 		isAttackAnim = true;
 	}
-	if (m_animData.m_index == ANIM_ATTACK3)
+	if (m_animData.m_animIndex == ANIM_ATTACK3)
 	{
 		isAttackAnim = true;
 	}
 	
 	//最終フレームまで再生し終えたか
 	bool isAttackFinished = false;
-	if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+	if (m_animData.m_currentFrame >= m_animData.m_totalFrames)
 	{
 		isAttackFinished = true;
 	}
@@ -217,7 +217,7 @@ void BossGolem::StepJumpAttack(const VECTOR& playerPos)
 	TurnToward(dir);
 	m_speed = VEC_ZERO;
 
-	if (m_animData.m_nowFrm >= m_animData.m_endFrm * CHARGE_TIME)
+	if (m_animData.m_currentFrame >= m_animData.m_totalFrames * CHARGE_TIME)
 	{
 		bool isGroundedBeforeGravity = false;
 		if (m_pos.y <= Field::GetGroundHeight(m_pos.x, m_pos.z))
@@ -250,7 +250,7 @@ void BossGolem::StepRockPillar(const VECTOR& playerPos)
 	m_RockPillarCoolCnt;
 	//最終フレームまで再生し終えたか
 	bool isAttackFinished = false;
-	if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+	if (m_animData.m_currentFrame >= m_animData.m_totalFrames)
 	{
 		isAttackFinished = true;
 	}
@@ -259,10 +259,10 @@ void BossGolem::StepRockPillar(const VECTOR& playerPos)
 //ロード
 void BossGolem::Load()
 {
-	if (m_hndl == -1)
+	if (m_modelHandle == -1)
 	{
-		m_hndl = MV1LoadModel(FILE_PATH);
-		BrightenModelAmbient(m_hndl);
+		m_modelHandle = MV1LoadModel(FILE_PATH);
+		BrightenModelAmbient(m_modelHandle);
 	}
 }
 
@@ -279,7 +279,7 @@ void BossGolem::Step(const VECTOR& playerPos)
 	//死亡モーション再生中は行動せず、再生が終わったら消す
 	if (m_isDying == true)
 	{
-		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		if (m_animData.m_currentFrame >= m_animData.m_totalFrames)
 		{
 			m_isActive = false;
 			m_isDying = false;
@@ -303,25 +303,25 @@ void BossGolem::Step(const VECTOR& playerPos)
 	//攻撃モーション(通常攻撃1〜3)を再生中は、距離に関わらず最後まで攻撃状態を維持する
 	//(振っている途中でプレイヤーが離れてもChaseに切り替わって歩き出さないようにするため)
 	bool isAttackAnim = false;
-	if (m_animData.m_index == ANIM_ATTACK1)
+	if (m_animData.m_animIndex == ANIM_ATTACK1)
 	{
 		isAttackAnim = true;
 	}
-	if (m_animData.m_index == ANIM_ATTACK2)
+	if (m_animData.m_animIndex == ANIM_ATTACK2)
 	{
 		isAttackAnim = true;
 	}
-	if (m_animData.m_index == ANIM_ATTACK3)
+	if (m_animData.m_animIndex == ANIM_ATTACK3)
 	{
 		isAttackAnim = true;
 	}
-	if (m_animData.m_index == ANIM_JUMPATTACK)
+	if (m_animData.m_animIndex == ANIM_JUMPATTACK)
 	{
 		isAttackAnim = true;
 	}
 	//最終フレームまで再生し終えたか
 	bool isAttackFinished = false;
-	if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+	if (m_animData.m_currentFrame >= m_animData.m_totalFrames)
 	{
 		isAttackFinished = true;
 	}
@@ -414,13 +414,13 @@ void BossGolem::Draw()
 
 	if (isFlash == true)
 	{
-		MV1SetDifColorScale(m_hndl, GetColorF(1.0f, 0.3f, 0.3f, 1.0f));
+		MV1SetDifColorScale(m_modelHandle, GetColorF(1.0f, 0.3f, 0.3f, 1.0f));
 	}
-	MV1DrawModel(m_hndl);
+	MV1DrawModel(m_modelHandle);
 	if (isFlash == true)
 	{
 		//他の描画に影響しないよう元の色に戻す
-		MV1SetDifColorScale(m_hndl, GetColorF(1.0f, 1.0f, 1.0f, 1.0f));
+		MV1SetDifColorScale(m_modelHandle, GetColorF(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 
 	//攻撃判定の可視化(デバッグ):判定を出している間は攻撃判定の球をワイヤーフレームで表示する
@@ -449,24 +449,24 @@ bool BossGolem::IsAttackActive() const
 	//モーションごとに振り下ろすタイミングが違うので、区間は攻撃ごとに決める
 	float hitStart = 0.0f;
 	float hitEnd = 0.0f;
-	if (m_animData.m_index == ANIM_ATTACK1)
+	if (m_animData.m_animIndex == ANIM_ATTACK1)
 	{
 		hitStart = ATTACK1_HIT_START;
 		hitEnd = ATTACK1_HIT_END;
 	}
-	else if (m_animData.m_index == ANIM_ATTACK2)
+	else if (m_animData.m_animIndex == ANIM_ATTACK2)
 	{
 		hitStart = ATTACK2_HIT_START;
 		hitEnd = ATTACK2_HIT_END;
 	}
-	else if (m_animData.m_index == ANIM_ATTACK3)
+	else if (m_animData.m_animIndex == ANIM_ATTACK3)
 	{
 		//三段攻撃は、3回の振り下ろしのどれか1つでも区間に入っていれば判定を出す
 		for (int i = 0; i < ATTACK3_HIT_NUM; i++)
 		{
-			float startFrm3 = m_animData.m_endFrm * ATTACK3_HIT_START[i];
-			float endFrm3 = m_animData.m_endFrm * ATTACK3_HIT_END[i];
-			if (m_animData.m_nowFrm >= startFrm3 && m_animData.m_nowFrm <= endFrm3)
+			float startFrm3 = m_animData.m_totalFrames * ATTACK3_HIT_START[i];
+			float endFrm3 = m_animData.m_totalFrames * ATTACK3_HIT_END[i];
+			if (m_animData.m_currentFrame >= startFrm3 && m_animData.m_currentFrame <= endFrm3)
 			{
 				return true;
 			}
@@ -479,9 +479,9 @@ bool BossGolem::IsAttackActive() const
 		return false;
 	}
 
-	float startFrm = m_animData.m_endFrm * hitStart;
-	float endFrm = m_animData.m_endFrm * hitEnd;
-	if (m_animData.m_nowFrm >= startFrm && m_animData.m_nowFrm <= endFrm)
+	float startFrm = m_animData.m_totalFrames * hitStart;
+	float endFrm = m_animData.m_totalFrames * hitEnd;
+	if (m_animData.m_currentFrame >= startFrm && m_animData.m_currentFrame <= endFrm)
 	{
 		return true;
 	}

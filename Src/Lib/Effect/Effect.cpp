@@ -25,10 +25,10 @@ void Effect::Init()
 //ロード
 void Effect::Load(int originalModelHandle)
 {
-	if (m_hndl == -1)
+	if (m_modelHandle == -1)
 	{
 		//モデルは複製する
-		m_hndl = MV1DuplicateModel(originalModelHandle);
+		m_modelHandle = MV1DuplicateModel(originalModelHandle);
 	}
 }
 

@@ -3,11 +3,11 @@
 
 class DebugCamera {
 private:
-	VECTOR m_camerapos;
-	VECTOR m_focuspos;
-	VECTOR m_upvec;
+	VECTOR m_cameraPos;
+	VECTOR m_focusPos;
+	VECTOR m_upVec;
 	VECTOR m_speed;
-	VECTOR m_camerarot;
+	VECTOR m_cameraRot;
 public:
 	//コンストラクタ・デストラクタ
 	DebugCamera();

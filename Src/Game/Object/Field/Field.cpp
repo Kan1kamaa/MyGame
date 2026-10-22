@@ -6,10 +6,10 @@
 //ロード
 void Field::Load()
 {
-	if (m_hndl == -1)
+	if (m_modelHandle == -1)
 	{
-		m_hndl = MV1LoadModel("Data/Models/Field/Field_grassland.mv1");
-		BrightenModelAmbient(m_hndl);
+		m_modelHandle = MV1LoadModel("Data/Models/Field/Field_grassland.mv1");
+		BrightenModelAmbient(m_modelHandle);
 	}
 }
 

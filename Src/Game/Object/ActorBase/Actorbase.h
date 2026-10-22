@@ -7,12 +7,12 @@ class ActorBase : public ObjectBase
 protected:
 	typedef struct
 	{
-		float m_nowFrm;		//現在のアニメ再生時間
-		float m_endFrm;		//アニメの終了時間
-		float m_speed;		//アニメーションの速度
-		int	  m_attachID;	//アタッチID
-		int   m_index;		//再生中のアニメID
-		int   m_state;		//アニメの状態(ループor再生後停止)
+		float m_currentFrame;	//現在のアニメ再生位置(フレーム数)
+		float m_totalFrames;	//アニメの総フレーム数(終了位置)
+		float m_speed;			//1回のUpdateで進める再生位置(アニメーション速度)
+		int	  m_attachID;		//アタッチID(DxLibが返すアニメ識別子。-1ならアニメなし)
+		int   m_animIndex;		//再生中のアニメ番号(モデルに入っている番号。-1なら未再生)
+		int   m_playMode;		//再生方法(ANIMSTATE_NORMAL=最後で停止 / ANIMSTATE_LOOP=繰り返し)
 	}ANIM_DATA;
 
 	ANIM_DATA m_animData;	//アニメーションデータ 一式
@@ -42,7 +42,7 @@ public:
 	void RequestLoopAnim(int index, float animSpeed, int animSrcHndl = -1, bool isCheck = false);
 
 	//デバッグ用:現在再生中のアニメ番号とアタッチ結果(-1ならアタッチ失敗)
-	int GetAnimIndex() const { return m_animData.m_index; }
+	int GetAnimIndex() const { return m_animData.m_animIndex; }
 	int GetAnimAttachID() const { return m_animData.m_attachID; }
 
 private:

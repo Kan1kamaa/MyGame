@@ -4,10 +4,10 @@
 class ObjectBase {
 public:
 	VECTOR m_pos;		//座標
-	VECTOR m_rot;		//拡大角度
+	VECTOR m_rot;		//回転角度(ラジアン, XYZ軸まわり)
 	VECTOR m_scale;		//拡大縮小率
 	float m_radius;     //当たり判定用半径(球)
-	int m_hndl;			//モデルハンドル
+	int m_modelHandle;			//3Dモデルのハンドル(DxLibが返す番号。-1なら未ロード)
 	bool m_isActive;	//生存フラグ
 
 public:

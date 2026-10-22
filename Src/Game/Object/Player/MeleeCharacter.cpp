@@ -79,15 +79,15 @@ void MeleeCharacter::Init()
 //データロード
 void MeleeCharacter::Load()
 {
-	if (m_hndl == -1)
+	if (m_modelHandle == -1)
 	{
-		m_hndl = MV1LoadModel("Data/Models/Player/charcter1/Kan1kama2.mv1");
-		BrightenModelAmbient(m_hndl);
+		m_modelHandle = MV1LoadModel("Data/Models/Player/charcter1/Kan1kama2.mv1");
+		BrightenModelAmbient(m_modelHandle);
 		RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
 
 		//左手・右手のボーン番号を調べておく(見つからなければ-1のまま)
-		m_handFrameIndexL = MV1SearchFrame(m_hndl, HAND_FRAME_NAME_L);
-		m_handFrameIndexR = MV1SearchFrame(m_hndl, HAND_FRAME_NAME_R);
+		m_handFrameIndexL = MV1SearchFrame(m_modelHandle, HAND_FRAME_NAME_L);
+		m_handFrameIndexR = MV1SearchFrame(m_modelHandle, HAND_FRAME_NAME_R);
 	}
 
 	if (m_weaponHndl == -1)
@@ -196,15 +196,15 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 	//地上にいる(待機・歩き・走り)ときだけジャンプ・スキル・必殺技を受け付ける
 	//※isGroundedは重力適用後(=ジャンプ開始直後は既に空中扱い)の値なのでここでは使わない
 	bool isGroundedState = false;
-	if (m_animData.m_index == ANIMID_IDLE)
+	if (m_animData.m_animIndex == ANIMID_IDLE)
 	{
 		isGroundedState = true;
 	}
-	if (m_animData.m_index == ANIMID_WALK)
+	if (m_animData.m_animIndex == ANIMID_WALK)
 	{
 		isGroundedState = true;
 	}
-	if (m_animData.m_index == ANIMID_RUN)
+	if (m_animData.m_animIndex == ANIMID_RUN)
 	{
 		isGroundedState = true;
 	}
@@ -232,8 +232,8 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 
 	
 
-	//m_animData.m_indexは「今再生中のアニメ番号」。これで今の状態(待機/歩き/走り/攻撃/ジャンプ)を判断している
-	switch (m_animData.m_index)
+	//m_animData.m_animIndexは「今再生中のアニメ番号」。これで今の状態(待機/歩き/走り/攻撃/ジャンプ)を判断している
+	switch (m_animData.m_animIndex)
 	{
 	case ANIMID_IDLE: //今は待機モーション中
 		//isAttackTriggerがtrueなら(=左クリックを押した瞬間なら)1段目の攻撃を開始する
@@ -305,7 +305,7 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 		break;
 	case ANIMID_RUNSTART: //今は走り出しモーション中
 		//モーションを最後まで再生してから移行する
-		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		if (m_animData.m_currentFrame >= m_animData.m_totalFrames)
 		{
 			//シフトキーが押され続けていれば走り、離されていれば歩きへ
 			if (isRunInput == true)
@@ -325,8 +325,8 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 		break;
 
 	case ANIMID_JUMSTART: //今はジャンプ開始モーション中
-		//m_nowFrmがm_endFrm以上になったら、上昇モーションへ切り替える
-		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		//m_currentFrameがm_totalFrames以上になったら、上昇モーションへ切り替える
+		if (m_animData.m_currentFrame >= m_animData.m_totalFrames)
 		{
 			RequestLoopAnim(ANIMID_JUMPRISE, ANIM_SPEED);
 		}
@@ -359,7 +359,7 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 
 	case ANIMID_JUMPATTACK: //今は空中攻撃モーション中
 		//着地しても中断せず、必ず最後まで再生する
-		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		if (m_animData.m_currentFrame >= m_animData.m_totalFrames)
 		{
 			//最後まで再生し終えた時点で、地上にいれば待機、まだ空中なら落下モーションへ
 			if (isGrounded == true)
@@ -375,7 +375,7 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 
 	case ANIMID_JUMPRAND: //今は着地モーション中
 		//着地モーションを最後まで再生し終えたら待機に戻る
-		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		if (m_animData.m_currentFrame >= m_animData.m_totalFrames)
 		{
 			RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
 		}
@@ -383,28 +383,28 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 
 	case ANIMID_SKILL: //今はスキルモーション中
 		//スキルモーションを最後まで再生し終えたら待機に戻る
-		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		if (m_animData.m_currentFrame >= m_animData.m_totalFrames)
 		{
 			RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
 		}
 		break;
 	case ANIMID_DAMAGE: //今は被弾モーション中
 		//被弾モーションを最後まで再生し終えたら待機に戻る
-		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		if (m_animData.m_currentFrame >= m_animData.m_totalFrames)
 		{
 			RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
 		}
 		break;
 	case ANIMID_DAMAGE2: //今は被弾モーション大中
 		//被弾モーション大を最後まで再生し終えたら待機に戻る
-		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		if (m_animData.m_currentFrame >= m_animData.m_totalFrames)
 		{
 			RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
 		}
 		break;
 	case ANIMID_ULT: //今は必殺技モーション中
 		//必殺技モーションを最後まで再生し終えたら待機に戻る
-		if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		if (m_animData.m_currentFrame >= m_animData.m_totalFrames)
 		{
 			RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
 		}
@@ -424,12 +424,12 @@ void MeleeCharacter::UpdateAnimState(bool isAttackInput, bool isMoveInput, bool 
 		}
 
 		//m_comboQueuedがtrueで、モーションがCOMBO_CHAIN_RATIOまで進んでいたら、次の段を開始する
-		if (m_comboQueued == true && m_animData.m_nowFrm >= m_animData.m_endFrm * COMBO_CHAIN_RATIO)
+		if (m_comboQueued == true && m_animData.m_currentFrame >= m_animData.m_totalFrames * COMBO_CHAIN_RATIO)
 		{
 			StartAttack(m_comboStage + 1);
 		}
 		//予約が無いまま最後まで再生し終えたら、待機に戻る
-		else if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+		else if (m_animData.m_currentFrame >= m_animData.m_totalFrames)
 		{
 			m_comboStage = 0;
 			RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
@@ -449,15 +449,15 @@ void MeleeCharacter::ResetToIdle()
 //地上の通常攻撃(1〜3段目)モーションを再生中かどうか
 bool MeleeCharacter::IsGroundAttackMotion() const
 {
-	if (m_animData.m_index == ANIMID_ATTACK1)
+	if (m_animData.m_animIndex == ANIMID_ATTACK1)
 	{
 		return true;
 	}
-	if (m_animData.m_index == ANIMID_ATTACK2)
+	if (m_animData.m_animIndex == ANIMID_ATTACK2)
 	{
 		return true;
 	}
-	if (m_animData.m_index == ANIMID_ATTACK3)
+	if (m_animData.m_animIndex == ANIMID_ATTACK3)
 	{
 		return true;
 	}
@@ -471,7 +471,7 @@ bool MeleeCharacter::IsAttackMotion() const
 	{
 		return true;
 	}
-	if (m_animData.m_index == ANIMID_JUMPATTACK)
+	if (m_animData.m_animIndex == ANIMID_JUMPATTACK)
 	{
 		return true;
 	}
@@ -486,11 +486,11 @@ bool MeleeCharacter::IsAttacking() const
 	{
 		return true;
 	}
-	if (m_animData.m_index == ANIMID_SKILL)
+	if (m_animData.m_animIndex == ANIMID_SKILL)
 	{
 		return true;
 	}
-	if (m_animData.m_index == ANIMID_ULT)
+	if (m_animData.m_animIndex == ANIMID_ULT)
 	{
 		return true;
 	}
@@ -507,7 +507,7 @@ bool MeleeCharacter::IsAttackActive() const
 //走り出し(=回避)モーション中かどうか
 bool MeleeCharacter::IsDodging() const
 {
-	if (m_animData.m_index == ANIMID_RUNSTART)
+	if (m_animData.m_animIndex == ANIMID_RUNSTART)
 	{
 		return true;
 	}
@@ -517,7 +517,7 @@ bool MeleeCharacter::IsDodging() const
 //被弾モーション中かどうか
 bool MeleeCharacter::IsDamageMotion() const
 {
-	if (m_animData.m_index == ANIMID_DAMAGE)
+	if (m_animData.m_animIndex == ANIMID_DAMAGE)
 	{
 		return true;
 	}
@@ -527,7 +527,7 @@ bool MeleeCharacter::IsDamageMotion() const
 //被弾モーション大中かどうか
 bool MeleeCharacter::IsDamage2Motion() const
 {
-	if (m_animData.m_index == ANIMID_DAMAGE2)
+	if (m_animData.m_animIndex == ANIMID_DAMAGE2)
 	{
 		return true;
 	}
@@ -537,7 +537,7 @@ bool MeleeCharacter::IsDamage2Motion() const
 //死亡モーション中かどうか
 bool MeleeCharacter::IsDeathMotion() const
 {
-	if (m_animData.m_index == ANIMID_DEATH)
+	if (m_animData.m_animIndex == ANIMID_DEATH)
 	{
 		return true;
 	}
@@ -551,7 +551,7 @@ bool MeleeCharacter::IsDeathFinished() const
 	{
 		return false;
 	}
-	if (m_animData.m_nowFrm >= m_animData.m_endFrm)
+	if (m_animData.m_currentFrame >= m_animData.m_totalFrames)
 	{
 		return true;
 	}
@@ -587,7 +587,7 @@ bool MeleeCharacter::PopEffectRequest(EffectManager::EffectId& id)
 
 float MeleeCharacter::GetAttackPower()const
 {
-	switch (m_animData.m_index)
+	switch (m_animData.m_animIndex)
 	{
 	case 0:
 		return ATTACK1_POWER;
@@ -609,7 +609,7 @@ float MeleeCharacter::GetAttackPower()const
 float MeleeCharacter::GetLungeSpeed() const
 {
 	//走り出しモーション中は、モーションが終わるまでずっと前方へ加速する
-	if (m_animData.m_index == ANIMID_RUNSTART)
+	if (m_animData.m_animIndex == ANIMID_RUNSTART)
 	{
 		return RUNSTART_LUNGE_SPEED;
 	}
@@ -621,7 +621,7 @@ float MeleeCharacter::GetLungeSpeed() const
 	}
 
 	//攻撃モーションの最初のLUNGE_WINDOW_RATIOの間だけ踏み込む
-	if (m_animData.m_nowFrm < m_animData.m_endFrm * LUNGE_WINDOW_RATIO)
+	if (m_animData.m_currentFrame < m_animData.m_totalFrames * LUNGE_WINDOW_RATIO)
 	{
 		return LUNGE_SPEED;
 	}
@@ -650,19 +650,19 @@ void MeleeCharacter::UpdateWeapon()
 	//右手のボーンの今の姿勢(ワールド行列)を取得し、サイズ・向きを調整した上で刀のモデルに適用する
 	if (m_handFrameIndexR != -1)
 	{
-		MATRIX handMatrixR = MV1GetFrameLocalWorldMatrix(m_hndl, m_handFrameIndexR);
+		MATRIX handMatrixR = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_handFrameIndexR);
 		MV1SetMatrix(m_weaponHndl, MMult(adjustMatrix, handMatrixR));
 	}
 
 	//ジャンプ攻撃の間だけ、左手にも複製した刀を持たせる(左手は右手と鏡合わせなので別の補正を使う)
-	if (m_animData.m_index == ANIMID_JUMPATTACK && m_handFrameIndexL != -1)
+	if (m_animData.m_animIndex == ANIMID_JUMPATTACK && m_handFrameIndexL != -1)
 	{
 		MATRIX rotMatrixXL = MGetRotX(WEAPON_ROT_X_L);
 		MATRIX rotMatrixYL = MGetRotY(WEAPON_ROT_Y_L);
 		MATRIX rotMatrixZL = MGetRotZ(WEAPON_ROT_Z_L);
 		MATRIX adjustMatrixL = MMult(MMult(MMult(scaleMatrix, rotMatrixXL), rotMatrixYL), rotMatrixZL);
 
-		MATRIX handMatrixL = MV1GetFrameLocalWorldMatrix(m_hndl, m_handFrameIndexL);
+		MATRIX handMatrixL = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_handFrameIndexL);
 		MV1SetMatrix(m_weaponHndl2, MMult(adjustMatrixL, handMatrixL));
 	}
 }
@@ -680,7 +680,7 @@ void MeleeCharacter::DrawWeapon()
 		MV1DrawModel(m_weaponHndl);
 	}
 
-	if (m_animData.m_index == ANIMID_JUMPATTACK && m_handFrameIndexL != -1)
+	if (m_animData.m_animIndex == ANIMID_JUMPATTACK && m_handFrameIndexL != -1)
 	{
 		MV1DrawModel(m_weaponHndl2);
 	}

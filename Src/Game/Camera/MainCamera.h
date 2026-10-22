@@ -3,9 +3,9 @@
 
 class MainCamera {
 private:
-	VECTOR m_camerapos;
-	VECTOR m_focuspos;
-	VECTOR m_upvec;
+	VECTOR m_cameraPos;
+	VECTOR m_focusPos;
+	VECTOR m_upVec;
 
 	float m_yaw;      //カメラの水平方向の向き(マウスで操作)
 	float m_pitch;    //カメラの垂直方向の向き(マウスで操作)

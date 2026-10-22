@@ -2,10 +2,10 @@
 #include "SceneBase.h"
 
 
-// ゲーム本編管理シーン
+// リザルトシーン
 class ResultScene : public SceneBase {
 protected:
-	int m_hndl;		// 一枚絵のタイトル画像を使う
+	int m_resultImageHandle;		// 一枚絵のリザルト画像のハンドル
 
 public:
 	// コンストラクタ

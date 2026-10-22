@@ -1,9 +1,9 @@
 ﻿#include "SceneManager.h"
 #include "../../Lib/Fade/Fade.h"
 // コンストラクタ
-SceneManager::SceneManager() : m_state(MAIN)
+SceneManager::SceneManager() : m_state(PLAY)
 {
-	// 提出時はMAINからTITLEに変える
+	// 提出時はPLAYからTITLEに変える
 	FADE::Init();
 	//ゲーム起動時にサウンドの初期化＆ロード
 	SoundManager::Init();
@@ -25,10 +25,10 @@ void SceneManager::Loop()
 		ret = m_title.Loop();
 		if (ret != -1)
 		{
-			m_state = MAIN;
+			m_state = PLAY;
 		}
 		break;
-	case MAIN:
+	case PLAY:
 		ret = m_play.Loop();
 		// ゲームが終了した場合、戻り値は-1以外
 		if (ret != -1)
@@ -55,7 +55,7 @@ void SceneManager::Draw()
 	case TITLE:
 		m_title.Draw();
 		break;
-	case MAIN:
+	case PLAY:
 		m_play.Draw();
 		break;
 	case RESULT:

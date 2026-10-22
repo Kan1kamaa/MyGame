@@ -1,7 +1,7 @@
 ﻿#include"resultScene.h"
 #include"DxLib.h"
 // コンストラクタ
-ResultScene::ResultScene() : m_hndl(-1)
+ResultScene::ResultScene() : m_resultImageHandle(-1)
 {
 
 }
@@ -9,7 +9,7 @@ ResultScene::ResultScene() : m_hndl(-1)
 // 描画全般
 void ResultScene::Draw()
 {
-	DrawGraph(0, 0, m_hndl, TRUE);
+	DrawGraph(0, 0, m_resultImageHandle, TRUE);
 }
 
 // 初期化
@@ -20,8 +20,8 @@ void ResultScene::Init()
 // データロード
 void ResultScene::Load()
 {
-	m_hndl = LoadGraph("Data/Texture/Result/result.png");
-	// ロードが終わったらゲーム本編へ
+	m_resultImageHandle = LoadGraph("Data/Texture/Result/result.png");
+	// ロードが終わったらフェードイン待ちへ
 	m_state = START;
 }
 // メイン処理
@@ -41,7 +41,7 @@ void ResultScene::Update()
 // 破棄
 void ResultScene::Fin()
 {
-	DeleteGraph(m_hndl);
+	DeleteGraph(m_resultImageHandle);
 
 	// 最初に戻す
 	m_state = INIT;

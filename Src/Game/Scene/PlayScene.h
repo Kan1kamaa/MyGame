@@ -12,20 +12,20 @@
 class PlayScene : public SceneBase {
 private:
 	//エフェクト(Effekseer)
-	EffectManager effect;
+	EffectManager m_effect;
 	//プレイヤー
-	CharacterManager player;
+	CharacterManager m_player;
 	//弾
-	ShotManager shot;
+	ShotManager m_shot;
 	//敵
-	EnemyManager enemy;
+	EnemyManager m_enemy;
 	//ボス
-	BossGolem boss;
+	BossGolem m_boss;
 	//背景
-	Field field;
-	Sky sky;
+	Field m_field;
+	Sky m_sky;
 	//カメラ
-	CameraManager camera;
+	CameraManager m_camera;
 
 
 	

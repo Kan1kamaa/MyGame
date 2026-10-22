@@ -2,10 +2,10 @@
 #include "SceneBase.h"
 
 
-// ゲーム本編管理シーン
+// タイトルシーン
 class TitleScene : public SceneBase {
 protected:
-	int m_hndl;		// 一枚絵のタイトル画像を使う
+	int m_titleImageHandle;		// 一枚絵のタイトル画像のハンドル
 
 public:
 	// コンストラクタ

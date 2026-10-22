@@ -5,16 +5,16 @@
 // 各種シーン管理クラス
 class SceneManager {
 private:
-	enum tagState {
+	enum SceneId {
 		TITLE,	// タイトル画面
-		MAIN,	// ゲーム本編
+		PLAY,	// ゲーム本編
 		RESULT,	// リザルト画面
 	};
 
 	TitleScene m_title;	// タイトル画面
 	PlayScene m_play;	// ゲーム本編
 	ResultScene m_result; //リザルト画面
-	tagState m_state;	// 今どのシーンか
+	SceneId m_state;	// 今どのシーンか
 
 public:
 	// コンストラクタ

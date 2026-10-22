@@ -1,7 +1,7 @@
 ﻿#include"TitleScene.h"
 #include"DxLib.h"
 // コンストラクタ
-TitleScene::TitleScene() : m_hndl(-1)
+TitleScene::TitleScene() : m_titleImageHandle(-1)
 {
 
 }
@@ -9,7 +9,7 @@ TitleScene::TitleScene() : m_hndl(-1)
 // 描画全般
 void TitleScene::Draw()
 {
-	DrawGraph(0, 0, m_hndl, TRUE);
+	DrawGraph(0, 0, m_titleImageHandle, TRUE);
 }
 
 // 初期化
@@ -20,8 +20,8 @@ void TitleScene::Init()
 // データロード
 void TitleScene::Load()
 {
-	m_hndl = LoadGraph("Data/Texture/Title/title.png");
-	// ロードが終わったらゲーム本編へ
+	m_titleImageHandle = LoadGraph("Data/Texture/Title/title.png");
+	// ロードが終わったらフェードイン待ちへ
 	m_state = START;
 }
 // メイン処理
@@ -41,7 +41,7 @@ void TitleScene::Update()
 // 破棄
 void TitleScene::Fin()
 {
-	DeleteGraph(m_hndl);
+	DeleteGraph(m_titleImageHandle);
 
 	// 最初に戻す
 	m_state = INIT;

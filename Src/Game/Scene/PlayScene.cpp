@@ -7,28 +7,28 @@ static const VECTOR BOSS_SPAWN_POS = { 0.0f, 0.0f, 300.0f };
 // 描画処理
 void PlayScene::Draw()
 {
-	field.Draw();
-	sky.Draw();
-	player.DrawPL();
-	player.DrawHUD();
-	shot.Draw();
-	camera.Draw();
-	enemy.Draw();
-	boss.Draw();
-	effect.Draw();
+	m_field.Draw();
+	m_sky.Draw();
+	m_player.DrawPL();
+	m_player.DrawHUD();
+	m_shot.Draw();
+	m_camera.Draw();
+	m_enemy.Draw();
+	m_boss.Draw();
+	m_effect.Draw();
 }
 
 //初期化
 void PlayScene::Init()
 {
-	field.Init();
-	sky.Init();
-	player.Init();
-	camera.Init();
-	shot.Init();
-	enemy.Init();
-	boss.Init();
-	effect.Init();
+	m_field.Init();
+	m_sky.Init();
+	m_player.Init();
+	m_camera.Init();
+	m_shot.Init();
+	m_enemy.Init();
+	m_boss.Init();
+	m_effect.Init();
 
 	m_state = LOAD;
 }
@@ -36,14 +36,14 @@ void PlayScene::Init()
 //ロード
 void PlayScene::Load()
 {
-	field.Load();
-	sky.Load();
-	enemy.Load();
-	boss.Load();
-	player.Load();
-	shot.Load();
-	effect.Load();
-	boss.Request(BOSS_SPAWN_POS);
+	m_field.Load();
+	m_sky.Load();
+	m_enemy.Load();
+	m_boss.Load();
+	m_player.Load();
+	m_shot.Load();
+	m_effect.Load();
+	m_boss.Request(BOSS_SPAWN_POS);
 	Step();
 	Update();
 	//BGMは一旦オフ
@@ -54,65 +54,65 @@ void PlayScene::Load()
 //毎フレーム計算する処理
 void PlayScene::Step()
 {
-	if (camera.GetCameraID() == 0)
+	if (m_camera.GetCameraID() == 0)
 	{
 		//先にマウスでカメラを回し、移動がこのフレームのカメラ向きを使うようにする
-		camera.UpdateLook();
-		player.Step(camera.GetYaw());
-		shot.Step();
-		enemy.Step(player.GetPos());
-		boss.Step(player.GetPos());
-		sky.Step();
+		m_camera.UpdateLook();
+		m_player.Step(m_camera.GetYaw());
+		m_shot.Step();
+		m_enemy.Step(m_player.GetPos());
+		m_boss.Step(m_player.GetPos());
+		m_sky.Step();
 
 		//攻撃・スキル・必殺技が始まったらエフェクトを出す
 		EffectManager::EffectId effectId;
 		VECTOR effectPos;
 		float effectRotY;
-		if (player.PopEffectRequest(effectId, effectPos, effectRotY) == true)
+		if (m_player.PopEffectRequest(effectId, effectPos, effectRotY) == true)
 		{
-			effect.Play(effectId, effectPos, effectRotY);
+			m_effect.Play(effectId, effectPos, effectRotY);
 		}
 	}
 	//カメラの更新
-	camera.Step(player.GetPos());
+	m_camera.Step(m_player.GetPos());
 	//各種当たり判定
-	GameCollision::CheckHitEnemyToShot(enemy, shot);
-	GameCollision::CheckHitEnemyToPlayer(enemy, player);
-	GameCollision::CheckHitPlayerAttackToEnemy(player, enemy);
-	GameCollision::CheckHitBossToShot(boss, shot);
-	GameCollision::CheckHitBossAttackToPlayer(boss, player);
-	GameCollision::CheckHitPlayerAttackToBoss(player, boss);
+	GameCollision::CheckHitEnemyToShot(m_enemy, m_shot);
+	GameCollision::CheckHitEnemyToPlayer(m_enemy, m_player);
+	GameCollision::CheckHitPlayerAttackToEnemy(m_player, m_enemy);
+	GameCollision::CheckHitBossToShot(m_boss, m_shot);
+	GameCollision::CheckHitBossAttackToPlayer(m_boss, m_player);
+	GameCollision::CheckHitPlayerAttackToBoss(m_player, m_boss);
 
 	//プレイヤーがリスポーンしたら、ボスも最初の状態に戻して出し直す
-	if (player.CheckRespawned() == true)
+	if (m_player.CheckRespawned() == true)
 	{
-		boss.Reset(BOSS_SPAWN_POS);
+		m_boss.Reset(BOSS_SPAWN_POS);
 	}
 }
 
 // 更新処理
 void PlayScene::Update()
 {
-	field.Update();
-	sky.Update(player.GetPos());
-	player.Update();
-	shot.Update();
-	enemy.Update();
-	boss.Update();
-	camera.Update();
-	effect.Update();
+	m_field.Update();
+	m_sky.Update(m_player.GetPos());
+	m_player.Update();
+	m_shot.Update();
+	m_enemy.Update();
+	m_boss.Update();
+	m_camera.Update();
+	m_effect.Update();
 }
 
 // 終了処理
 void PlayScene::Fin()
 {
-	field.Fin();
-	sky.Fin();
-	player.Fin();
-	shot.Fin();
-	enemy.Fin();
-	boss.Fin();
-	effect.Fin();
+	m_field.Fin();
+	m_sky.Fin();
+	m_player.Fin();
+	m_shot.Fin();
+	m_enemy.Fin();
+	m_boss.Fin();
+	m_effect.Fin();
 
 	m_nextScene = 0;	//とりあえずリザルトに
 	m_state = INIT;		//念のため最初に戻す

@@ -83,20 +83,20 @@ void CharacterManager::Init()
 	m_pos = PLAYER_SPAWN_POS;
 	m_radius = 5.0f;
 	m_velocityY = 0.0f;
-	m_Knockbackvel = { 0.0f,0.0f,0.0f };
+	m_knockbackVelocity = { 0.0f,0.0f,0.0f };
 	m_prevKeySpace = false;
 	m_prevKeyE = false;
 	m_prevKeyR = false;
 	m_status.Init(PLAYER_MAX_HP, 0);
 	m_stamina = PLAYER_MAX_STAMINA;
 	m_staminaRegenWait = 0;
-	m_invincibleCnt = 0;
+	m_invincibleFrames = 0;
 	m_isExhausted = false;
 	m_wasDodging = false;
 	m_isDying = false;
-	m_respawnWaitCnt = 0;
+	m_respawnWaitFrames = 0;
 	m_hasRespawned = false;
-	m_char.Init();
+	m_meleeChar.Init();
 }
 
 //----------------------
@@ -104,7 +104,7 @@ void CharacterManager::Init()
 //----------------------
 void CharacterManager::Load()
 {
-	m_char.Load();
+	m_meleeChar.Load();
 }
 
 //----------------------
@@ -122,9 +122,9 @@ void CharacterManager::Step(float cameraYaw)
 	}
 
 	//無敵時間を減らす
-	if (m_invincibleCnt > 0)
+	if (m_invincibleFrames > 0)
 	{
-		m_invincibleCnt--;
+		m_invincibleFrames--;
 	}
 	if (m_staminaRegenWait > 0)
 	{
@@ -140,9 +140,9 @@ void CharacterManager::Step(float cameraYaw)
 	
 	//------ このフレームの入力をすべて読む ------
 	//攻撃中はWASDでの移動を受け付けない(移動方向を0にする)
-	bool isAttacking = m_char.IsAttacking();
+	bool isAttacking = m_meleeChar.IsAttacking();
 	bool isTakingDamage = false;
-	if (m_char.IsDamageMotion() == true || m_char.IsDamage2Motion() == true)
+	if (m_meleeChar.IsDamageMotion() == true || m_meleeChar.IsDamage2Motion() == true)
 	{
 		isTakingDamage = true;
 	}
@@ -204,12 +204,12 @@ void CharacterManager::Step(float cameraYaw)
 	VECTOR velocity = CalcMoveVelocity(moveDir, isRunInput);
 	velocity = VAdd(velocity, CalcLungeVelocity());
 	m_pos = VAdd(m_pos, velocity);
-	m_pos = VAdd(m_pos, m_Knockbackvel);
-	m_Knockbackvel = VScale(m_Knockbackvel, 0.95);
+	m_pos = VAdd(m_pos, m_knockbackVelocity);
+	m_knockbackVelocity = VScale(m_knockbackVelocity, 0.95);
 	//一定速度を下回るとノックバック終了
-	if (VSquareSize(m_Knockbackvel) < 0.01f)
+	if (VSquareSize(m_knockbackVelocity) < 0.01f)
 	{
-		m_Knockbackvel.x = m_Knockbackvel.z = 0.0f;
+		m_knockbackVelocity.x = m_knockbackVelocity.z = 0.0f;
 	}
 	ClampInsideField();
 
@@ -229,15 +229,15 @@ void CharacterManager::Step(float cameraYaw)
 	}
 
 	//------ キャラクターへ座標・向きを反映 ------
-	m_char.SetPos(m_pos);
-	m_char.SetRot(m_rot);
+	m_meleeChar.SetPos(m_pos);
+	m_meleeChar.SetRot(m_rot);
 
 	//------ アニメーションを処理 ------
-	m_char.UpdateAnimState(isAttackInput, isMoveInput, isRunInput, isGrounded, m_velocityY, isJumpTrigger,
+	m_meleeChar.UpdateAnimState(isAttackInput, isMoveInput, isRunInput, isGrounded, m_velocityY, isJumpTrigger,
 		isSkillTrigger, isUltTrigger);
 
 	//------ 回避(走り出し)に切り替わった瞬間だけ、まとめてスタミナを引く ------
-	bool isDodging = m_char.IsDodging();
+	bool isDodging = m_meleeChar.IsDodging();
 	if (isDodging == true && m_wasDodging == false)
 	{
 		m_stamina -= AVOID_STAMINA_COST;
@@ -301,7 +301,7 @@ VECTOR CharacterManager::CalcMoveVelocity(VECTOR moveDir, bool isRun) const
 //攻撃の踏み込みぶんの移動量を返す(自分が向いている方向へ、攻撃モーション序盤だけ少し進む)
 VECTOR CharacterManager::CalcLungeVelocity() const
 {
-	float lungeSpeed = m_char.GetLungeSpeed(); //踏み込み中でなければ0が返ってくる
+	float lungeSpeed = m_meleeChar.GetLungeSpeed(); //踏み込み中でなければ0が返ってくる
 	VECTOR lungeDir = { -sinf(m_rot.y), 0.0f, -cosf(m_rot.y) };
 	return VScale(lungeDir, lungeSpeed);
 }
@@ -393,23 +393,23 @@ void CharacterManager::UpdateVertical(bool isJumpTrigger)
 void CharacterManager::StepDying()
 {
 	//吹っ飛びながら倒れたときのために、ノックバックと重力だけは続ける
-	m_pos = VAdd(m_pos, m_Knockbackvel);
-	m_Knockbackvel = VScale(m_Knockbackvel, 0.9f);
-	if (VSquareSize(m_Knockbackvel) < 0.01f)
+	m_pos = VAdd(m_pos, m_knockbackVelocity);
+	m_knockbackVelocity = VScale(m_knockbackVelocity, 0.9f);
+	if (VSquareSize(m_knockbackVelocity) < 0.01f)
 	{
-		m_Knockbackvel.x = m_Knockbackvel.z = 0.0f;
+		m_knockbackVelocity.x = m_knockbackVelocity.z = 0.0f;
 	}
 	ClampInsideField();
 	UpdateVertical(false);
 
-	m_char.SetPos(m_pos);
-	m_char.SetRot(m_rot);
+	m_meleeChar.SetPos(m_pos);
+	m_meleeChar.SetRot(m_rot);
 
 	//死亡モーションを最後まで見せてから、少し待ってリスポーンする
-	if (m_char.IsDeathFinished() == true)
+	if (m_meleeChar.IsDeathFinished() == true)
 	{
-		m_respawnWaitCnt--;
-		if (m_respawnWaitCnt <= 0)
+		m_respawnWaitFrames--;
+		if (m_respawnWaitFrames <= 0)
 		{
 			Respawn();
 		}
@@ -422,20 +422,20 @@ void CharacterManager::Respawn()
 	m_pos = PLAYER_SPAWN_POS;
 	m_rot = VGet(0.0f, 0.0f, 0.0f);
 	m_velocityY = 0.0f;
-	m_Knockbackvel = VGet(0.0f, 0.0f, 0.0f);
+	m_knockbackVelocity = VGet(0.0f, 0.0f, 0.0f);
 	m_status.Init(PLAYER_MAX_HP, 0);
 	m_stamina = PLAYER_MAX_STAMINA;
 	m_staminaRegenWait = 0;
 	m_isExhausted = false;
 	m_wasDodging = false;
 	//復活した瞬間に袋叩きにされないよう、しばらく無敵にする
-	m_invincibleCnt = RESPAWN_INVINCIBLE_TIME;
+	m_invincibleFrames = RESPAWN_INVINCIBLE_TIME;
 	m_isDying = false;
 	m_hasRespawned = true;
 
-	m_char.ResetToIdle();
-	m_char.SetPos(m_pos);
-	m_char.SetRot(m_rot);
+	m_meleeChar.ResetToIdle();
+	m_meleeChar.SetPos(m_pos);
+	m_meleeChar.SetRot(m_rot);
 }
 
 //リスポーンした直後ならtrueを返す(1回呼ぶとfalseに戻る)
@@ -451,8 +451,8 @@ bool CharacterManager::CheckRespawned()
 //----------------------
 void CharacterManager::Update()
 {
-	m_char.Update();
-	m_char.UpdateWeapon();
+	m_meleeChar.Update();
+	m_meleeChar.UpdateWeapon();
 }
 
 //----------------------
@@ -466,8 +466,8 @@ void CharacterManager::DrawPL()
 		return;
 	}
 
-	m_char.Draw();
-	m_char.DrawWeapon();
+	m_meleeChar.Draw();
+	m_meleeChar.DrawWeapon();
 }
 
 //----------------------
@@ -483,8 +483,8 @@ void CharacterManager::DrawHUD()
 
 	//デバッグ表示:このモデルのアニメーション数と、直前のアタッチが成功したかを確認する
 	/*DrawFormatString(16, 16, GetColor(255, 255, 0), "AnimNum:%d Index:%d AttachID:%d WeaponFrameL:%d WeaponFrameR:%d",
-		MV1GetAnimNum(m_char.m_modelHandle), m_char.GetAnimIndex(), m_char.GetAnimAttachID(),
-		m_char.GetWeaponFrameIndex(), m_char.GetWeaponFrameIndexR());*/
+		MV1GetAnimNum(m_meleeChar.m_modelHandle), m_meleeChar.GetAnimIndex(), m_meleeChar.GetAnimAttachID(),
+		m_meleeChar.GetWeaponFrameIndex(), m_meleeChar.GetWeaponFrameIndexR());*/
 	DrawFormatString(1100, 610, GetColor(255, 255, 255), "操作方法" );
 	DrawFormatString(1100, 630, GetColor(255, 255, 255), "WASD：移動");
 	DrawFormatString(1100, 650, GetColor(255, 255, 255), "Shift：ダッシュ");
@@ -514,24 +514,24 @@ void CharacterManager::HitCalc(const ObjectBase& other)
 		return;
 	}
 	//被弾後の無敵時間中はダメージを受けない
-	if (m_invincibleCnt > 0)
+	if (m_invincibleFrames > 0)
 	{
 		return;
 	}
 	//走り出し(回避)モーション中は無敵
-	if (m_char.IsDodging() == true)
+	if (m_meleeChar.IsDodging() == true)
 	{
 		return;
 	}
 	m_status.AddDamage(other.GetAttackPower());
-	m_invincibleCnt = INVINCIBLE_TIME;
+	m_invincibleFrames = INVINCIBLE_TIME;
 	//攻撃力がBIGDAMAGE_LINE以上なら大ダメージ
 	bool isBig = false;
 	if (other.GetAttackPower() >= BIGDAMAGE_LINE)
 	{
 		isBig = true;
 	}
-	m_char.OnDamage(isBig);
+	m_meleeChar.OnDamage(isBig);
 
 	//相手からプレイヤーへ向かう方向(=吹き飛ぶ方向)を計算。高さは別で設定する
 	VECTOR backDir = VSub(m_pos, other.GetPos());
@@ -549,34 +549,34 @@ void CharacterManager::HitCalc(const ObjectBase& other)
 	if (isBig == true)
 	{
 		//大ダメージ:後ろへ大きく吹っ飛ばして、上にも浮かせる
-		m_Knockbackvel = VScale(backDir, KNOCKBACK_BIG_BACK);
+		m_knockbackVelocity = VScale(backDir, KNOCKBACK_BIG_BACK);
 		m_velocityY = KNOCKBACK_BIG_Y;
 	}
 	else
 	{
 		//小ダメージ:後ろへ少しよろけるだけ
-		m_Knockbackvel = VScale(backDir, KNOCKBACK_SMALL_BACK);
+		m_knockbackVelocity = VScale(backDir, KNOCKBACK_SMALL_BACK);
 	}
 
 	//HPが0になったら死亡モーションへ。描画は続けたいのでm_isActiveはtrueのまま
 	if (m_status.IsAlive() == false)
 	{
 		m_isDying = true;
-		m_respawnWaitCnt = RESPAWN_WAIT;
-		m_char.StartDeath();
+		m_respawnWaitFrames = RESPAWN_WAIT;
+		m_meleeChar.StartDeath();
 	}
 }
 
 //現在操作中のキャラクターの攻撃力を返す(近接攻撃が敵に当たったときに使われる)
 float CharacterManager::GetAttackPower() const
 {
-	return m_char.GetAttackPower();
+	return m_meleeChar.GetAttackPower();
 }
 
 //攻撃・スキル・必殺技の開始時に出したいエフェクトを取り出す
 bool CharacterManager::PopEffectRequest(EffectManager::EffectId& id, VECTOR& pos, float& rotY)
 {
-	if (m_char.PopEffectRequest(id) == false)
+	if (m_meleeChar.PopEffectRequest(id) == false)
 	{
 		return false;
 	}
@@ -591,7 +591,7 @@ bool CharacterManager::PopEffectRequest(EffectManager::EffectId& id, VECTOR& pos
 //攻撃モーション中で、前方に攻撃判定を出すべきかどうか(実体は操作中のキャラに聞く)
 bool CharacterManager::IsAttackActive() const
 {
-	return m_char.IsAttackActive();
+	return m_meleeChar.IsAttackActive();
 }
 
 //攻撃判定(球)の中心座標。キャラが向いている方向の少し前に置く
@@ -615,5 +615,5 @@ float CharacterManager::GetAttackRadius() const
 //----------------------
 void CharacterManager::Fin()
 {
-	m_char.Fin();
+	m_meleeChar.Fin();
 }

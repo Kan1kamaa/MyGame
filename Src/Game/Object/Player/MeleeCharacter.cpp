@@ -61,7 +61,7 @@ namespace {
 //	コンストラクタ
 //----------------------
 MeleeCharacter::MeleeCharacter() : m_comboStage(0), m_prevAttackInput(false), m_comboQueued(false),
-m_weaponHndl(-1), m_weaponHndl2(-1), m_handFrameIndexL(-1), m_handFrameIndexR(-1),
+m_weaponModelR(-1), m_weaponModelL(-1), m_handFrameIndexL(-1), m_handFrameIndexR(-1),
 m_effectRequest(-1)
 {
 }
@@ -90,13 +90,13 @@ void MeleeCharacter::Load()
 		m_handFrameIndexR = MV1SearchFrame(m_modelHandle, HAND_FRAME_NAME_R);
 	}
 
-	if (m_weaponHndl == -1)
+	if (m_weaponModelR == -1)
 	{
-		m_weaponHndl = MV1LoadModel(WEAPON_FILE_PATH);
-		//右手用はデータを共有した複製を作る(ジャンプ攻撃の両手持ちで使う)
-		m_weaponHndl2 = MV1DuplicateModel(m_weaponHndl);
-		BrightenModelAmbient(m_weaponHndl);
-		BrightenModelAmbient(m_weaponHndl2);
+		m_weaponModelR = MV1LoadModel(WEAPON_FILE_PATH);
+		//左手用はデータを共有した複製を作る(ジャンプ攻撃の両手持ちで使う)
+		m_weaponModelL = MV1DuplicateModel(m_weaponModelR);
+		BrightenModelAmbient(m_weaponModelR);
+		BrightenModelAmbient(m_weaponModelL);
 	}
 }
 
@@ -105,16 +105,16 @@ void MeleeCharacter::Fin()
 {
 	ObjectBase::Fin(); //自分のモデルの後片付け
 
-	if (m_weaponHndl != -1)
+	if (m_weaponModelR != -1)
 	{
-		MV1DeleteModel(m_weaponHndl);
-		m_weaponHndl = -1;
+		MV1DeleteModel(m_weaponModelR);
+		m_weaponModelR = -1;
 	}
 
-	if (m_weaponHndl2 != -1)
+	if (m_weaponModelL != -1)
 	{
-		MV1DeleteModel(m_weaponHndl2);
-		m_weaponHndl2 = -1;
+		MV1DeleteModel(m_weaponModelL);
+		m_weaponModelL = -1;
 	}
 }
 
@@ -157,13 +157,13 @@ void MeleeCharacter::StartUlt()
 }
 
 //被弾モーションを再生する
-void MeleeCharacter::StartDamege()
+void MeleeCharacter::StartDamage()
 {
 	RequestAnim(ANIMID_DAMAGE, ANIM_SPEED);
 }
 
 //被弾モーション大を再生する
-void MeleeCharacter::StartDamege2()
+void MeleeCharacter::StartDamage2()
 {
 	RequestAnim(ANIMID_DAMAGE2, ANIM_SPEED);
 }
@@ -565,11 +565,11 @@ void MeleeCharacter::OnDamage(bool isBig)
 	m_comboQueued = false;
 	if(isBig == false)
 	{
-		StartDamege();
+		StartDamage();
 	}
 	else
 	{
-		StartDamege2();
+		StartDamage2();
 	}
 }
 
@@ -651,7 +651,7 @@ void MeleeCharacter::UpdateWeapon()
 	if (m_handFrameIndexR != -1)
 	{
 		MATRIX handMatrixR = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_handFrameIndexR);
-		MV1SetMatrix(m_weaponHndl, MMult(adjustMatrix, handMatrixR));
+		MV1SetMatrix(m_weaponModelR, MMult(adjustMatrix, handMatrixR));
 	}
 
 	//ジャンプ攻撃の間だけ、左手にも複製した刀を持たせる(左手は右手と鏡合わせなので別の補正を使う)
@@ -663,7 +663,7 @@ void MeleeCharacter::UpdateWeapon()
 		MATRIX adjustMatrixL = MMult(MMult(MMult(scaleMatrix, rotMatrixXL), rotMatrixYL), rotMatrixZL);
 
 		MATRIX handMatrixL = MV1GetFrameLocalWorldMatrix(m_modelHandle, m_handFrameIndexL);
-		MV1SetMatrix(m_weaponHndl2, MMult(adjustMatrixL, handMatrixL));
+		MV1SetMatrix(m_weaponModelL, MMult(adjustMatrixL, handMatrixL));
 	}
 }
 
@@ -677,12 +677,12 @@ void MeleeCharacter::DrawWeapon()
 
 	if (m_handFrameIndexR != -1)
 	{
-		MV1DrawModel(m_weaponHndl);
+		MV1DrawModel(m_weaponModelR);
 	}
 
 	if (m_animData.m_animIndex == ANIMID_JUMPATTACK && m_handFrameIndexL != -1)
 	{
-		MV1DrawModel(m_weaponHndl2);
+		MV1DrawModel(m_weaponModelL);
 	}
 }
 

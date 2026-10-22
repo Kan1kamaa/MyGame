@@ -6,11 +6,11 @@
 //プレイヤーが操作するキャラクターを管理するクラス
 class CharacterManager : public ObjectBase {
 private:
-	MeleeCharacter m_char;
+	MeleeCharacter m_meleeChar;
 	//現在の上下速度(ジャンプ・重力で使用)
 	float m_velocityY;
 	//ノックバック時の移動
-	VECTOR m_Knockbackvel;
+	VECTOR m_knockbackVelocity;
 	//前フレームのジャンプキー入力状態(押した瞬間だけジャンプさせるための判定用)
 	bool m_prevKeySpace;
 	//前フレームのスキル/必殺技キー入力状態(押した瞬間だけ発動させるための判定用)
@@ -20,14 +20,14 @@ private:
 	//HP管理
 	Status m_status;
 	//被弾後、無敵時間として残っているフレーム数(この間はHitCalcでダメージを受けない)
-	int m_invincibleCnt;
+	int m_invincibleFrames;
 
 	float m_stamina;       //現在のスタミナ
 	int   m_staminaRegenWait; //消費してから回復が始まるまでの残りフレーム数
 	bool m_isExhausted;	//スタミナ切れで走れない状態か
 	bool m_wasDodging;	//前フレームで回避(走り出し)モーション中だったか(切り替わった瞬間の検出用)
 	bool m_isDying;			//死亡中か(死亡モーション再生〜リスポーンまで。この間は操作・被弾を受け付けない)
-	int  m_respawnWaitCnt;	//死亡モーションが終わってからリスポーンするまでの残りフレーム数
+	int  m_respawnWaitFrames;	//死亡モーションが終わってからリスポーンするまでの残りフレーム数
 	bool m_hasRespawned;	//リスポーンした直後か(PlaySceneがボスをリセットするのに使う)
 	//--- Step() から呼ぶ小さな処理(1つずつ役割を分けている) ---
 

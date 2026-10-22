@@ -11,8 +11,8 @@ private:
 	bool m_prevAttackInput; //前フレームの攻撃キー入力状態(トリガー判定用)
 	bool m_comboQueued;     //次の段への攻撃入力を予約しているか(モーション終盤でつなげる)
 
-	int m_weaponHndl;      //刀のモデルハンドル(左手用)
-	int m_weaponHndl2;     //刀のモデルハンドル(右手用。ジャンプ攻撃の両手持ちでのみ使う)
+	int m_weaponModelR;      //刀のモデルハンドル(右手用。通常攻撃・スキル・必殺技・ジャンプ攻撃で使う)
+	int m_weaponModelL;     //刀のモデルハンドル(左手用の複製。ジャンプ攻撃の両手持ちでのみ使う)
 	int m_handFrameIndexL; //左手のボーン(フレーム)番号。見つからなければ-1
 	int m_handFrameIndexR; //右手のボーン(フレーム)番号。見つからなければ-1
 
@@ -27,9 +27,9 @@ private:
 	//必殺技モーションを再生する
 	void StartUlt();
 	//被弾モーションを再生する
-	void StartDamege();
+	void StartDamage();
 	//被弾モーション大を再生する
-	void StartDamege2();
+	void StartDamage2();
 	//地上の通常攻撃(1〜3段目)モーションを再生中かどうか
 	bool IsGroundAttackMotion() const;
 	//攻撃モーション(地上1〜3段目、空中攻撃)を再生中かどうか。刀を持たせるかどうかの判定にも使う

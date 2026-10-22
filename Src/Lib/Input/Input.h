@@ -10,14 +10,14 @@
 //入力クラス
 class Input {
 private:
-	static unsigned int m_nowkey;	//今回入力したキー
-	static unsigned int m_prekey;	//前回入力したキー
+	static unsigned int m_currentKeys;	//今回入力したキー
+	static unsigned int m_previousKeys;	//前回入力したキー
 public:
 	//キー入力判定(通常判定)
 	static bool IsKeyInput(unsigned int key);
 	//キー入力判定(トリガー判定)
 	static bool IsKeyInputTrg(unsigned int key);
 	//キー入力更新
-	void UpdataKeyInput();
+	void UpdateKeyInput();
 
 };

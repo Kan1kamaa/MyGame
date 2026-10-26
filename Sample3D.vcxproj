@@ -146,7 +146,12 @@
     <ClCompile Include="Src\Game\Object\Field\Sky.cpp" />
     <ClCompile Include="Src\Game\Object\Objectbase\Objectbase.cpp" />
     <ClCompile Include="Src\Game\Object\Player\CharacterManager.cpp" />
+    <ClCompile Include="Src\Game\Object\Player\FairyBase.cpp" />
+    <ClCompile Include="Src\Game\Object\Player\FairyManager.cpp" />
+    <ClCompile Include="Src\Game\Object\Player\FireFairy.cpp" />
     <ClCompile Include="Src\Game\Object\Player\MeleeCharacter.cpp" />
+    <ClCompile Include="Src\Game\Object\Player\ThunderFairy.cpp" />
+    <ClCompile Include="Src\Game\Object\Player\WindFairy.cpp" />
     <ClCompile Include="Src\Game\Object\Shot\Shot.cpp" />
     <ClCompile Include="Src\Game\Object\Shot\ShotManager.cpp" />
     <ClCompile Include="Src\Game\Scene\PlayScene.cpp" />
@@ -176,7 +181,12 @@
     <ClInclude Include="Src\Game\Object\Field\Sky.h" />
     <ClInclude Include="Src\Game\Object\Objectbase\Objectbase.h" />
     <ClInclude Include="Src\Game\Object\Player\CharacterManager.h" />
+    <ClInclude Include="Src\Game\Object\Player\FairyBase.h" />
+    <ClInclude Include="Src\Game\Object\Player\FairyManager.h" />
+    <ClInclude Include="Src\Game\Object\Player\FireFairy.h" />
     <ClInclude Include="Src\Game\Object\Player\MeleeCharacter.h" />
+    <ClInclude Include="Src\Game\Object\Player\ThunderFairy.h" />
+    <ClInclude Include="Src\Game\Object\Player\WindFairy.h" />
     <ClInclude Include="Src\Game\Object\Shot\Shot.h" />
     <ClInclude Include="Src\Game\Object\Shot\ShotManager.h" />
     <ClInclude Include="Src\Game\Scene\PlayScene.h" />

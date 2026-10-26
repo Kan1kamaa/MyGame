@@ -78,6 +78,21 @@
     <ClCompile Include="Src\Game\Object\Player\MeleeCharacter.cpp">
       <Filter>ソース ファイル\Game\Object\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game\Object\Player\FairyBase.cpp">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game\Object\Player\FairyManager.cpp">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game\Object\Player\FireFairy.cpp">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game\Object\Player\ThunderFairy.cpp">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Game\Object\Player\WindFairy.cpp">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
+    </ClCompile>
     <ClCompile Include="Src\Game\Object\Field\Field.cpp">
       <Filter>ソース ファイル\Game\Object\Field</Filter>
     </ClCompile>
@@ -159,6 +174,21 @@
       <Filter>ソース ファイル\Game\Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game\Object\Player\MeleeCharacter.h">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game\Object\Player\FairyBase.h">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game\Object\Player\FairyManager.h">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game\Object\Player\FireFairy.h">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game\Object\Player\ThunderFairy.h">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game\Object\Player\WindFairy.h">
       <Filter>ソース ファイル\Game\Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="Src\Game\Object\Field\Field.h">

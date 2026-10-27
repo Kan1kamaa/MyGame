@@ -1,13 +1,11 @@
-#include "FireFairy.h"
-#include "../../System/ModelUtil.h"
-#include "math.h"
+﻿#include "FireFairy.h"
 
+//コンストラクタ
 FireFairy::FireFairy()
 {
-	m_element = FairyElement::Fire;
 }
 
+//炎の攻撃を開始する
 void FireFairy::StartAttack()
 {
-	//TODO: ChangeState(FairyState::Attack); m_isAttacking = true; にして攻撃を作る
-}
+}

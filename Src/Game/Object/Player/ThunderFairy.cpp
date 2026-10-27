@@ -1,13 +1,11 @@
-#include "ThunderFairy.h"
-#include "../../System/ModelUtil.h"
-#include "math.h"
+﻿#include "ThunderFairy.h"
 
+//コンストラクタ
 ThunderFairy::ThunderFairy()
 {
-	m_element = FairyElement::Thunder;
 }
 
+//雷の攻撃を開始する
 void ThunderFairy::StartAttack()
 {
-	//TODO: ChangeState(FairyState::Attack); m_isAttacking = true; にして攻撃を作る
-}
+}

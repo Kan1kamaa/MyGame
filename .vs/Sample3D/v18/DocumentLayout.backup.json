@@ -35,10 +35,8 @@
               "RelativeDocumentMoniker": "..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\18\\Community\\MSBuild\\Microsoft\\VC\\v180\\Microsoft.CppBuild.targets",
               "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\MSBuild\\Microsoft\\VC\\v180\\Microsoft.CppBuild.targets",
               "RelativeToolTip": "..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\18\\Community\\MSBuild\\Microsoft\\VC\\v180\\Microsoft.CppBuild.targets",
-              "ViewState": "AgIAAL8BAAAAAAAAAAAawNgBAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2026-09-30T18:45:46.518Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-30T18:45:46.518Z"
             },
             {
               "$type": "Document",
@@ -48,6 +46,7 @@
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\PlayerCharacter.h",
               "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\PlayerCharacter.h",
               "RelativeToolTip": "Src\\Game\\Object\\Player\\PlayerCharacter.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2026-09-28T06:37:33.822Z"
             },

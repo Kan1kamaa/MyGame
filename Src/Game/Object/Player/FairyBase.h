@@ -1,22 +1,26 @@
 ﻿#pragma once
 #include "../ActorBase/ActorBase.h"
 
+const VECTOR FAIRY_POS = { -30,30,-30 };	//精霊がプレイヤーからどれだけ離れているか
+
 //精霊の基底クラス(風・炎・雷の精霊はこれを継承する)
 class FairyBase : public ActorBase {
-private:
 
+protected:
 	enum  FairyState {
 		FOLLOW,
 		ATTACK,
+		SKILL,
+		END,
 
 		STATENUM,
 	};
-
+	FairyState m_state;
+private:
 	VECTOR m_TargetPos;
 	float m_MoveSpeed;
 	float m_FlowTimer;
-	int m_AttackCount;
-	FairyState m_state;
+	
 
 public:
 	//コンストラクタ・デストラクタ
@@ -37,4 +41,6 @@ public:
 
 	//攻撃を開始する(属性ごとに中身を変えるので、各精霊クラスで実装する)
 	virtual void StartAttack() = 0;
+
+	bool IsSkillFinished() const;
 };

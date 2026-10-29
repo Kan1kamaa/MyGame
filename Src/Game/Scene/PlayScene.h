@@ -9,6 +9,7 @@
 #include"../System/GameCollision.h"
 #include"../System/SoundManager.h"
 #include"../../Lib/Effect/EffectManager.h"
+#include"../Object/Player/FairyManager.h"
 class PlayScene : public SceneBase {
 private:
 	//エフェクト(Effekseer)
@@ -26,8 +27,8 @@ private:
 	Sky sky;
 	//カメラ
 	CameraManager camera;
-
-
+	//精霊
+	FairyManager fairy;
 	
 public:
 	//描画

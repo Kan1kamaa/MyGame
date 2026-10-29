@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../ActorBase/ActorBase.h"
 
-const VECTOR FAIRY_POS = { -30,30,-30 };	//精霊がプレイヤーからどれだけ離れているか
+const VECTOR FAIRY_POS = { -30,10,-30 };	//精霊がプレイヤーからどれだけ離れているか
 
 //精霊の基底クラス(風・炎・雷の精霊はこれを継承する)
 class FairyBase : public ActorBase {
@@ -21,7 +21,7 @@ private:
 	float m_MoveSpeed;
 	float m_FlowTimer;
 	
-
+	bool m_isLeaving;
 public:
 	//コンストラクタ・デストラクタ
 	FairyBase();
@@ -42,5 +42,12 @@ public:
 	//攻撃を開始する(属性ごとに中身を変えるので、各精霊クラスで実装する)
 	virtual void StartAttack() = 0;
 
+	//モデルを持たせて、待機アニメをループ再生する(Initの後に呼ぶ)
+	void SetModel(int hndl);
+
 	bool IsSkillFinished() const;
+
+	void isLeave();
+
+	bool isEnd() const;
 };

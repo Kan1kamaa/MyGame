@@ -18,6 +18,8 @@ private:
 	FairyBase	*m_nowFairy;
 	std::vector<FairyBase*> m_LivingFairy;
 	FairyType m_nowType;
+	//複製の元になる各属性のモデルハンドル(FAIRYTYPENUM個。NONEの分は使わない)
+	int m_modelHndl[FAIRYTYPENUM];
 
 	//前フレームのキー入力状態(押した瞬間だけ発動させるための判定用)
 	bool m_prevKeyE;
@@ -26,6 +28,8 @@ private:
 	bool m_prevKey3;
 
 	void SwapFairy(FairyType,VECTOR playerPos);
+	//場にいる精霊を全員片付ける(元モデルは残す)
+	void ClearFairy();
 public:
 	//コンストラクタ・デストラクタ
 	FairyManager();
@@ -42,6 +46,8 @@ public:
 	void Update();
 	//描画
 	void Draw();
-	//破棄
+	//リスポーンなどで、精霊だけを最初の状態に戻す(元モデルは残す)
+	void Reset();
+	//破棄(元モデルも消す)
 	void Fin();
 };

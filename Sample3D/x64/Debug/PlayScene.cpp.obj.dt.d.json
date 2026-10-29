@@ -344,7 +344,12 @@
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\initializer_list",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\cstring",
             "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\xpolymorphic_allocator.h",
-            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\tuple"
+            "c:\\program files\\microsoft visual studio\\18\\community\\vc\\tools\\msvc\\14.51.36231\\include\\tuple",
+            "c:\\users\\2509413\\desktop\\mygame\\src\\game\\object\\player\\fairymanager.h",
+            "c:\\users\\2509413\\desktop\\mygame\\src\\game\\object\\player\\windfairy.h",
+            "c:\\users\\2509413\\desktop\\mygame\\src\\game\\object\\player\\fairybase.h",
+            "c:\\users\\2509413\\desktop\\mygame\\src\\game\\object\\player\\firefairy.h",
+            "c:\\users\\2509413\\desktop\\mygame\\src\\game\\object\\player\\thunderfairy.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

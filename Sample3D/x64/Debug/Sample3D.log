@@ -1,4 +1,36 @@
-﻿  Main.cpp
+﻿  FairyBase.cpp
+C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Player\FairyBase.cpp(5,24): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+  FairyManager.cpp
+  FireFairy.cpp
+  ThunderFairy.cpp
+  WindFairy.cpp
+  PlayScene.cpp
+C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
+  (ソース ファイル 'Src/Game/Scene/PlayScene.cpp' をコンパイルしています)
+  
+C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Enemy\Enemy.h(64,47): warning C4244: 'return': 'const int' から 'float' への変換です。データが失われる可能性があります。
+  (ソース ファイル 'Src/Game/Scene/PlayScene.cpp' をコンパイルしています)
+  
+C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Enemy\Boss.h(90,47): warning C4244: 'return': 'const int' から 'float' への変換です。データが失われる可能性があります。
+  (ソース ファイル 'Src/Game/Scene/PlayScene.cpp' をコンパイルしています)
+  
+C:\Users\2509413\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
+  (ソース ファイル 'Src/Game/Scene/PlayScene.cpp' をコンパイルしています)
+  
+  SceneManager.cpp
+C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
+  (ソース ファイル 'Src/Game/Scene/SceneManager.cpp' をコンパイルしています)
+  
+C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Enemy\Enemy.h(64,47): warning C4244: 'return': 'const int' から 'float' への変換です。データが失われる可能性があります。
+  (ソース ファイル 'Src/Game/Scene/SceneManager.cpp' をコンパイルしています)
+  
+C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Enemy\Boss.h(90,47): warning C4244: 'return': 'const int' から 'float' への変換です。データが失われる可能性があります。
+  (ソース ファイル 'Src/Game/Scene/SceneManager.cpp' をコンパイルしています)
+  
+C:\Users\2509413\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
+  (ソース ファイル 'Src/Game/Scene/SceneManager.cpp' をコンパイルしています)
+  
+  Main.cpp
 C:\Users\2509413\Desktop\MyGame\Src\Game\Camera\CameraManager.h(31,48): warning C4552: '&': 式の結果が使用されていません
   (ソース ファイル 'src/Main.cpp' をコンパイルしています)
   
@@ -11,4 +43,5 @@ C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Enemy\Boss.h(90,47): warning C42
 C:\Users\2509413\Desktop\MyGame\Src\Game\System\SoundManager.h(1,9): warning C4068: 不明な pragma 'on'
   (ソース ファイル 'src/Main.cpp' をコンパイルしています)
   
+  コードを生成中...
   Sample3D.vcxproj -> C:\Users\2509413\Desktop\MyGame\x64\Debug\Sample3D.exe

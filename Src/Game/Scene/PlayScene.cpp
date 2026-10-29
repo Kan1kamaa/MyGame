@@ -10,6 +10,7 @@ void PlayScene::Draw()
 	field.Draw();
 	sky.Draw();
 	player.DrawPL();
+	fairy.Draw();
 	player.DrawHUD();
 	shot.Draw();
 	camera.Draw();
@@ -24,6 +25,7 @@ void PlayScene::Init()
 	field.Init();
 	sky.Init();
 	player.Init();
+	fairy.Init();
 	camera.Init();
 	shot.Init();
 	enemy.Init();
@@ -41,6 +43,7 @@ void PlayScene::Load()
 	enemy.Load();
 	boss.Load();
 	player.Load();
+	fairy.Load();
 	shot.Load();
 	effect.Load();
 	boss.Request(BOSS_SPAWN_POS);
@@ -59,6 +62,7 @@ void PlayScene::Step()
 		//先にマウスでカメラを回し、移動がこのフレームのカメラ向きを使うようにする
 		camera.UpdateLook();
 		player.Step(camera.GetYaw());
+		fairy.Step(player.GetPos());
 		shot.Step();
 		enemy.Step(player.GetPos());
 		boss.Step(player.GetPos());
@@ -87,6 +91,7 @@ void PlayScene::Step()
 	if (player.CheckRespawned() == true)
 	{
 		boss.Reset(BOSS_SPAWN_POS);
+		fairy.Reset();
 	}
 }
 
@@ -96,6 +101,7 @@ void PlayScene::Update()
 	field.Update();
 	sky.Update(player.GetPos());
 	player.Update();
+	fairy.Update();
 	shot.Update();
 	enemy.Update();
 	boss.Update();
@@ -109,6 +115,7 @@ void PlayScene::Fin()
 	field.Fin();
 	sky.Fin();
 	player.Fin();
+	fairy.Fin();
 	shot.Fin();
 	enemy.Fin();
 	boss.Fin();

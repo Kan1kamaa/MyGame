@@ -197,7 +197,8 @@ void CharacterManager::Step(float cameraYaw)
 	{
 		isJumpTrigger = false;
 	}
-	bool isSkillTrigger = IsPressedNow(KEY_INPUT_E, m_prevKeyE);
+	//bool isSkillTrigger = IsPressedNow(KEY_INPUT_E, m_prevKeyE);
+	bool isSkillTrigger = false;
 	bool isUltTrigger = IsPressedNow(KEY_INPUT_R, m_prevKeyR);
 
 	//------ 水平移動(歩き/走り + 攻撃の踏み込み) ------

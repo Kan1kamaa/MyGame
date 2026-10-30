@@ -7,5 +7,5 @@ public:
 	WindFairy();
 
 	//風の攻撃を開始する
-	void StartAttack() override;
+	void StartAttack(const VECTOR& playerPos,float playerRotY) override;
 };

@@ -46,7 +46,7 @@ public:
 	virtual void Fin();
 
 	//攻撃を開始する(属性ごとに中身を変えるので、各精霊クラスで実装する)
-	virtual void StartAttack() = 0;
+	virtual void StartAttack(const VECTOR& playerPos,float playerRotY) = 0;
 
 	//モデルを持たせて、待機アニメをループ再生する(Initの後に呼ぶ)
 	void SetModel(int hndl);

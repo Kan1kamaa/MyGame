@@ -3,7 +3,6 @@
 #include "math.h"
 
 const float MOVE_SPEED = 0.1;			//精霊の移動速度
-static const int   ANIMID_IDLE = 0;		//待機アニメの番号(モデルに合わせて変える)
 static const float ANIM_SPEED = 0.5f;	//アニメーションの速度
 //コンストラクタ
 FairyBase::FairyBase()

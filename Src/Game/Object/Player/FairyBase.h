@@ -1,12 +1,18 @@
 ﻿#pragma once
 #include "../ActorBase/ActorBase.h"
 
-const VECTOR FAIRY_POS = { -30,10,-30 };	//精霊がプレイヤーからどれだけ離れているか
+const VECTOR FAIRY_POS = { -15,10,-15 };	//精霊がプレイヤーからどれだけ離れているか
 
 //精霊の基底クラス(風・炎・雷の精霊はこれを継承する)
 class FairyBase : public ActorBase {
 
 protected:
+	enum FairyAnumID
+	{
+		ANIMID_ATTACK,
+		ANIMID_IDLE,
+		ANIMID_MOVE
+	};
 	enum  FairyState {
 		FOLLOW,
 		ATTACK,

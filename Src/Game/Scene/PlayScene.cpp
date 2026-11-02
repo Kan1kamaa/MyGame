@@ -62,7 +62,7 @@ void PlayScene::Step()
 		//先にマウスでカメラを回し、移動がこのフレームのカメラ向きを使うようにする
 		camera.UpdateLook();
 		player.Step(camera.GetYaw());
-		fairy.Step(player.GetPos());
+		fairy.Step(player.GetPos(),player.GetRot().y);
 		shot.Step();
 		enemy.Step(player.GetPos());
 		boss.Step(player.GetPos());

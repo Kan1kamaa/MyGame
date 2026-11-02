@@ -101,7 +101,7 @@ void FairyManager::SwapFairy(FairyType nextType,VECTOR playerpos)
 }
 
 //毎フレーム計算する処理
-void FairyManager::Step(const VECTOR& playerPos)
+void FairyManager::Step(const VECTOR& playerPos,const float playerRotY)
 {
 	if (m_nowFairy != nullptr)
 	{
@@ -140,7 +140,7 @@ void FairyManager::Step(const VECTOR& playerPos)
 	{
 		if (m_nowFairy != nullptr)
 		{
-			m_nowFairy->StartAttack();
+			m_nowFairy->StartAttack(playerPos,playerRotY);
 		}
 	}
 }

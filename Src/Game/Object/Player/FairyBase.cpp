@@ -53,6 +53,7 @@ void FairyBase::Step(const VECTOR& playerPos)
 			if (m_isLeaving != true)
 			{
 				m_state = FOLLOW;
+				RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
 			}
 			else
 			{
@@ -133,3 +134,4 @@ bool FairyBase::isEnd()const
 		return false;
 	}
 }
+

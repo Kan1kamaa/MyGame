@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "../ActorBase/ActorBase.h"
-
+#include"math.h"
 const VECTOR FAIRY_POS = { -15,10,-15 };	//精霊がプレイヤーからどれだけ離れているか
 
 //精霊の基底クラス(風・炎・雷の精霊はこれを継承する)
@@ -56,4 +56,24 @@ public:
 	void isLeave();
 
 	bool isEnd() const;
+
+	virtual bool IsPullActive()const
+	{
+		return false;
+	}
+
+	virtual VECTOR GetPullPos()const
+	{
+		return { 0.0f,0.0f,0.0f };
+	}
+
+	virtual float GetPullRadius()const
+	{
+		return 0.0f;
+	}
+
+	virtual float GetPullPower()const
+	{
+		return 0.0f;
+	}
 };

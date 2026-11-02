@@ -8,12 +8,15 @@ private:
 	bool m_isDying;		//死亡モーション再生中かどうか
 	//被弾後、無敵時間として残っているフレーム数(この間はHitCalcでダメージを受けない)
 	int m_invincibleCnt;
+	//引き寄せられているフレーム数
+	int m_pullCnt;
 	enum EnemyState
 	{
 		Search,
 		Chase,
 		Attack,
-		KnockBack
+		KnockBack,
+		Pulled,
 	};
 	EnemyState m_state;	//現在の行動状態
 

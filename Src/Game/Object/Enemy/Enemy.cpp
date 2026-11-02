@@ -21,7 +21,7 @@ static const float CHASE_MOVE_SPEED = 0.3f;	//追いかけているときの1フ
 static const float ROT_SPEED = 0.08f;			//1フレームで向き直れる最大角度(巨体なのでゆっくり)
 
 //コンストラクタ
-Enemy::Enemy() :m_speed(VEC_ZERO), m_changeDirCnt(0), m_isDying(false), m_state(Search)
+Enemy::Enemy() :m_speed(VEC_ZERO), m_changeDirCnt(0), m_isDying(false), m_state(Search),m_invincibleCnt(0),m_pullCnt(0)
 {
 }
 
@@ -43,6 +43,7 @@ void Enemy::Init()
 	m_isDying = false;
 	m_state = Search;
 	m_invincibleCnt = 0;
+	m_pullCnt = 0;
 	m_isActive = false;		//最初は見えないように消しておく
 }
 

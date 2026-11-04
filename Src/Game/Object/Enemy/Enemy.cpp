@@ -3,23 +3,26 @@
 #include"../../System/SoundManager.h"
 #include"../../System/ModelUtil.h"
 static const VECTOR VEC_ZERO{ 0.0f,0.0f,0.0f };
-static const float MOVE_RANGE = 300.0f;	//移動可能範囲(プレイヤーのMOVE_RANGE_X / MOVE_RANGE_Zと同じ)
-static const float ENEMY_RAD = 5.0f;
-static const float ENEMY_SCALE = 0.08f;	//Golemモデルの表示倍率(見た目が大きすぎ/小さすぎる場合はここを調整)
+static const float MOVE_RANGE = 300.0f;		//移動可能範囲(プレイヤーのMOVE_RANGE_X / MOVE_RANGE_Zと同じ)
+static const float ENEMY_RAD = 5.0f;		//当たり判定の値
+static const float ENEMY_SCALE = 0.08f;		//Golemモデルの表示倍率(見た目が大きすぎ/小さすぎる場合はここを調整)
 static const float ANIM_SPEED = 0.3f;		//アニメーション再生速度
-static const int INVINCIBLE_TIME = 30;        //被弾後の無敵時間(フレーム数。60=約1秒)
-static const int HIT_FLASH_TIME = 8;          //被弾してから赤く光らせるフレーム数
+static const int INVINCIBLE_TIME = 30;      //被弾後の無敵時間(フレーム数。60=約1秒)
+static const int HIT_FLASH_TIME = 8;        //被弾してから赤く光らせるフレーム数
 //ランダム移動の調整用パラメータ
 static const float ENEMY_MOVE_SPEED = 0.2f;	//1フレームあたりの移動量
 static const int   DIR_CHANGE_MIN = 30;		//方向転換するまでの最短フレーム数
 static const int   DIR_CHANGE_MAX = 90;		//方向転換するまでの最長フレーム数
 
 //プレイヤーの追跡・攻撃の調整用パラメータ
-static const float DETECT_RANGE = 100.0f;		//この距離より近づくとプレイヤーを追いかける
-static const float ATTACK_RANGE = 10.0f;		//この距離より近づくと攻撃する
+static const float DETECT_RANGE = 100.0f;	//この距離より近づくとプレイヤーを追いかける
+static const float ATTACK_RANGE = 10.0f;	//この距離より近づくと攻撃する
 static const float CHASE_MOVE_SPEED = 0.3f;	//追いかけているときの1フレームあたりの移動量
-static const float ROT_SPEED = 0.08f;			//1フレームで向き直れる最大角度(巨体なのでゆっくり)
+static const float ROT_SPEED = 0.08f;		//1フレームで向き直れる最大角度(巨体なのでゆっくり)
 
+//風の精霊関連
+static const float PULL_STOP_DIST = 10.0f;	//この距離まで引っ張られる
+static const int PULL_HOLD_TIME = 3.0f;     //「引き寄せが終わった後、元に戻るまでのフレーム数
 //コンストラクタ
 Enemy::Enemy() :m_speed(VEC_ZERO), m_changeDirCnt(0), m_isDying(false), m_state(Search),m_invincibleCnt(0),m_pullCnt(0)
 {
@@ -208,7 +211,7 @@ void Enemy::Step(const VECTOR& playerPos)
 	m_invincibleCnt--;
 	//プレイヤーとの距離で状態を決める
 	float distToPlayer = VSize(VSub(playerPos, m_pos));
-	if (m_state != KnockBack)
+	if (m_state != KnockBack && m_state != Pulled)
 	{
 		if (distToPlayer <= ATTACK_RANGE)
 		{
@@ -225,10 +228,19 @@ void Enemy::Step(const VECTOR& playerPos)
 	}
 	switch (m_state)
 	{
-	case Search: StepSearch();          break;
-	case Chase:  StepChase(playerPos);  break;
-	case Attack: StepAttack(playerPos); break;
-	case KnockBack: StepKnockBack(); break;
+		case Search: StepSearch();          break;
+		case Chase:  StepChase(playerPos);  break;
+		case Attack: StepAttack(playerPos); break;
+		case KnockBack: StepKnockBack(); break;
+		case Pulled:
+		{
+			m_pullCnt--;
+			if (m_pullCnt <= 0)
+			{
+				m_state = Chase;
+			}
+			break;
+		}
 	}
 }
 
@@ -313,4 +325,27 @@ void Enemy::HitCalc(const ObjectBase& other)
 		m_isDying = true;
 		m_speed = VEC_ZERO;		//死亡モーション再生中は動きを止める
 	}
+}
+
+void Enemy::Pull(const VECTOR& center, const float power)
+{
+	if (m_isActive == false || m_isDying == true)return;
+	VECTOR toCenter = VSub(center, m_pos);
+	toCenter.y = 0;
+	float dist = VSize(toCenter);
+
+	if (dist > PULL_STOP_DIST)
+	{
+		VECTOR dir = VNorm(toCenter);
+		if (power < dist - PULL_STOP_DIST)
+		{
+			m_pos = VAdd(m_pos, VScale(dir, power));
+		}
+		else
+		{
+			m_pos = VAdd(m_pos, VScale(dir, dist- PULL_STOP_DIST));
+		}
+	}
+	m_state = Pulled;
+	m_pullCnt = PULL_HOLD_TIME;
 }

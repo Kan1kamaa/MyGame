@@ -210,3 +210,13 @@ void FairyManager::ClearFairy()
 	}
 	m_LivingFairy.clear();
 }
+
+int FairyManager::GetFairyCount()const
+{
+	int count = (int)m_LivingFairy.size();
+	if (m_nowFairy != nullptr)
+	{
+		count++;
+	}
+	return count;
+}

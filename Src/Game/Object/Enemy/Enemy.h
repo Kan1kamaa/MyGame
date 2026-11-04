@@ -64,5 +64,7 @@ public:
 
 	void HitCalc(const ObjectBase& other);
 
-	float GetAttackPower()const { return m_status.AttackPower; }
+	float GetAttackPower()const { return m_status.AttackPower; };
+
+	void Pull(const VECTOR& center,const float power);
 };

@@ -50,4 +50,6 @@ public:
 	void Reset();
 	//破棄(元モデルも消す)
 	void Fin();
+	//今いる精霊の数を返す
+	int GetFairyCount()const;
 };

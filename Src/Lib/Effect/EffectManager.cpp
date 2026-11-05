@@ -20,6 +20,7 @@ namespace {
 		{ "Data/Effect/SwordAttack/SwordJumpAttack.efkefc", 5.0f, -20.0f, 4.0f, DX_PI_F },
 		{ "Data/Effect/SwordSkill/SwordSkill.efkefc",   30.0f,  0.0f, 5.0f, DX_PI_F },
 		{ "Data/Effect/SwordUlt/SwordUlt.efkefc",        0.0f,  0.0f, 5.0f, 1.5 },	
+		{"Data/Effect/WindSkill/WindSkill.efkefc",0.0f,0.1f,5.0f,0.0f},
 	};
 }
 

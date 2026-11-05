@@ -11,8 +11,9 @@ public:
 		EFFECT_SWORDATTACK2,		//通常攻撃1
 		EFFECT_SWORDATTACK3,		//通常攻撃1
 		EFFECT_SWORDJUMPATTACK,		//通常攻撃1
-		EFFECT_SWORDSKILL,		//スキル(氷の柱)
+		EFFECT_SWORDSKILL,			//スキル(氷の柱)
 		EFFECT_SWORDULT,			//必殺技
+		EFFECT_WINDSKILL,			//風の精霊のスキル
 
 		EFFECT_NUM			// 全エフェクト数
 	};

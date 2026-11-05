@@ -76,6 +76,10 @@ void PlayScene::Step()
 		{
 			effect.Play(effectId, effectPos, effectRotY);
 		}
+		if (fairy.PopEffectRequest(effectId, effectPos, effectRotY) == true)
+		{
+			effect.Play(effectId, effectPos, effectRotY);
+		}
 	}
 	//カメラの更新
 	camera.Step(player.GetPos());

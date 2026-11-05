@@ -243,3 +243,12 @@ FairyBase* FairyManager::GetFairy(int index)const
 		return m_LivingFairy[index];
 	}
 }
+
+bool FairyManager::PopEffectRequest(EffectManager::EffectId& id, VECTOR& pos, float& rotY)
+{
+	if (m_nowFairy == nullptr)return false;
+	if (m_nowFairy->PopEffectRequest(id) == false)return false;
+	pos = m_nowFairy->GetPullPos();
+	rotY = 0.0f;
+	return true;
+}

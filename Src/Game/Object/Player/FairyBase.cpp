@@ -12,6 +12,7 @@ FairyBase::FairyBase()
 	m_TargetPos = {0,0,0};
 	m_state = FOLLOW;
 	m_isLeaving = false;
+	m_effectRequest = -1;
 }
 
 //デストラクタ
@@ -28,6 +29,7 @@ void FairyBase::Init()
 	m_MoveSpeed = MOVE_SPEED;
 	m_TargetPos = { 0,0,0 };
 	m_isLeaving = false;
+	m_effectRequest = -1;
 }
 
 //毎フレーム計算する処理
@@ -135,3 +137,13 @@ bool FairyBase::isEnd()const
 	}
 }
 
+bool FairyBase::PopEffectRequest(EffectManager::EffectId& id)
+{
+	if (m_effectRequest == -1)
+	{
+		return false;
+	}
+	id = (EffectManager::EffectId)m_effectRequest;
+	m_effectRequest = -1;
+	return true;
+}

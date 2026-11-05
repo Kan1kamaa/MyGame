@@ -54,4 +54,6 @@ public:
 	int GetFairyCount()const;
 
 	FairyBase* GetFairy(int index)const;
+
+	bool PopEffectRequest(EffectManager::EffectId& id, VECTOR& pos, float& rotY);
 };

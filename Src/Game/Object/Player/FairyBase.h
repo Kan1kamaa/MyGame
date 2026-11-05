@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "../ActorBase/ActorBase.h"
 #include"math.h"
+#include"../../../Lib/Effect/EffectManager.h"
 const VECTOR FAIRY_POS = { -15,10,-15 };	//精霊がプレイヤーからどれだけ離れているか
 
 //精霊の基底クラス(風・炎・雷の精霊はこれを継承する)
@@ -21,6 +22,8 @@ protected:
 
 		STATENUM,
 	};
+
+	int m_effectRequest;
 	FairyState m_state;
 private:
 	VECTOR m_TargetPos;
@@ -56,6 +59,8 @@ public:
 	void isLeave();
 
 	bool isEnd() const;
+
+	bool PopEffectRequest(EffectManager::EffectId& id);
 
 	virtual bool IsPullActive()const
 	{

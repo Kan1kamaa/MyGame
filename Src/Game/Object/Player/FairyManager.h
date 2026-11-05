@@ -52,4 +52,6 @@ public:
 	void Fin();
 	//今いる精霊の数を返す
 	int GetFairyCount()const;
+
+	FairyBase* GetFairy(int index)const;
 };

@@ -165,3 +165,40 @@ void GameCollision::CheckHitPlayerAttackToBoss(CharacterManager& player, BossGol
 		boss.HitCalc(player);
 	}
 }
+
+//風の精霊のスキルと敵の当たり判定
+void GameCollision::CheckHitFairyPullToEnemy(FairyManager& fairyManager,EnemyManager& enemyManager)
+{
+	for (int i = 0; i < fairyManager.GetFairyCount(); i++)
+	{
+		//いない精霊は無視
+		FairyBase* fairy = fairyManager.GetFairy(i);
+		if (fairy == nullptr)
+		{
+			continue;
+		}
+		//引き寄せ中の精霊だけ処理する
+		if (fairy->IsPullActive() == false)
+		{
+			continue;
+		}
+
+		VECTOR pullPos = fairy->GetPullPos();
+		float pullRadius = fairy->GetPullRadius();
+		float pullPower = fairy->GetPullPower();
+		for (int j = 0; j < ENEMY_MAX; j++)
+		{
+			Enemy& enemy = enemyManager.GetEnemy(j);
+			if (enemy.GetActive() == false)
+			{
+				continue;
+			}
+
+			//引き寄せの範囲に入っている敵を中心へ引き寄せる
+			if (Collsion::CheckHitSphereToSphere(pullPos, pullRadius, enemy.GetCollisionPos(), enemy.GetRadius()) == true)
+			{
+				enemy.Pull(pullPos, pullPower);
+			}
+		}
+	}
+}

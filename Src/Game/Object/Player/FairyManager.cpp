@@ -220,3 +220,26 @@ int FairyManager::GetFairyCount()const
 	}
 	return count;
 }
+
+FairyBase* FairyManager::GetFairy(int index)const
+{
+	if (m_nowFairy != nullptr)
+	{
+		if (index == 0)
+		{
+			return m_nowFairy;
+		}
+		else
+		{
+			index--;
+		}
+	}
+	if (index < 0 || index >= (int)m_LivingFairy.size())
+	{
+		return nullptr;
+	}
+	else
+	{
+		return m_LivingFairy[index];
+	}
+}

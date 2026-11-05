@@ -1,9 +1,9 @@
 ﻿#include "WindFairy.h"
 
-const float SKILL_HIT_DIST = 15.0f;
+const float SKILL_HIT_DIST = 50.0f;
 const float ANIM_SPEED = 0.5f;
-const float PULL_RADIUS = 25.0f;
-const float PULL_POWER = 2.0f;
+const float PULL_RADIUS = 60.0f;
+const float PULL_POWER = 0.5f;
 //コンストラクタ
 WindFairy::WindFairy()
 {

@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\2509413\\Desktop\\MyGame\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\EenemyManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Game\\Object\\Enemy\\EenemyManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\Enemy.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Game\\Object\\Enemy\\Enemy.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Scene\\PlayScene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Game\\Scene\\PlayScene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -37,14 +45,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\EnemyManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Game\\Object\\Enemy\\EnemyManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\Enemy.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Game\\Object\\Enemy\\Enemy.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\EenemyManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Game\\Object\\Enemy\\EenemyManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\Enemy.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -182,37 +182,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "FairyBase.h",
-              "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\FairyBase.h",
-              "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\FairyBase.h",
-              "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\FairyBase.h",
-              "RelativeToolTip": "Src\\Game\\Object\\Player\\FairyBase.h",
-              "ViewState": "AgIAACoAAAAAAAAAAAAAAD4AAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-11-05T05:55:01.837Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "FairyBase.cpp",
-              "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\FairyBase.cpp",
-              "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\FairyBase.cpp",
-              "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\FairyBase.cpp",
-              "RelativeToolTip": "Src\\Game\\Object\\Player\\FairyBase.cpp",
-              "ViewState": "AgIAAHEAAAAAAAAAAAAAAIsAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-11-05T05:55:01.026Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "WindFairy.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\WindFairy.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\WindFairy.cpp",
@@ -220,12 +194,11 @@
               "RelativeToolTip": "Src\\Game\\Object\\Player\\WindFairy.cpp",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAABUAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-11-05T03:54:50.658Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-05T03:54:50.658Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "FairyManager.h",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\FairyManager.h",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\FairyManager.h",
@@ -233,12 +206,11 @@
               "RelativeToolTip": "Src\\Game\\Object\\Player\\FairyManager.h",
               "ViewState": "AgIAABUAAAAAAAAAAAAAAC4AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-11-04T01:35:17.845Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-04T01:35:17.845Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "FairyManager.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\FairyManager.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\FairyManager.cpp",
@@ -246,25 +218,24 @@
               "RelativeToolTip": "Src\\Game\\Object\\Player\\FairyManager.cpp",
               "ViewState": "AgIAAOAAAAAAAAAAAAASwP0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-11-04T01:57:52.765Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-04T01:57:52.765Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "PlayScene.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Scene\\PlayScene.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\Scene\\PlayScene.cpp",
               "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Scene\\PlayScene.cpp",
               "RelativeToolTip": "Src\\Game\\Scene\\PlayScene.cpp",
-              "ViewState": "AgIAADYAAAAAAAAAAAAAAFAAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAH0AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-11-04T00:45:59.984Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "EffectManager.h",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Lib\\Effect\\EffectManager.h",
               "RelativeDocumentMoniker": "Src\\Lib\\Effect\\EffectManager.h",
@@ -272,12 +243,11 @@
               "RelativeToolTip": "Src\\Lib\\Effect\\EffectManager.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-11-04T00:45:59.984Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-04T00:45:59.984Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "EnemyManager.h",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\EnemyManager.h",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Enemy\\EnemyManager.h",
@@ -285,25 +255,24 @@
               "RelativeToolTip": "Src\\Game\\Object\\Enemy\\EnemyManager.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-11-04T00:45:59.984Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-04T00:45:59.984Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 1,
               "Title": "Enemy.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\Enemy.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\Object\\Enemy\\Enemy.cpp",
               "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\Enemy.cpp",
               "RelativeToolTip": "Src\\Game\\Object\\Enemy\\Enemy.cpp",
-              "ViewState": "AgIAAD8BAAAAAAAAAAAAAE0BAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAAMBAAAAAAAAAAAAAE0BAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-11-04T00:45:59.937Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "EffectManager.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Lib\\Effect\\EffectManager.cpp",
               "RelativeDocumentMoniker": "Src\\Lib\\Effect\\EffectManager.cpp",
@@ -311,8 +280,7 @@
               "RelativeToolTip": "Src\\Lib\\Effect\\EffectManager.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-11-04T00:45:59.984Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-04T00:45:59.984Z"
             },
             {
               "$type": "Document",
@@ -325,6 +293,43 @@
               "ViewState": "AgIAAJgAAAAAAAAAAAD4v7IAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-11-04T00:45:59.984Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EenemyManager.cpp",
+              "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\EenemyManager.cpp",
+              "RelativeDocumentMoniker": "Src\\Game\\Object\\Enemy\\EenemyManager.cpp",
+              "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\EenemyManager.cpp",
+              "RelativeToolTip": "Src\\Game\\Object\\Enemy\\EenemyManager.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-11-04T00:45:59.984Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FairyBase.cpp",
+              "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\FairyBase.cpp",
+              "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\FairyBase.cpp",
+              "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\FairyBase.cpp",
+              "RelativeToolTip": "Src\\Game\\Object\\Player\\FairyBase.cpp",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAAAIsAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-11-05T05:55:01.026Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FairyBase.h",
+              "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\FairyBase.h",
+              "RelativeDocumentMoniker": "Src\\Game\\Object\\Player\\FairyBase.h",
+              "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Player\\FairyBase.h",
+              "RelativeToolTip": "Src\\Game\\Object\\Player\\FairyBase.h",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAAD4AAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-11-05T05:55:01.837Z"
             },
             {
               "$type": "Document",
@@ -373,18 +378,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEQAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2026-11-04T00:45:59.937Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "EenemyManager.cpp",
-              "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\EenemyManager.cpp",
-              "RelativeDocumentMoniker": "Src\\Game\\Object\\Enemy\\EenemyManager.cpp",
-              "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Object\\Enemy\\EenemyManager.cpp",
-              "RelativeToolTip": "Src\\Game\\Object\\Enemy\\EenemyManager.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-11-04T00:45:59.984Z"
             },
             {
               "$type": "Document",

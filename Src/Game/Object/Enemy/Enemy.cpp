@@ -37,7 +37,7 @@ Enemy::~Enemy()
 //初期化
 void Enemy::Init()
 {
-	ActorBase::Init();
+	EnemyBase::Init();
 	m_status.Init(50,10);
 	m_radius = ENEMY_RAD;
 	m_scale = { ENEMY_SCALE, ENEMY_SCALE, ENEMY_SCALE };
@@ -186,6 +186,7 @@ void Enemy::Load(int origiinhndl)
 		//モデルは複製する
 		m_hndl = MV1DuplicateModel(origiinhndl);
 		BrightenModelAmbient(m_hndl);
+		//SetModelOutline(m_hndl, 1.0f, 0.0f, 0.0f);
 	}
 }
 
@@ -197,6 +198,8 @@ void Enemy::Step(const VECTOR& playerPos)
 	{
 		return;
 	}
+
+	EnemyBase::StepElement();
 
 	//死亡モーション再生中は移動処理を行わず、再生が終わったら消す
 	if (m_isDying == true)

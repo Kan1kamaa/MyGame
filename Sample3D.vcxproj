@@ -142,6 +142,7 @@
     <ClCompile Include="Src\Game\Object\Enemy\Boss.cpp" />
     <ClCompile Include="Src\Game\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="Src\Game\Object\Enemy\EenemyManager.cpp" />
+    <ClCompile Include="Src\Game\Object\Enemy\EnemyBase.cpp" />
     <ClCompile Include="Src\Game\Object\Field\Field.cpp" />
     <ClCompile Include="Src\Game\Object\Field\Sky.cpp" />
     <ClCompile Include="Src\Game\Object\Objectbase\Objectbase.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Src\Game\Object\Actorbase\Actorbase.h" />
     <ClInclude Include="Src\Game\Object\Enemy\Boss.h" />
     <ClInclude Include="Src\Game\Object\Enemy\Enemy.h" />
+    <ClInclude Include="Src\Game\Object\Enemy\EnemyBase.h" />
     <ClInclude Include="Src\Game\Object\Enemy\EnemyManager.h" />
     <ClInclude Include="Src\Game\Object\Field\Field.h" />
     <ClInclude Include="Src\Game\Object\Field\Sky.h" />
@@ -194,7 +196,9 @@
     <ClInclude Include="Src\Game\Scene\Scenebase.h" />
     <ClInclude Include="Src\Game\Scene\SceneManager.h" />
     <ClInclude Include="Src\Game\Scene\TitleScene.h" />
+    <ClInclude Include="Src\Game\System\Element.h" />
     <ClInclude Include="Src\Game\System\GameCollision.h" />
+    <ClInclude Include="Src\Game\System\ModelUtil.h" />
     <ClInclude Include="Src\Game\System\SoundManager.h" />
     <ClInclude Include="Src\Game\System\Status.h" />
     <ClInclude Include="Src\Lib\Collision\Collsion.h" />

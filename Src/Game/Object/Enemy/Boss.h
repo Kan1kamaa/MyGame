@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include"../ActorBase/ActorBase.h"
+#include"../Enemy/EnemyBase.h"
 #include"../../System/Status.h"
 
-class BossGolem : public ActorBase {
+class BossGolem : public EnemyBase {
 private:
 	VECTOR m_speed;			//移動速度
 	bool m_isDying;			//死亡モーション再生中かどうか

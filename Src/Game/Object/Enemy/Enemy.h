@@ -1,7 +1,7 @@
 ﻿#pragma once
-#include"../ActorBase/ActorBase.h"
+#include"EnemyBase.h"
 #include"../../System/Status.h"
-class Enemy : public ActorBase {
+class Enemy : public  EnemyBase{
 private:
 	VECTOR m_speed;		//移動速度
 	int m_changeDirCnt;	//次にランダムで方向転換するまでのフレーム数
@@ -66,5 +66,5 @@ public:
 
 	float GetAttackPower()const { return m_status.AttackPower; };
 
-	void Pull(const VECTOR& center,const float power);
+	void Pull(const VECTOR& center,const float power)override;
 };

@@ -83,6 +83,7 @@ void MeleeCharacter::Load()
 	{
 		m_hndl = MV1LoadModel("Data/Models/Player/Charcter/charcter.mv1");
 		BrightenModelAmbient(m_hndl);
+		//SetModelOutline(m_hndl, 0.0f, 0.0f, 0.0f);
 		RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);
 
 		//左手・右手のボーン番号を調べておく(見つからなければ-1のまま)

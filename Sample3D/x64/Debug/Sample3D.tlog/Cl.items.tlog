@@ -5,6 +5,7 @@ C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Actorbase\Actorbase.cpp;C:\Users
 C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Enemy\Boss.cpp;C:\Users\2509413\Desktop\MyGame\Sample3D\x64\Debug\Boss.obj
 C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Enemy\Enemy.cpp;C:\Users\2509413\Desktop\MyGame\Sample3D\x64\Debug\Enemy.obj
 C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Enemy\EenemyManager.cpp;C:\Users\2509413\Desktop\MyGame\Sample3D\x64\Debug\EenemyManager.obj
+C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Enemy\EnemyBase.cpp;C:\Users\2509413\Desktop\MyGame\Sample3D\x64\Debug\EnemyBase.obj
 C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Field\Field.cpp;C:\Users\2509413\Desktop\MyGame\Sample3D\x64\Debug\Field.obj
 C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Field\Sky.cpp;C:\Users\2509413\Desktop\MyGame\Sample3D\x64\Debug\Sky.obj
 C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Objectbase\Objectbase.cpp;C:\Users\2509413\Desktop\MyGame\Sample3D\x64\Debug\Objectbase.obj

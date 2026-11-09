@@ -62,7 +62,7 @@ BossGolem::~BossGolem()
 //初期化
 void BossGolem::Init()
 {
-	ActorBase::Init();
+	EnemyBase::Init();
 	m_status.Init(BOSS_MAX_HP, BOSS_ATTACK_POWER);
 	m_radius = BOSS_RAD;
 	m_scale = { BOSS_SCALE, BOSS_SCALE, BOSS_SCALE };
@@ -275,6 +275,8 @@ void BossGolem::Step(const VECTOR& playerPos)
 	{
 		return;
 	}
+
+	EnemyBase::StepElement();
 
 	//死亡モーション再生中は行動せず、再生が終わったら消す
 	if (m_isDying == true)

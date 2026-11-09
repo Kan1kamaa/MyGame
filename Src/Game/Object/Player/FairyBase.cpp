@@ -13,6 +13,7 @@ FairyBase::FairyBase()
 	m_state = FOLLOW;
 	m_isLeaving = false;
 	m_effectRequest = -1;
+	m_hitCnt = 0;
 }
 
 //デストラクタ
@@ -30,6 +31,7 @@ void FairyBase::Init()
 	m_TargetPos = { 0,0,0 };
 	m_isLeaving = false;
 	m_effectRequest = -1;
+	m_hitCnt = 0;
 }
 
 //毎フレーム計算する処理
@@ -62,6 +64,7 @@ void FairyBase::Step(const VECTOR& playerPos)
 				m_state = END;
 			}
 		}
+		m_hitCnt++;
 		break;
 	case FairyBase::END:
 		break;

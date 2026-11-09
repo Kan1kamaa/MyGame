@@ -166,6 +166,44 @@ void GameCollision::CheckHitPlayerAttackToBoss(CharacterManager& player, BossGol
 	}
 }
 
+//精霊のスキルとボスの当たり判定(ボスは引き寄せず、ダメージだけ与える)
+void GameCollision::CheckHitFairySkillToBoss(FairyManager& fairyManager, BossGolem& boss)
+{
+	//ボスが出現していなければ何もしない
+	if (boss.GetActive() == false)
+	{
+		return;
+	}
+
+	VECTOR bossPos = boss.GetCollisionPos();
+	float bossRad = boss.GetRadius();
+
+	for (int i = 0; i < fairyManager.GetFairyCount(); i++)
+	{
+		//いない精霊は無視
+		FairyBase* fairy = fairyManager.GetFairy(i);
+		if (fairy == nullptr)
+		{
+			continue;
+		}
+		//スキル中の精霊だけ処理する
+		if (fairy->IsSkillActive() == false)
+		{
+			continue;
+		}
+		//ダメージが入るタイミングでなければ何もしない
+		if (fairy->IsSkillHit() == false)
+		{
+			continue;
+		}
+
+		if (Collsion::CheckHitSphereToSphere(fairy->GetSkillPos(), fairy->GetSkillRadius(), bossPos, bossRad) == true)
+		{
+			boss.TakeDamage((int)fairy->GetAttackPower());
+		}
+	}
+}
+
 //風の精霊のスキルと敵の当たり判定
 void GameCollision::CheckHitFairyPullToEnemy(FairyManager& fairyManager,EnemyManager& enemyManager)
 {
@@ -178,14 +216,14 @@ void GameCollision::CheckHitFairyPullToEnemy(FairyManager& fairyManager,EnemyMan
 			continue;
 		}
 		//引き寄せ中の精霊だけ処理する
-		if (fairy->IsPullActive() == false)
+		if (fairy->IsSkillActive() == false)
 		{
 			continue;
 		}
 
-		VECTOR pullPos = fairy->GetPullPos();
-		float pullRadius = fairy->GetPullRadius();
-		float pullPower = fairy->GetPullPower();
+		VECTOR pullPos = fairy->GetSkillPos();
+		float pullRadius = fairy->GetSkillRadius();
+		float pullPower = fairy->GetSkillPower();
 		for (int j = 0; j < ENEMY_MAX; j++)
 		{
 			Enemy& enemy = enemyManager.GetEnemy(j);
@@ -198,6 +236,10 @@ void GameCollision::CheckHitFairyPullToEnemy(FairyManager& fairyManager,EnemyMan
 			if (Collsion::CheckHitSphereToSphere(pullPos, pullRadius, enemy.GetCollisionPos(), enemy.GetRadius()) == true)
 			{
 				enemy.Pull(pullPos, pullPower);
+				if (fairy->IsSkillHit() == true)
+				{
+					enemy.TakeDamage((int)fairy->GetAttackPower());
+				}
 			}
 		}
 	}

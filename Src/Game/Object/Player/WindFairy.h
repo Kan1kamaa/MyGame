@@ -11,13 +11,17 @@ public:
 	//風の攻撃を開始する
 	void StartAttack(const VECTOR& playerPos,float playerRotY) override;
 
-	bool IsPullActive()const override;
+	bool IsSkillActive()const override;
 
-	VECTOR GetPullPos()const override;
+	VECTOR GetSkillPos()const override;
 
-	float GetPullRadius()const override;
+	float GetSkillRadius()const override;
 
-	float GetPullPower()const override;
+	float GetSkillPower()const override;
+
+	float GetAttackPower()const override;
+
+	bool IsSkillHit()const override;
 };
 
 

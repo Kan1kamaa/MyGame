@@ -23,6 +23,7 @@ protected:
 		STATENUM,
 	};
 
+	int m_hitCnt;
 	int m_effectRequest;
 	FairyState m_state;
 private:
@@ -62,23 +63,32 @@ public:
 
 	bool PopEffectRequest(EffectManager::EffectId& id);
 
-	virtual bool IsPullActive()const
+	//スキルの判定を出しているか(GameCollisionから使う。属性ごとに上書きする)
+	virtual bool IsSkillActive()const
 	{
 		return false;
 	}
 
-	virtual VECTOR GetPullPos()const
+	//スキルの判定(球)の中心座標
+	virtual VECTOR GetSkillPos()const
 	{
 		return { 0.0f,0.0f,0.0f };
 	}
 
-	virtual float GetPullRadius()const
+	//スキルの判定(球)の半径
+	virtual float GetSkillRadius()const
 	{
 		return 0.0f;
 	}
 
-	virtual float GetPullPower()const
+	//スキルの強さ(風なら引き寄せる強さ、ほかの属性ならダメージなど)
+	virtual float GetSkillPower()const
 	{
 		return 0.0f;
+	}
+
+	virtual bool IsSkillHit()const
+	{
+		return false;
 	}
 };

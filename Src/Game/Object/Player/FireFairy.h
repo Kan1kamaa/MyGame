@@ -3,6 +3,8 @@
 
 //炎の精霊
 class FireFairy : public FairyBase {
+private:
+	VECTOR m_SkillCenter;
 public:
 	FireFairy();
 

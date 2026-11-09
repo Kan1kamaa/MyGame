@@ -24,4 +24,7 @@ public:
 
 	//風の精霊のスキルと敵の当たり判定
 	static void CheckHitFairyPullToEnemy(FairyManager& fairyManager, EnemyManager& enemyManager);
+
+	//精霊のスキルとボスの当たり判定(ボスは引き寄せず、ダメージだけ与える)
+	static void CheckHitFairySkillToBoss(FairyManager& fairyManager, BossGolem& boss);
 };

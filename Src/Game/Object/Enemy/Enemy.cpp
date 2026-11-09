@@ -24,7 +24,7 @@ static const float ROT_SPEED = 0.08f;		//1フレームで向き直れる最大�
 static const float PULL_STOP_DIST = 10.0f;	//この距離まで引っ張られる
 static const int PULL_HOLD_TIME = 3.0f;     //「引き寄せが終わった後、元に戻るまでのフレーム数
 //コンストラクタ
-Enemy::Enemy() :m_speed(VEC_ZERO), m_changeDirCnt(0), m_isDying(false), m_state(Search),m_invincibleCnt(0),m_pullCnt(0)
+Enemy::Enemy() : m_changeDirCnt(0), m_state(Search),m_invincibleCnt(0),m_pullCnt(0)
 {
 }
 
@@ -199,7 +199,7 @@ void Enemy::Step(const VECTOR& playerPos)
 		return;
 	}
 
-	EnemyBase::StepElement();
+	StepBase();
 
 	//死亡モーション再生中は移動処理を行わず、再生が終わったら消す
 	if (m_isDying == true)
@@ -257,7 +257,7 @@ void Enemy::Draw()
 
 	//被弾直後(無敵時間の最初の数フレーム)だけ赤く染めて、攻撃が当たったことをわかりやすくする
 	bool isFlash = false;
-	if (m_invincibleCnt > INVINCIBLE_TIME - HIT_FLASH_TIME)
+	if (m_invincibleCnt > INVINCIBLE_TIME - HIT_FLASH_TIME || m_flashCnt > 0)
 	{
 		isFlash = true;
 	}
@@ -328,6 +328,12 @@ void Enemy::HitCalc(const ObjectBase& other)
 		m_isDying = true;
 		m_speed = VEC_ZERO;		//死亡モーション再生中は動きを止める
 	}
+}
+
+void Enemy::OnDead()
+{
+	SoundManager::Play(SoundManager::SE_EXPLORE);
+	RequestAnim(ANIM_DEATH, ANIM_SPEED);
 }
 
 void Enemy::Pull(const VECTOR& center, const float power)

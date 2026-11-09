@@ -1,11 +1,8 @@
 ﻿#pragma once
 #include"EnemyBase.h"
-#include"../../System/Status.h"
-class Enemy : public  EnemyBase{
+class Enemy : public  EnemyBase {
 private:
-	VECTOR m_speed;		//移動速度
 	int m_changeDirCnt;	//次にランダムで方向転換するまでのフレーム数
-	bool m_isDying;		//死亡モーション再生中かどうか
 	//被弾後、無敵時間として残っているフレーム数(この間はHitCalcでダメージを受けない)
 	int m_invincibleCnt;
 	//引き寄せられているフレーム数
@@ -28,7 +25,7 @@ private:
 		ANIM_WALK,
 	};
 
-	Status m_status;
+
 
 	//移動方向をランダムに選び直す
 	void RandomizeDirection();
@@ -66,5 +63,7 @@ public:
 
 	float GetAttackPower()const { return m_status.AttackPower; };
 
-	void Pull(const VECTOR& center,const float power)override;
+	void OnDead() override;
+
+	void Pull(const VECTOR& center, const float power)override;
 };

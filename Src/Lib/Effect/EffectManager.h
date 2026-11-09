@@ -14,6 +14,9 @@ public:
 		EFFECT_SWORDSKILL,			//スキル(氷の柱)
 		EFFECT_SWORDULT,			//必殺技
 		EFFECT_WINDSKILL,			//風の精霊のスキル
+		EFFECT_FIRESKILL,
+		EFFECT_THUNDERSKILL,
+		EFFECT_WATERSKILL,
 
 		EFFECT_NUM			// 全エフェクト数
 	};

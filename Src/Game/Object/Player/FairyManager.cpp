@@ -248,7 +248,7 @@ bool FairyManager::PopEffectRequest(EffectManager::EffectId& id, VECTOR& pos, fl
 {
 	if (m_nowFairy == nullptr)return false;
 	if (m_nowFairy->PopEffectRequest(id) == false)return false;
-	pos = m_nowFairy->GetPullPos();
+	pos = m_nowFairy->GetSkillPos();
 	rotY = 0.0f;
 	return true;
 }

@@ -91,6 +91,7 @@ void PlayScene::Step()
 	GameCollision::CheckHitBossAttackToPlayer(boss, player);
 	GameCollision::CheckHitPlayerAttackToBoss(player, boss);
 	GameCollision::CheckHitFairyPullToEnemy(fairy, enemy);
+	GameCollision::CheckHitFairySkillToBoss(fairy, boss);
 
 	//プレイヤーがリスポーンしたら、ボスも最初の状態に戻して出し直す
 	if (player.CheckRespawned() == true)

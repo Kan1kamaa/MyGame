@@ -49,7 +49,7 @@ static const int   JUMP_HIT_TIME = 6;           //ジャンプ攻撃の着地の
 static const float JUMP_HIT_RADIUS = 60.0f;     //ジャンプ攻撃の着地の衝撃判定(球)の半径
 
 //コンストラクタ
-BossGolem::BossGolem() :m_speed(VEC_ZERO), m_isDying(false), m_attackCoolCnt(0), m_state(Search)
+BossGolem::BossGolem() :m_attackCoolCnt(0), m_state(Search)
 {
 }
 
@@ -276,7 +276,7 @@ void BossGolem::Step(const VECTOR& playerPos)
 		return;
 	}
 
-	EnemyBase::StepElement();
+	StepBase();
 
 	//死亡モーション再生中は行動せず、再生が終わったら消す
 	if (m_isDying == true)
@@ -409,7 +409,7 @@ void BossGolem::Draw()
 	DrawFormatString(16, 120, GetColor(255, 255, 0), "state:%d", m_state);
 	//被弾直後(無敵時間の最初の数フレーム)だけ赤く染めて、攻撃が当たったことをわかりやすくする
 	bool isFlash = false;
-	if (m_invincibleCnt > INVINCIBLE_TIME - HIT_FLASH_TIME)
+	if (m_invincibleCnt > INVINCIBLE_TIME - HIT_FLASH_TIME || m_flashCnt > 0)
 	{
 		isFlash = true;
 	}
@@ -577,4 +577,10 @@ void BossGolem::HitCalc(const ObjectBase& other)
 		m_isDying = true;
 		m_speed = VEC_ZERO;		//死亡モーション再生中は動きを止める
 	}
+}
+
+void BossGolem::OnDead()
+{
+	SoundManager::Play(SoundManager::SE_EXPLORE);
+	RequestAnim(ANIM_DEATH, ANIM_SPEED);
 }

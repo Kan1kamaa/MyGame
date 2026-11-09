@@ -4,8 +4,6 @@
 
 class BossGolem : public EnemyBase {
 private:
-	VECTOR m_speed;			//移動速度
-	bool m_isDying;			//死亡モーション再生中かどうか
 	int m_attackCoolCnt;	//次の攻撃を出すまでのフレーム数
 	int m_JumpatackCoolCnt;//ジャンプ攻撃のクールダウン
 	int m_RockPillarCoolCnt;//ロックピラー攻撃のクールダウン
@@ -47,7 +45,7 @@ private:
 		ANIM_WALK,
 	};
 
-	Status m_status;
+
 
 	//moveDirの方向へ少しずつ向き直る
 	void TurnToward(const VECTOR& moveDir);
@@ -98,4 +96,5 @@ public:
 	int GetBossHp() const { return m_status.NowHp; }
 	int GetBossMaxHp() const { return m_status.MaxHp; }
 
+	void OnDead()override;
 };

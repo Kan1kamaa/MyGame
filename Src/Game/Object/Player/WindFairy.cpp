@@ -24,6 +24,7 @@ void WindFairy::StartAttack(const VECTOR& playerPos,float playerRotY)
 	//キャラの前方ベクトル(移動処理と同じ向きの取り方)
 	VECTOR forward = { -sinf(playerRotY), 0.0f, -cosf(playerRotY) };
 	m_SkillCenter = VAdd(playerPos, VScale(forward, SKILL_HIT_DIST));
+	m_SkillRotY = playerRotY;
 	m_effectRequest = EffectManager::EFFECT_WINDSKILL;
 }
 

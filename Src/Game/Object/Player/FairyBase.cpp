@@ -16,6 +16,7 @@ FairyBase::FairyBase()
 	m_hitCnt = 0;
 	m_element = NONE;
 	m_SkillCenter = { 0.0f,0.0f,0.0f };
+	m_SkillRotY = 0.0f;
 	m_SkillMinFrame = 0;
 }
 
@@ -36,6 +37,7 @@ void FairyBase::Init()
 	m_effectRequest = -1;
 	m_hitCnt = 0;
 	m_SkillCenter = { 0.0f, 0.0f, 0.0f };
+	m_SkillRotY = 0.0f;
 	m_SkillMinFrame = 0;
 }
 

@@ -29,6 +29,7 @@ protected:
 	FairyState m_state;
 	ElementType m_element;
 	VECTOR m_SkillCenter;
+	float m_SkillRotY;
 	int m_SkillMinFrame;
 private:
 	VECTOR m_TargetPos;
@@ -88,6 +89,11 @@ public:
 	virtual float GetSkillPower()const
 	{
 		return 0.0f;
+	}
+
+	virtual float GetSkillRotY()const
+	{
+		return m_SkillRotY;
 	}
 
 	virtual bool IsSkillHit()const

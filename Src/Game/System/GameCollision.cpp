@@ -1,6 +1,33 @@
 ﻿#include"GameCollision.h"
 #include"../../Lib/Collision/Collsion.h"
 
+void GameCollision::ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy)
+{
+	switch (fairy->GetFairyElement())
+	{
+	case NONE:
+		break;
+	case WIND:
+		enemy.Pull(fairy->GetSkillPos(), fairy->GetSkillPower());
+		if (fairy->IsSkillHit() == true)
+		{
+			enemy.TakeDamage((int)fairy->GetAttackPower());
+		}
+		break;
+	case FIRE:
+		if (fairy->IsSkillHit() == true)
+		{
+			enemy.TakeDamage((int)fairy->GetAttackPower());
+			enemy.AddElement(FIRE);
+		}
+		break;
+	case THUNDER:
+		break;
+	case WATER:
+		break;
+	}
+}
+
 void GameCollision::CheckHitEnemyToShot(EnemyManager& enemyManager, ShotManager& shotManager)
 {
 	for (int i = 0; i < PL_SHOT_MAX; i++)
@@ -199,13 +226,13 @@ void GameCollision::CheckHitFairySkillToBoss(FairyManager& fairyManager, BossGol
 
 		if (Collsion::CheckHitSphereToSphere(fairy->GetSkillPos(), fairy->GetSkillRadius(), bossPos, bossRad) == true)
 		{
-			boss.TakeDamage((int)fairy->GetAttackPower());
+			ApplySkillEffect(fairy, boss);
 		}
 	}
 }
 
-//風の精霊のスキルと敵の当たり判定
-void GameCollision::CheckHitFairyPullToEnemy(FairyManager& fairyManager,EnemyManager& enemyManager)
+//精霊のスキルと敵の当たり判定
+void GameCollision::CheckHitFairySkillToEnemy(FairyManager& fairyManager,EnemyManager& enemyManager)
 {
 	for (int i = 0; i < fairyManager.GetFairyCount(); i++)
 	{
@@ -215,15 +242,14 @@ void GameCollision::CheckHitFairyPullToEnemy(FairyManager& fairyManager,EnemyMan
 		{
 			continue;
 		}
-		//引き寄せ中の精霊だけ処理する
+		//スキル中の精霊だけ処理する
 		if (fairy->IsSkillActive() == false)
 		{
 			continue;
 		}
 
-		VECTOR pullPos = fairy->GetSkillPos();
-		float pullRadius = fairy->GetSkillRadius();
-		float pullPower = fairy->GetSkillPower();
+		VECTOR skillPos = fairy->GetSkillPos();
+		float skillRadius = fairy->GetSkillRadius();
 		for (int j = 0; j < ENEMY_MAX; j++)
 		{
 			Enemy& enemy = enemyManager.GetEnemy(j);
@@ -232,14 +258,10 @@ void GameCollision::CheckHitFairyPullToEnemy(FairyManager& fairyManager,EnemyMan
 				continue;
 			}
 
-			//引き寄せの範囲に入っている敵を中心へ引き寄せる
-			if (Collsion::CheckHitSphereToSphere(pullPos, pullRadius, enemy.GetCollisionPos(), enemy.GetRadius()) == true)
+			//敵とそれぞれの精霊のスキルの当たり判定
+			if (Collsion::CheckHitSphereToSphere(skillPos, skillRadius, enemy.GetCollisionPos(), enemy.GetRadius()) == true)
 			{
-				enemy.Pull(pullPos, pullPower);
-				if (fairy->IsSkillHit() == true)
-				{
-					enemy.TakeDamage((int)fairy->GetAttackPower());
-				}
+				ApplySkillEffect(fairy, enemy);
 			}
 		}
 	}

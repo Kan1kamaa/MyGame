@@ -14,6 +14,8 @@ FairyBase::FairyBase()
 	m_isLeaving = false;
 	m_effectRequest = -1;
 	m_hitCnt = 0;
+	m_element = NONE;
+	m_SkillCenter = { 0.0f,0.0f,0.0f };
 }
 
 //デストラクタ
@@ -32,6 +34,8 @@ void FairyBase::Init()
 	m_isLeaving = false;
 	m_effectRequest = -1;
 	m_hitCnt = 0;
+	m_element = NONE;
+	m_SkillCenter = { 0.0f, 0.0f, 0.0f };
 }
 
 //毎フレーム計算する処理

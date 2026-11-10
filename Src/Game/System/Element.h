@@ -2,6 +2,7 @@
 enum ElementType
 {
 	NONE,
+	WIND,
 	FIRE,
 	WATER,
 	THUNDER,

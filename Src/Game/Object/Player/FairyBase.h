@@ -2,6 +2,7 @@
 #include "../ActorBase/ActorBase.h"
 #include"math.h"
 #include"../../../Lib/Effect/EffectManager.h"
+#include"../../System/Element.h"
 const VECTOR FAIRY_POS = { -15,10,-15 };	//精霊がプレイヤーからどれだけ離れているか
 
 //精霊の基底クラス(風・炎・雷の精霊はこれを継承する)
@@ -26,11 +27,12 @@ protected:
 	int m_hitCnt;
 	int m_effectRequest;
 	FairyState m_state;
+	ElementType m_element;
+	VECTOR m_SkillCenter;
 private:
 	VECTOR m_TargetPos;
 	float m_MoveSpeed;
 	float m_FlowTimer;
-	
 	bool m_isLeaving;
 public:
 	//コンストラクタ・デストラクタ
@@ -72,7 +74,7 @@ public:
 	//スキルの判定(球)の中心座標
 	virtual VECTOR GetSkillPos()const
 	{
-		return { 0.0f,0.0f,0.0f };
+		return m_SkillCenter;
 	}
 
 	//スキルの判定(球)の半径
@@ -90,5 +92,10 @@ public:
 	virtual bool IsSkillHit()const
 	{
 		return false;
+	}
+
+	ElementType GetFairyElement()const
+	{
+		return m_element;
 	}
 };

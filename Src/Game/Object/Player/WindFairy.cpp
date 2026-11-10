@@ -9,7 +9,7 @@ const int HIT_INTERVAL = 20;
 //コンストラクタ
 WindFairy::WindFairy()
 {
-	m_SkillCenter = { 0.0f,0.0f,0.0f };
+	m_element = WIND;
 }
 
 //風の攻撃を開始する

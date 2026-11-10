@@ -5,6 +5,8 @@
 #include"../Object/Player/CharacterManager.h"
 #include"../Object/Player/FairyManager.h"
 class GameCollision {
+private:
+	static void ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy);
 public:
 	static void CheckHitEnemyToShot(EnemyManager& enemyManager, ShotManager& shotManager);
 
@@ -22,8 +24,8 @@ public:
 	//プレイヤーの近接攻撃(前方の球)とボスの当たり判定
 	static void CheckHitPlayerAttackToBoss(CharacterManager& player, BossGolem& boss);
 
-	//風の精霊のスキルと敵の当たり判定
-	static void CheckHitFairyPullToEnemy(FairyManager& fairyManager, EnemyManager& enemyManager);
+	//精霊のスキルと敵の当たり判定
+	static void CheckHitFairySkillToEnemy(FairyManager& fairyManager, EnemyManager& enemyManager);
 
 	//精霊のスキルとボスの当たり判定(ボスは引き寄せず、ダメージだけ与える)
 	static void CheckHitFairySkillToBoss(FairyManager& fairyManager, BossGolem& boss);

@@ -90,7 +90,7 @@ void PlayScene::Step()
 	GameCollision::CheckHitBossToShot(boss, shot);
 	GameCollision::CheckHitBossAttackToPlayer(boss, player);
 	GameCollision::CheckHitPlayerAttackToBoss(player, boss);
-	GameCollision::CheckHitFairyPullToEnemy(fairy, enemy);
+	GameCollision::CheckHitFairySkillToEnemy(fairy, enemy);
 	GameCollision::CheckHitFairySkillToBoss(fairy, boss);
 
 	//プレイヤーがリスポーンしたら、ボスも最初の状態に戻して出し直す

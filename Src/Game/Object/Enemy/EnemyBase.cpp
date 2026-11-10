@@ -2,7 +2,8 @@
 
 static const int ELEMENT_HOLD_TIME = 900;
 static const int DAMAGE_FLASH_TIME = 4;		//TakeDamageで被弾したときに赤く光らせるフレーム数(多段ヒット用に短め)
-
+static const int BURN_DAMAGE = 5;
+static const int BURN_INTERVAL = 30;
 EnemyBase::EnemyBase()
 {
 	m_element = NONE;
@@ -29,6 +30,7 @@ void EnemyBase::Init()
 
 void EnemyBase::AddElement(ElementType elementType)
 {
+	if (elementType == WIND || elementType == NONE)return;
 	m_element = elementType;
 	m_elementCnt = ELEMENT_HOLD_TIME;
 }
@@ -50,6 +52,25 @@ void EnemyBase::StepBase()
 void EnemyBase::StepElement()
 {
 	if (m_element == NONE)return;
+	
+	switch (m_element)
+	{
+	case NONE:
+		break;
+	case WIND:
+		break;
+	case FIRE:
+		if (m_elementCnt % BURN_INTERVAL == 0)
+		{
+			TakeDamage(BURN_DAMAGE);
+		}
+		break;
+	case WATER:
+		break;
+	case THUNDER:
+		break;
+	}
+
 	m_elementCnt--;
 	if (m_elementCnt <= 0)
 	{

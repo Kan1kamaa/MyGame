@@ -4,7 +4,7 @@
 //風の精霊
 class WindFairy : public FairyBase {
 private:
-	VECTOR m_SkillCenter;
+
 public:
 	WindFairy();
 

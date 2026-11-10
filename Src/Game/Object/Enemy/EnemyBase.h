@@ -25,6 +25,7 @@ public:
 
 	virtual void OnDead();
 
+	void ClearElement();
 protected:
 	bool m_isDying;		//死亡モーション再生中かどうか
 	VECTOR m_speed;
@@ -37,5 +38,7 @@ protected:
 	void StepElement();
 
 	unsigned int GetElementColor();
+
+
 
 };

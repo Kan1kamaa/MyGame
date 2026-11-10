@@ -29,6 +29,7 @@ protected:
 	FairyState m_state;
 	ElementType m_element;
 	VECTOR m_SkillCenter;
+	int m_SkillMinFrame;
 private:
 	VECTOR m_TargetPos;
 	float m_MoveSpeed;
@@ -43,7 +44,7 @@ public:
 	void Init() override;
 	//毎フレーム計算する処理
 	//@playerPos : ついていく相手(プレイヤー)の座標
-	virtual void Step(const VECTOR& playerPos);
+	virtual void Step(const VECTOR& playerPos,float rotY);
 	//情報更新
 	void Update() override;
 	//描画

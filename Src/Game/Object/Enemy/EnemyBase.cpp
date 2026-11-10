@@ -2,7 +2,7 @@
 
 static const int ELEMENT_HOLD_TIME = 900;
 static const int DAMAGE_FLASH_TIME = 4;		//TakeDamageで被弾したときに赤く光らせるフレーム数(多段ヒット用に短め)
-static const int BURN_DAMAGE = 5;
+static const int BURN_DAMAGE = 3;
 static const int BURN_INTERVAL = 30;
 EnemyBase::EnemyBase()
 {
@@ -104,4 +104,10 @@ void EnemyBase::TakeDamage(int damage)
 void EnemyBase::OnDead()
 {
 
+}
+
+void EnemyBase::ClearElement()
+{
+	m_element = NONE;
+	m_elementCnt = 0;
 }

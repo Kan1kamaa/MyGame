@@ -21,6 +21,7 @@ namespace {
 		{ "Data/Effect/SwordSkill/SwordSkill.efkefc",   30.0f,  0.0f, 5.0f, DX_PI_F },
 		{ "Data/Effect/SwordUlt/SwordUlt.efkefc",        0.0f,  0.0f, 5.0f, 1.5 },	
 		{"Data/Effect/WindSkill/WindSkill.efkefc",0.0f,0.1f,5.0f,0.0f},
+		{"Data/Effect/FireSkill/FireSkill2.efkefc",0.0f,0.1f,7.0f,0.0f},
 	};
 }
 

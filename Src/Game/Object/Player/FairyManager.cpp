@@ -105,11 +105,11 @@ void FairyManager::Step(const VECTOR& playerPos,const float playerRotY)
 {
 	if (m_nowFairy != nullptr)
 	{
-		m_nowFairy->Step(playerPos);
+		m_nowFairy->Step(playerPos,playerRotY);
 	}
 	for (int i = 0;i < m_LivingFairy.size();)
 	{
-		m_LivingFairy[i]->Step(playerPos);
+		m_LivingFairy[i]->Step(playerPos,playerRotY);
 		if (m_LivingFairy[i]->isEnd() == true)
 		{
 			delete m_LivingFairy[i];

@@ -286,7 +286,7 @@ bool Enemy::Request(const VECTOR& pos, const VECTOR& speed)
 	m_pos = pos;
 	m_speed = speed;
 	m_isActive = true;
-
+	ClearElement();
 	//すぐにランダムな方向へ動き出す
 	RandomizeDirection();
 

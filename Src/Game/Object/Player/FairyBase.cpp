@@ -16,6 +16,7 @@ FairyBase::FairyBase()
 	m_hitCnt = 0;
 	m_element = NONE;
 	m_SkillCenter = { 0.0f,0.0f,0.0f };
+	m_SkillMinFrame = 0;
 }
 
 //デストラクタ
@@ -34,12 +35,12 @@ void FairyBase::Init()
 	m_isLeaving = false;
 	m_effectRequest = -1;
 	m_hitCnt = 0;
-	m_element = NONE;
 	m_SkillCenter = { 0.0f, 0.0f, 0.0f };
+	m_SkillMinFrame = 0;
 }
 
 //毎フレーム計算する処理
-void FairyBase::Step(const VECTOR& playerPos)
+void FairyBase::Step(const VECTOR& playerPos,float rotY)
 {
 	VECTOR dis;
 	m_FlowTimer++;
@@ -48,9 +49,11 @@ void FairyBase::Step(const VECTOR& playerPos)
 	case FairyBase::FOLLOW:
 		if (m_isLeaving != true)
 		{
+			m_rot.y = rotY;
 			m_TargetPos = VAdd(playerPos, FAIRY_POS);
 			dis = VSub(m_TargetPos, m_pos);
 			m_pos = VAdd(m_pos, VScale(dis, m_MoveSpeed));
+
 		}
 		break;
 	case FairyBase::ATTACK:
@@ -113,6 +116,10 @@ void FairyBase::SetModel(int hndl)
 bool FairyBase::IsSkillFinished() const
 {
 	if (m_state != SKILL)
+	{
+		return false;
+	}
+	else if (m_hitCnt < m_SkillMinFrame)
 	{
 		return false;
 	}

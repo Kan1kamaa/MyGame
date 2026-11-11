@@ -6,7 +6,7 @@
 #include"../Object/Player/FairyManager.h"
 class GameCollision {
 private:
-	static void ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy);
+	static void ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy,int k);
 public:
 	static void CheckHitEnemyToShot(EnemyManager& enemyManager, ShotManager& shotManager);
 

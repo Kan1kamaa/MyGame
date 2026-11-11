@@ -168,6 +168,9 @@
     <ClCompile Include="Src\Game\Object\Enemy\EnemyBase.cpp">
       <Filter>ソース ファイル\Game\Object\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game\Object\Player\WaterFairy.cpp">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Lib\Fps\Fps.h">
@@ -280,6 +283,9 @@
     </ClInclude>
     <ClInclude Include="Src\Game\System\ModelUtil.h">
       <Filter>ソース ファイル\Game\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game\Object\Player\WaterFairy.h">
+      <Filter>ソース ファイル\Game\Object\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

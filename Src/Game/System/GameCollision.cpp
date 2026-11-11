@@ -1,29 +1,39 @@
 ﻿#include"GameCollision.h"
 #include"../../Lib/Collision/Collsion.h"
 
-void GameCollision::ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy)
+void GameCollision::ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy,int k)
 {
 	switch (fairy->GetFairyElement())
 	{
 	case NONE:
 		break;
 	case WIND:
-		enemy.Pull(fairy->GetSkillPos(), fairy->GetSkillPower());
-		if (fairy->IsSkillHit() == true)
+		enemy.Pull(fairy->GetSkillHitPos(k), fairy->GetSkillPower());
+		if (fairy->IsSkillHitAt(k) == true)
 		{
 			enemy.TakeDamage((int)fairy->GetAttackPower());
 		}
 		break;
 	case FIRE:
-		if (fairy->IsSkillHit() == true)
+		if (fairy->IsSkillHitAt(k) == true)
 		{
 			enemy.TakeDamage((int)fairy->GetAttackPower());
 			enemy.AddElement(FIRE);
 		}
 		break;
 	case THUNDER:
+		if (fairy->IsSkillHitAt(k) == true)
+		{
+			enemy.TakeDamage((int)fairy->GetAttackPower());
+			enemy.AddElement(THUNDER);
+		}
 		break;
 	case WATER:
+		enemy.AddElement(WATER);
+		if(fairy->IsSkillHitAt(k) == true)
+		{
+			enemy.TakeDamage((int)fairy->GetAttackPower());
+		}
 		break;
 	}
 }
@@ -218,15 +228,12 @@ void GameCollision::CheckHitFairySkillToBoss(FairyManager& fairyManager, BossGol
 		{
 			continue;
 		}
-		//ダメージが入るタイミングでなければ何もしない
-		if (fairy->IsSkillHit() == false)
+		for (int k = 0; k < fairy->GetSkillHitNum(); k++)
 		{
-			continue;
-		}
-
-		if (Collsion::CheckHitSphereToSphere(fairy->GetSkillPos(), fairy->GetSkillRadius(), bossPos, bossRad) == true)
-		{
-			ApplySkillEffect(fairy, boss);
+			if (Collsion::CheckHitSphereToSphere(fairy->GetSkillHitPos(k), fairy->GetSkillHitRadius(k), bossPos, bossRad) == true)
+			{
+				ApplySkillEffect(fairy, boss,k);
+			}
 		}
 	}
 }
@@ -247,21 +254,23 @@ void GameCollision::CheckHitFairySkillToEnemy(FairyManager& fairyManager,EnemyMa
 		{
 			continue;
 		}
-
-		VECTOR skillPos = fairy->GetSkillPos();
-		float skillRadius = fairy->GetSkillRadius();
-		for (int j = 0; j < ENEMY_MAX; j++)
+		for (int k = 0; k < fairy->GetSkillHitNum(); k++)
 		{
-			Enemy& enemy = enemyManager.GetEnemy(j);
-			if (enemy.GetActive() == false)
+			VECTOR skillPos = fairy->GetSkillHitPos(k);
+			float skillRadius = fairy->GetSkillHitRadius(k);
+			for (int j = 0; j < ENEMY_MAX; j++)
 			{
-				continue;
-			}
+				Enemy& enemy = enemyManager.GetEnemy(j);
+				if (enemy.GetActive() == false)
+				{
+					continue;
+				}
 
-			//敵とそれぞれの精霊のスキルの当たり判定
-			if (Collsion::CheckHitSphereToSphere(skillPos, skillRadius, enemy.GetCollisionPos(), enemy.GetRadius()) == true)
-			{
-				ApplySkillEffect(fairy, enemy);
+				//敵とそれぞれの精霊のスキルの当たり判定
+				if (Collsion::CheckHitSphereToSphere(skillPos, skillRadius, enemy.GetCollisionPos(), enemy.GetRadius()) == true)
+				{
+					ApplySkillEffect(fairy, enemy,k);
+				}
 			}
 		}
 	}

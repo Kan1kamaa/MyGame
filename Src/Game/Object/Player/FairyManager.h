@@ -2,6 +2,7 @@
 #include "WindFairy.h"
 #include "FireFairy.h"
 #include "ThunderFairy.h"
+#include "WaterFairy.h"
 #include<vector>
 
 //精霊を管理するクラス
@@ -11,6 +12,7 @@ private:
 		NONE,
 		WIND,
 		FIRE,
+		WATER,
 		THUNDER,
 
 		FAIRYTYPENUM
@@ -26,7 +28,7 @@ private:
 	bool m_prevKey1;
 	bool m_prevKey2;
 	bool m_prevKey3;
-
+	bool m_prevKey4;
 	void SwapFairy(FairyType,VECTOR playerPos);
 	//場にいる精霊を全員片付ける(元モデルは残す)
 	void ClearFairy();

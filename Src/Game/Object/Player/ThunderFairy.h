@@ -18,4 +18,13 @@ public:
 	float GetAttackPower()const override;
 
 	bool IsSkillHit()const override;
+
+	int GetSkillHitNum()const override;
+
+	VECTOR GetSkillHitPos(int index)const override;
+	
+	float GetSkillHitRadius(int index)const override;
+	
+	bool IsSkillHitAt(int index)const override;
+	
 };

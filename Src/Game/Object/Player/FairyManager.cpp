@@ -5,6 +5,7 @@ static const char* const FAIRY_MODEL_PATH[] = {
 	"",
 	"Data/Models/Player/Fairy/WindFairy/WindFairy.mv1",
 	"Data/Models/Player/Fairy/FireFairy/FireFairy.mv1",
+	"Data/Models/Player/Fairy/WaterFairy/WaterFairy.mv1",
 	"Data/Models/Player/Fairy/ThunderFairy/ThunderFairy.mv1",
 };
 
@@ -58,6 +59,7 @@ void FairyManager::Init()
 	m_prevKey1 = false;
 	m_prevKey2 = false;
 	m_prevKey3 = false;
+	m_prevKey4 = false;
 }
 
 //ロード
@@ -89,6 +91,9 @@ void FairyManager::SwapFairy(FairyType nextType,VECTOR playerpos)
 		break;
 	case FairyManager::FIRE:
 		m_nowFairy = new FireFairy();
+		break;
+	case FairyManager::WATER:
+		m_nowFairy = new WaterFairy();
 		break;
 	case FairyManager::THUNDER:
 		m_nowFairy = new ThunderFairy();
@@ -130,7 +135,12 @@ void FairyManager::Step(const VECTOR& playerPos,const float playerRotY)
 	{
 		SwapFairy(FIRE, playerPos);
 	}
-	bool isFairyThunderTrigger = IsPressedNow(KEY_INPUT_3, m_prevKey3);
+	bool isFairyWaterTrigger = IsPressedNow(KEY_INPUT_3, m_prevKey3);
+	if (isFairyWaterTrigger == true)
+	{
+		SwapFairy(WATER, playerPos);
+	}
+	bool isFairyThunderTrigger = IsPressedNow(KEY_INPUT_4, m_prevKey4);
 	if (isFairyThunderTrigger == true)
 	{
 		SwapFairy(THUNDER, playerPos);

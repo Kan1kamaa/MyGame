@@ -105,4 +105,24 @@ public:
 	{
 		return m_element;
 	}
+
+	virtual int GetSkillHitNum()const
+	{
+		return 1;
+	}
+
+	virtual VECTOR GetSkillHitPos(int index)const
+	{
+		return GetSkillPos();
+	}
+
+	virtual float GetSkillHitRadius(int index)const
+	{
+		return GetSkillRadius();
+	}
+
+	virtual bool IsSkillHitAt(int index)const
+	{
+		return IsSkillHit();
+	}
 };

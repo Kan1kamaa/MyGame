@@ -4,6 +4,9 @@
 
 const float MOVE_SPEED = 0.1;			//精霊の移動速度
 static const float ANIM_SPEED = 0.5f;	//アニメーションの速度
+//--- スキル判定の可視化(デバッグ用) ---
+//※色は GetColor を使うので、DXライブラリの初期化後(描画のとき)に作る
+static const bool SKILL_DEBUG_DRAW = true;		//false にすると、判定の球を表示しない
 //コンストラクタ
 FairyBase::FairyBase()
 {
@@ -90,6 +93,21 @@ void FairyBase::Update()
 void FairyBase::Draw()
 {
 	ObjectBase::Draw();
+
+	//スキルの判定の可視化(デバッグ):スキル中は、判定の球をワイヤーフレームで表示する
+	//ダメージが入るフレームだけ色を変える
+	if (SKILL_DEBUG_DRAW == true && IsSkillActive() == true)
+	{
+		for (int k = 0; k < GetSkillHitNum(); k++)
+		{
+			unsigned int color = GetColor(80, 160, 255);		//スキル中の判定の球の色(青)
+			if (IsSkillHitAt(k) == true)
+			{
+				color = GetColor(255, 80, 80);					//ダメージが入るフレームの色(赤)
+			}
+			DrawSphere3D(GetSkillHitPos(k), GetSkillHitRadius(k), 16, color, GetColor(0, 0, 0), FALSE);
+		}
+	}
 }
 
 //破棄

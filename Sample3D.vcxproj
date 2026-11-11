@@ -152,6 +152,7 @@
     <ClCompile Include="Src\Game\Object\Player\FireFairy.cpp" />
     <ClCompile Include="Src\Game\Object\Player\MeleeCharacter.cpp" />
     <ClCompile Include="Src\Game\Object\Player\ThunderFairy.cpp" />
+    <ClCompile Include="Src\Game\Object\Player\WaterFairy.cpp" />
     <ClCompile Include="Src\Game\Object\Player\WindFairy.cpp" />
     <ClCompile Include="Src\Game\Object\Shot\Shot.cpp" />
     <ClCompile Include="Src\Game\Object\Shot\ShotManager.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Src\Game\Object\Player\FireFairy.h" />
     <ClInclude Include="Src\Game\Object\Player\MeleeCharacter.h" />
     <ClInclude Include="Src\Game\Object\Player\ThunderFairy.h" />
+    <ClInclude Include="Src\Game\Object\Player\WaterFairy.h" />
     <ClInclude Include="Src\Game\Object\Player\WindFairy.h" />
     <ClInclude Include="Src\Game\Object\Shot\Shot.h" />
     <ClInclude Include="Src\Game\Object\Shot\ShotManager.h" />

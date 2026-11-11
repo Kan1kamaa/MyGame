@@ -1,2 +1,6 @@
-﻿  ThunderFairy.cpp
+﻿  WaterFairy.cpp
+C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Player\WaterFairy.cpp(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\2509413\Desktop\MyGame\Src\Game\Object\Player\WaterFairy.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  (ソース ファイル 'Src/Game/Object/Player/WaterFairy.cpp' をコンパイルしています)
+  
   Sample3D.vcxproj -> C:\Users\2509413\Desktop\MyGame\x64\Debug\Sample3D.exe

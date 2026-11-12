@@ -25,6 +25,7 @@ C:\Users\2509413\Desktop\MyGame\Src\Game\Scene\Scenebase.cpp;C:\Users\2509413\De
 C:\Users\2509413\Desktop\MyGame\Src\Game\Scene\SceneManager.cpp;C:\Users\2509413\Desktop\MyGame\Sample3D\x64\Debug\SceneManager.obj
 C:\Users\2509413\Desktop\MyGame\Src\Game\Scene\Titltscene.cpp;C:\Users\2509413\Desktop\MyGame\Sample3D\x64\Debug\Titltscene.obj
 C:\Users\2509413\Desktop\MyGame\Src\Game\System\GameCollision.cpp;C:\Users\2509413\Desktop\MyGame\Sample3D\x64\Debug\GameCollision.obj
+C:\Users\2509413\Desktop\MyGame\Src\Game\System\Reaction.cpp;C:\Users\2509413\Desktop\MyGame\Sample3D\x64\Debug\Reaction.obj
 C:\Users\2509413\Desktop\MyGame\Src\Game\System\SoundManager.cpp;C:\Users\2509413\Desktop\MyGame\Sample3D\x64\Debug\SoundManager.obj
 C:\Users\2509413\Desktop\MyGame\Src\Lib\Collision\Collision.cpp;C:\Users\2509413\Desktop\MyGame\Sample3D\x64\Debug\Collision.obj
 C:\Users\2509413\Desktop\MyGame\Src\Lib\Effect\Effect.cpp;C:\Users\2509413\Desktop\MyGame\Sample3D\x64\Debug\Effect.obj

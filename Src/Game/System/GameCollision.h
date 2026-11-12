@@ -4,6 +4,7 @@
 #include"../Object/Shot/ShotManager.h"
 #include"../Object/Player/CharacterManager.h"
 #include"../Object/Player/FairyManager.h"
+#include"../System/Reaction.h"
 class GameCollision {
 private:
 	static void ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy,int k);

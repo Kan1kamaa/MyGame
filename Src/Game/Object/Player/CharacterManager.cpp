@@ -496,11 +496,11 @@ void CharacterManager::DrawHUD()
 	//スタミナ表示
 	DrawFormatString(16, 670, GetColor(255, 255, 0), "スタミナ:%d/100", (int)m_stamina);
 	//攻撃判定の可視化(デバッグ):攻撃中は前方の当たり判定の球をワイヤーフレームで表示する
-	if (IsAttackActive() == true)
+	/*if (IsAttackActive() == true)
 	{
 		DrawSphere3D(GetAttackPos(), GetAttackRadius(), 16,
 			GetColor(255, 80, 80), GetColor(0, 0, 0), FALSE);
-	}
+	}*/
 }
 
 //----------------------

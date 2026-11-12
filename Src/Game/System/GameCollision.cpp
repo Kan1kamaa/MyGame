@@ -3,38 +3,36 @@
 
 void GameCollision::ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy,int k)
 {
-	switch (fairy->GetFairyElement())
+	ElementType element = fairy->GetFairyElement();
+	ReactionResult result = calcReaction(enemy.GetElement(), element);
+	
+	if (element == NONE)
 	{
-	case NONE:
-		break;
-	case WIND:
-		enemy.Pull(fairy->GetSkillHitPos(k), fairy->GetSkillPower());
+		return;
+	}
+	if (element == WIND)
+	{
+		enemy.Pull(fairy->GetSkillHitPos(k),fairy->GetSkillPower());
 		if (fairy->IsSkillHitAt(k) == true)
 		{
 			enemy.TakeDamage((int)fairy->GetAttackPower());
 		}
-		break;
-	case FIRE:
-		if (fairy->IsSkillHitAt(k) == true)
-		{
-			enemy.TakeDamage((int)fairy->GetAttackPower());
-			enemy.AddElement(FIRE);
-		}
-		break;
-	case THUNDER:
-		if (fairy->IsSkillHitAt(k) == true)
-		{
-			enemy.TakeDamage((int)fairy->GetAttackPower());
-			enemy.AddElement(THUNDER);
-		}
-		break;
-	case WATER:
-		enemy.AddElement(WATER);
-		if(fairy->IsSkillHitAt(k) == true)
-		{
-			enemy.TakeDamage((int)fairy->GetAttackPower());
-		}
-		break;
+		return;
+	}
+	if (fairy->IsSkillHitAt(k) == false)
+	{
+		return;
+	}
+	int damage = (int)(fairy->GetAttackPower() * result.damageRate);
+	enemy.TakeDamage(damage);
+
+	if (result.type == REACTION_OVERLOAD)
+	{
+		enemy.ClearElement();
+	}
+	else
+	{
+		enemy.AddElement(element);
 	}
 }
 

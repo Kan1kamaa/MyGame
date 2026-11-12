@@ -96,7 +96,7 @@ void FairyBase::Draw()
 
 	//スキルの判定の可視化(デバッグ):スキル中は、判定の球をワイヤーフレームで表示する
 	//ダメージが入るフレームだけ色を変える
-	if (SKILL_DEBUG_DRAW == true && IsSkillActive() == true)
+	/*if (SKILL_DEBUG_DRAW == true && IsSkillActive() == true)
 	{
 		for (int k = 0; k < GetSkillHitNum(); k++)
 		{
@@ -107,7 +107,7 @@ void FairyBase::Draw()
 			}
 			DrawSphere3D(GetSkillHitPos(k), GetSkillHitRadius(k), 16, color, GetColor(0, 0, 0), FALSE);
 		}
-	}
+	}*/
 }
 
 //破棄

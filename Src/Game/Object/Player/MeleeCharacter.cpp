@@ -81,7 +81,7 @@ void MeleeCharacter::Load()
 {
 	if (m_hndl == -1)
 	{
-		m_hndl = MV1LoadModel("Data/Models/Player/Charcter/charcter.mv1");
+		m_hndl = MV1LoadModel("Data/Models/Player/charcter/charcter.mv1");
 		BrightenModelAmbient(m_hndl);
 		//SetModelOutline(m_hndl, 0.0f, 0.0f, 0.0f);
 		RequestLoopAnim(ANIMID_IDLE, ANIM_SPEED);

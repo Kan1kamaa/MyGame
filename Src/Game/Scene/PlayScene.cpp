@@ -85,7 +85,7 @@ void PlayScene::Step()
 	camera.Step(player.GetPos());
 	//各種当たり判定
 	GameCollision::CheckHitEnemyToShot(enemy, shot);
-	GameCollision::CheckHitEnemyToPlayer(enemy, player);
+	GameCollision::CheckHitEnemyAttackToPlayer(enemy, player);
 	GameCollision::CheckHitPlayerAttackToEnemy(player, enemy);
 	GameCollision::CheckHitBossToShot(boss, shot);
 	GameCollision::CheckHitBossAttackToPlayer(boss, player);

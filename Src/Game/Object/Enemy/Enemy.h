@@ -7,6 +7,9 @@ private:
 	int m_invincibleCnt;
 	//引き寄せられているフレーム数
 	int m_pullCnt;
+	int m_stunCnt;
+	//次の攻撃を出すまでの残りフレーム数
+	int m_attackCoolCnt;
 	enum EnemyState
 	{
 		Search,
@@ -14,6 +17,7 @@ private:
 		Attack,
 		KnockBack,
 		Pulled,
+		Stunned,
 	};
 	EnemyState m_state;	//現在の行動状態
 
@@ -66,4 +70,13 @@ public:
 	void OnDead() override;
 
 	void Pull(const VECTOR& center, const float power)override;
+
+	bool IsStunned()const override;
+
+	//攻撃判定を出しているか(攻撃モーションの振り下ろしの区間だけtrue)
+	bool IsAttackActive()const override;
+	//攻撃判定(球)の中心座標(敵の前方)
+	VECTOR GetAttackPos()const override;
+	//攻撃判定(球)の半径
+	float GetAttackRadius()const override;
 };

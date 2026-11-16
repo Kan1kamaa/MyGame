@@ -16,15 +16,24 @@ static const int   DIR_CHANGE_MAX = 90;		//方向転換するまでの最長フ�
 
 //プレイヤーの追跡・攻撃の調整用パラメータ
 static const float DETECT_RANGE = 100.0f;	//この距離より近づくとプレイヤーを追いかける
-static const float ATTACK_RANGE = 10.0f;	//この距離より近づくと攻撃する
+static const float ATTACK_RANGE = 15.0f;	//この距離より近づくと攻撃する(攻撃判定の球が届く距離に合わせる)
 static const float CHASE_MOVE_SPEED = 0.3f;	//追いかけているときの1フレームあたりの移動量
 static const float ROT_SPEED = 0.08f;		//1フレームで向き直れる最大角度(巨体なのでゆっくり)
 
 //風の精霊関連
 static const float PULL_STOP_DIST = 10.0f;	//この距離まで引っ張られる
 static const int PULL_HOLD_TIME = 3.0f;     //「引き寄せが終わった後、元に戻るまでのフレーム数
+
+static const int SHOCK_STUN_TIME = 45;
+
+//攻撃の判定(ボスと同じ。攻撃モーションの振り下ろしの区間だけ、前方の球が当たる)
+static const float ATTACK_HIT_DIST = 6.0f;		//敵の前方、攻撃判定(球)の中心までの距離
+static const float ATTACK_HIT_RADIUS = 8.0f;	//攻撃判定(球)の半径
+static const float ATTACK_HIT_START = 0.7f;		//判定が出始める位置(攻撃アニメの長さに対する割合)
+static const float ATTACK_HIT_END = 1.0f;		//判定が終わる位置(同上。1.0より小さくする)
+static const int ATTACK_COOLDOWN = 60;			//攻撃と攻撃の間隔(フレーム数)
 //コンストラクタ
-Enemy::Enemy() : m_changeDirCnt(0), m_state(Search),m_invincibleCnt(0),m_pullCnt(0)
+Enemy::Enemy() : m_changeDirCnt(0), m_state(Search),m_invincibleCnt(0),m_pullCnt(0),m_stunCnt(0),m_attackCoolCnt(0)
 {
 }
 
@@ -47,6 +56,8 @@ void Enemy::Init()
 	m_state = Search;
 	m_invincibleCnt = 0;
 	m_pullCnt = 0;
+	m_stunCnt = 0;
+	m_attackCoolCnt = 0;
 	m_isActive = false;		//最初は見えないように消しておく
 }
 
@@ -154,14 +165,30 @@ void Enemy::StepChase(const VECTOR& playerPos)
 //プレイヤーを攻撃する
 void Enemy::StepAttack(const VECTOR& playerPos)
 {
+	//攻撃モーションを再生中なら、最後まで再生し終えるまでそのまま見せる(向きも変えない)
+	if (m_animData.m_index == ANIM_ATTACK && m_animData.m_nowFrm < m_animData.m_endFrm)
+	{
+		return;
+	}
+
 	VECTOR toPlayer = playerPos;
 	toPlayer.y = 0.0f;
 	VECTOR from = m_pos;
 	from.y = 0.0f;
 
-	//攻撃中も向きだけはプレイヤーに合わせ続ける
+	//攻撃と攻撃の間はクールタイムを置く(攻撃アニメは最終フレームで止まったままになる)
+	if (m_attackCoolCnt > 0)
+	{
+		m_attackCoolCnt--;
+		TurnToward(VSub(toPlayer, from));
+		return;
+	}
+
+	//クールタイムが明けたら、プレイヤーの方を向いて攻撃モーションを最初から再生する
 	TurnToward(VSub(toPlayer, from));
-	RequestLoopAnim(ANIM_ATTACK, ANIM_SPEED);
+	RequestAnim(ANIM_ATTACK, ANIM_SPEED);
+	m_animData.m_nowFrm = 0.0f;		//同じアニメを再生中でも、最初からやり直す
+	m_attackCoolCnt = ATTACK_COOLDOWN;
 }
 
 //ノックバック
@@ -212,9 +239,17 @@ void Enemy::Step(const VECTOR& playerPos)
 		return;
 	}
 	m_invincibleCnt--;
+	if (m_state != KnockBack && m_state != Pulled && m_state != Stunned)
+	{
+		if (RollShockStun() == true)
+		{
+			m_state = Stunned;
+			m_stunCnt = SHOCK_STUN_TIME;
+		}
+	}
 	//プレイヤーとの距離で状態を決める
 	float distToPlayer = VSize(VSub(playerPos, m_pos));
-	if (m_state != KnockBack && m_state != Pulled)
+	if (m_state != KnockBack && m_state != Pulled && m_state != Stunned)
 	{
 		if (distToPlayer <= ATTACK_RANGE)
 		{
@@ -239,6 +274,15 @@ void Enemy::Step(const VECTOR& playerPos)
 		{
 			m_pullCnt--;
 			if (m_pullCnt <= 0)
+			{
+				m_state = Chase;
+			}
+			break;
+		}
+		case Stunned:
+		{
+			m_stunCnt--;
+			if (m_stunCnt <= 0)
 			{
 				m_state = Chase;
 			}
@@ -271,6 +315,13 @@ void Enemy::Draw()
 	{
 		//他の描画に影響しないよう元の色に戻す
 		MV1SetDifColorScale(m_hndl, GetColorF(1.0f, 1.0f, 1.0f, 1.0f));
+	}
+
+	//攻撃判定の可視化(デバッグ):判定を出している間は攻撃判定の球をワイヤーフレームで表示する
+	if (IsAttackActive() == true)
+	{
+		DrawSphere3D(GetAttackPos(), GetAttackRadius(), 16,
+			GetColor(255, 80, 80), GetColor(0, 0, 0), FALSE);
 	}
 }
 
@@ -357,4 +408,52 @@ void Enemy::Pull(const VECTOR& center, const float power)
 	}
 	m_state = Pulled;
 	m_pullCnt = PULL_HOLD_TIME;
+}
+
+bool Enemy::IsStunned()const
+{
+	if (m_state == Stunned)
+	{
+		return true;
+	}
+	return false;
+}
+
+//攻撃判定を出しているか
+bool Enemy::IsAttackActive()const
+{
+	if (m_isActive == false || m_isDying == true)
+	{
+		return false;
+	}
+	//攻撃状態で、攻撃モーションを再生中でなければ判定は出さない(硬直・ノックバック・引き寄せ中は出ない)
+	if (m_state != Attack || m_animData.m_index != ANIM_ATTACK)
+	{
+		return false;
+	}
+
+	//振りかぶりと振り終わりを除いた、振り下ろしの区間だけ判定を出す
+	float startFrm = m_animData.m_endFrm * ATTACK_HIT_START;
+	float endFrm = m_animData.m_endFrm * ATTACK_HIT_END;
+	if (m_animData.m_nowFrm >= startFrm && m_animData.m_nowFrm <= endFrm)
+	{
+		return true;
+	}
+	return false;
+}
+
+//攻撃判定(球)の中心座標
+VECTOR Enemy::GetAttackPos()const
+{
+	//敵の前方に置く(TurnTowardと同じ向きの取り方)
+	VECTOR forward = { -sinf(m_rot.y), 0.0f, -cosf(m_rot.y) };
+	VECTOR center = VAdd(m_pos, VScale(forward, ATTACK_HIT_DIST));
+	center.y += m_radius;	//GetCollisionPosと同じく体の高さに合わせる
+	return center;
+}
+
+//攻撃判定(球)の半径
+float Enemy::GetAttackRadius()const
+{
+	return ATTACK_HIT_RADIUS;
 }

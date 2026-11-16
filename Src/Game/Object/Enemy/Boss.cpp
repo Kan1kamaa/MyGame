@@ -48,8 +48,12 @@ static const float ATTACK_HIT_RADIUS = 30.0f;   //通常攻撃の判定(球)の�
 static const int   JUMP_HIT_TIME = 6;           //ジャンプ攻撃の着地の衝撃判定を出すフレーム数
 static const float JUMP_HIT_RADIUS = 60.0f;     //ジャンプ攻撃の着地の衝撃判定(球)の半径
 
+//感電の調整用パラメータ(雑魚より効きにくく、短い硬直にしている)
+static const int   SHOCK_STUN_RATE = 50;        //基底の硬直の抽選に当たったうち、実際に硬直する割合(%)
+static const int   SHOCK_STUN_TIME = 30;        //硬直する長さ(フレーム数)
+
 //コンストラクタ
-BossGolem::BossGolem() :m_attackCoolCnt(0), m_state(Search)
+BossGolem::BossGolem() :m_attackCoolCnt(0), m_stunCnt(0), m_state(Search)
 {
 }
 
@@ -76,6 +80,7 @@ void BossGolem::Init()
 	m_jumpTarget = VEC_ZERO;
 	m_jumpMove = VEC_ZERO;
 	m_landingHitCnt = 0;
+	m_stunCnt = 0;
 	m_invincibleCnt = 0;
 	m_isActive = false;		//Request()で出現させるまで非表示
 }
@@ -302,6 +307,19 @@ void BossGolem::Step(const VECTOR& playerPos)
 		m_landingHitCnt--;
 	}
 
+	//感電中は、一定の確率で硬直する(追跡中と通常攻撃中だけ。ジャンプ攻撃・着地の衝撃中は中断しない)
+	if (m_state == Chase || m_state == Attack)
+	{
+		if (m_isJumping == false && m_landingHitCnt <= 0)
+		{
+			if (RollShockStun() == true && GetRand(99) < SHOCK_STUN_RATE)
+			{
+				m_state = Stunned;
+				m_stunCnt = SHOCK_STUN_TIME;
+			}
+		}
+	}
+
 	//攻撃モーション(通常攻撃1〜3)を再生中は、距離に関わらず最後まで攻撃状態を維持する
 	//(振っている途中でプレイヤーが離れてもChaseに切り替わって歩き出さないようにするため)
 	bool isAttackAnim = false;
@@ -341,7 +359,7 @@ void BossGolem::Step(const VECTOR& playerPos)
 		}
 	}
 
-	if (isMidAttack == false)
+	if (isMidAttack == false && m_state != Stunned)
 	{
 		//プレイヤーとの距離で状態を決める
 	
@@ -374,6 +392,18 @@ void BossGolem::Step(const VECTOR& playerPos)
 	case Chase:  StepChase(playerPos);  break;
 	case Attack: StepAttack(playerPos); break;
 	case JumpAttack: StepJumpAttack(playerPos); break;
+	case Stunned:
+	{
+		//硬直中は動かず、攻撃モーションも止める(待機モーションに切り替わるので攻撃判定も出ない)
+		m_speed = VEC_ZERO;
+		RequestLoopAnim(ANIM_IDLE, ANIM_SPEED);
+		m_stunCnt--;
+		if (m_stunCnt <= 0)
+		{
+			m_state = Chase;
+		}
+		break;
+	}
 	}
 	//重力を適用して上下移動(接地中は毎フレーム地面の高さに戻るだけなので害はない)
 	m_velocityY -= GRAVITY;
@@ -426,11 +456,11 @@ void BossGolem::Draw()
 	}
 
 	//攻撃判定の可視化(デバッグ):判定を出している間は攻撃判定の球をワイヤーフレームで表示する
-	/*if (IsAttackActive() == true)
+	if (IsAttackActive() == true)
 	{
 		DrawSphere3D(GetAttackPos(), GetAttackRadius(), 16,
 			GetColor(255, 80, 80), GetColor(0, 0, 0), FALSE);
-	}*/
+	}
 }
 
 //攻撃判定を出しているか
@@ -534,6 +564,7 @@ bool BossGolem::Request(const VECTOR& pos)
 	m_attackCoolCnt = 0;
 	m_isJumping = false;
 	m_landingHitCnt = 0;
+	m_stunCnt = 0;
 	m_isActive = true;
 
 	return true;
@@ -583,4 +614,14 @@ void BossGolem::OnDead()
 {
 	SoundManager::Play(SoundManager::SE_EXPLORE);
 	RequestAnim(ANIM_DEATH, ANIM_SPEED);
+}
+
+//感電で硬直しているか
+bool BossGolem::IsStunned()const
+{
+	if (m_state == Stunned)
+	{
+		return true;
+	}
+	return false;
 }

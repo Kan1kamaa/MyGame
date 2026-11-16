@@ -25,7 +25,10 @@ void GameCollision::ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy,int k)
 	}
 	int damage = (int)(fairy->GetAttackPower() * result.damageRate);
 	enemy.TakeDamage(damage);
-
+	if (result.startShock == true)
+	{
+		enemy.StartShock();
+	}
 	if (result.type == REACTION_OVERLOAD)
 	{
 		enemy.ClearElement();
@@ -33,6 +36,14 @@ void GameCollision::ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy,int k)
 	else
 	{
 		enemy.AddElement(element);
+	}
+}
+
+void GameCollision::ProcessExplosion(EnemyManager& enemy, BossGolem& boss)
+{
+	for (int i = 0; i < m_explosionList.size(); i++)
+	{
+
 	}
 }
 
@@ -158,8 +169,27 @@ void GameCollision::CheckHitBossToShot(BossGolem& boss, ShotManager& shotManager
 //ボスの攻撃とプレイヤーの当たり判定(体に触れただけではダメージを受けない)
 void GameCollision::CheckHitBossAttackToPlayer(BossGolem& boss, CharacterManager& player)
 {
-	//攻撃判定を出しているとき(振り下ろしの区間・ジャンプ攻撃の着地直後)でなければ何もしない
-	if (boss.IsAttackActive() == false)
+	CheckHitAttackToPlayer(boss, player);
+}
+
+//敵の攻撃(攻撃モーションの振り下ろしの区間だけ前方の球が当たる)とプレイヤーの当たり判定
+void GameCollision::CheckHitEnemyAttackToPlayer(EnemyManager& enemyManager, CharacterManager& player)
+{
+	for (int j = 0; j < ENEMY_MAX; j++)
+	{
+		CheckHitAttackToPlayer(enemyManager.GetEnemy(j), player);
+	}
+}
+
+//敵(雑魚・ボス共通)の攻撃判定とプレイヤーの当たり判定
+void GameCollision::CheckHitAttackToPlayer(EnemyBase& enemy, CharacterManager& player)
+{
+	//攻撃判定を出しているとき(振り下ろしの区間など)でなければ何もしない
+	if (enemy.GetActive() == false)
+	{
+		return;
+	}
+	if (enemy.IsAttackActive() == false)
 	{
 		return;
 	}
@@ -167,12 +197,12 @@ void GameCollision::CheckHitBossAttackToPlayer(BossGolem& boss, CharacterManager
 	VECTOR playerPos = player.GetCollisionPos();
 	float playerRad = player.GetRadius();
 
-	VECTOR attackPos = boss.GetAttackPos();
-	float attackRad = boss.GetAttackRadius();
+	VECTOR attackPos = enemy.GetAttackPos();
+	float attackRad = enemy.GetAttackRadius();
 
 	if (Collsion::CheckHitSphereToSphere(playerPos, playerRad, attackPos, attackRad) == true)
 	{
-		player.HitCalc(boss);
+		player.HitCalc(enemy);
 	}
 }
 

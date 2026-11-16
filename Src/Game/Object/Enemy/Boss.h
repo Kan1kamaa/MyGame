@@ -16,6 +16,7 @@ private:
 	VECTOR m_jumpTarget;	//ジャンプ攻撃の着地目標(踏み切った瞬間のプレイヤー位置)
 	VECTOR m_jumpMove;		//ジャンプ攻撃中の1フレームあたりの水平移動量(踏み切った瞬間に固定)
 	int m_landingHitCnt;	//ジャンプ攻撃の着地の衝撃判定を出している残りフレーム数
+	int m_stunCnt;			//感電で硬直している残りフレーム数
 	
 	enum EnemyState
 	{
@@ -25,6 +26,7 @@ private:
 		JumpAttack,
 		RockPillar,
 		Down,
+		Stunned,	//感電で硬直中
 
 	};
 	EnemyState m_state;	//現在の行動状態
@@ -87,14 +89,17 @@ public:
 
 	float GetAttackPower()const { return m_status.AttackPower; };
 	//攻撃判定を出しているか(攻撃モーションの振り下ろし区間・ジャンプ攻撃の着地直後だけtrue)
-	bool IsAttackActive() const;
+	bool IsAttackActive() const override;
 	//攻撃判定(球)の中心座標。通常攻撃はボスの前方、ジャンプ攻撃の着地は足元
-	VECTOR GetAttackPos() const;
+	VECTOR GetAttackPos() const override;
 	//攻撃判定(球)の半径
-	float GetAttackRadius() const;
+	float GetAttackRadius() const override;
 	//現在のHP・最大HP(HUD表示用)
 	int GetBossHp() const { return m_status.NowHp; }
 	int GetBossMaxHp() const { return m_status.MaxHp; }
 
 	void OnDead()override;
+
+	//感電で硬直しているか
+	bool IsStunned()const override;
 };

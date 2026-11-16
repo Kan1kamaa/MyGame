@@ -4,6 +4,12 @@ static const int ELEMENT_HOLD_TIME = 900;
 static const int DAMAGE_FLASH_TIME = 4;		//TakeDamageで被弾したときに赤く光らせるフレーム数(多段ヒット用に短め)
 static const int BURN_DAMAGE = 3;
 static const int BURN_INTERVAL = 30;
+static const int SHOCK_TIME = 900;
+static const int SHOCK_CHECK_INTERVAL = 30;
+static const int SHOCK_STUN_CHANCE = 30;
+static const int SHOCK_DAMAGE = 2;			//感電中に定期的に受けるダメージ(1回あたり)
+static const int SHOCK_DAMAGE_INTERVAL = 60;	//感電中のダメージが入る間隔(フレーム数)
+
 EnemyBase::EnemyBase()
 {
 	m_element = NONE;
@@ -11,6 +17,7 @@ EnemyBase::EnemyBase()
 	m_flashCnt = 0;
 	m_isDying = false;
 	m_speed = { 0.0f,0.0f,0.0f };
+	m_shockCnt = 0;
 }
 
 EnemyBase::~EnemyBase()
@@ -26,6 +33,7 @@ void EnemyBase::Init()
 	m_flashCnt = 0;
 	m_isDying = false;
 	m_speed = { 0.0f,0.0f,0.0f };
+	m_shockCnt = 0;
 }
 
 void EnemyBase::AddElement(ElementType elementType)
@@ -46,6 +54,15 @@ void EnemyBase::StepBase()
 	if (m_flashCnt > 0)
 	{
 		m_flashCnt--;
+	}
+	if (m_shockCnt > 0)
+	{
+		//感電中は、一定間隔でダメージを受ける(硬直とは別に入る)
+		if (m_shockCnt % SHOCK_DAMAGE_INTERVAL == 0)
+		{
+			TakeDamage(SHOCK_DAMAGE);
+		}
+		m_shockCnt--;
 	}
 }
 
@@ -110,4 +127,38 @@ void EnemyBase::ClearElement()
 {
 	m_element = NONE;
 	m_elementCnt = 0;
+}
+
+void EnemyBase::StartShock()
+{
+	m_shockCnt = SHOCK_TIME;
+}
+
+bool EnemyBase::IsShocked()const
+{
+	if (m_shockCnt > 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool EnemyBase::IsStunned()const
+{
+	return false;
+}
+
+bool EnemyBase::RollShockStun()const
+{
+	if (IsShocked() == false)return false;
+	if (m_shockCnt % SHOCK_CHECK_INTERVAL != 0)
+	{
+		return false;
+	}
+	if (GetRand(99) < SHOCK_STUN_CHANCE)
+	{
+		return true;
+	}
+	return false;
+
 }

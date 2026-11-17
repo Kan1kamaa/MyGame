@@ -13,9 +13,18 @@ struct ExplosionRequest
 	int damage;
 };
 
+//爆発の範囲のデバッグ表示用(処理した爆発を、数フレームだけ残して表示する)
+struct ExplosionDebugInfo
+{
+	VECTOR pos;
+	float radius;
+	int cnt;	//表示を続ける残りフレーム数
+};
+
 class GameCollision {
 private:
 	static std::vector<ExplosionRequest> m_explosionList;
+	static std::vector<ExplosionDebugInfo> m_explosionDebugList;
 
 	static void ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy,int k);
 	//敵(雑魚・ボス共通)の攻撃判定とプレイヤーの当たり判定
@@ -47,5 +56,9 @@ public:
 	//精霊のスキルとボスの当たり判定(ボスは引き寄せず、ダメージだけ与える)
 	static void CheckHitFairySkillToBoss(FairyManager& fairyManager, BossGolem& boss);
 
-	static void ProcessExplosion(EnemyManager& enemy, BossGolem& boss);
+	//記録された爆発を処理する(周囲の敵とボスにダメージ)。スキルの判定のあとに1フレームに1回呼ぶ
+	static void ProcessExplosion(EnemyManager& enemyManager, BossGolem& boss);
+
+	//爆発の範囲を、ワイヤーフレームで表示する(デバッグ用)
+	static void DrawExplosionDebug();
 };

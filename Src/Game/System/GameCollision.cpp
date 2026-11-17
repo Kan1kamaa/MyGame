@@ -1,6 +1,15 @@
 ﻿#include"GameCollision.h"
 #include"../../Lib/Collision/Collsion.h"
 
+
+static const int OVERLOAD_RADIUS = 50;
+static const int OVERLOAD_DAMAGE = 30;
+
+static const int EXPLOSION_DEBUG_TIME = 30;	//爆発の範囲を表示し続けるフレーム数(デバッグ用)
+
+std::vector<ExplosionRequest>GameCollision::m_explosionList;
+std::vector<ExplosionDebugInfo>GameCollision::m_explosionDebugList;
+
 void GameCollision::ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy,int k)
 {
 	ElementType element = fairy->GetFairyElement();
@@ -31,6 +40,11 @@ void GameCollision::ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy,int k)
 	}
 	if (result.type == REACTION_OVERLOAD)
 	{
+		ExplosionRequest request;
+		request.pos = enemy.GetCollisionPos();
+		request.radius = OVERLOAD_RADIUS;
+		request.damage = OVERLOAD_DAMAGE;
+		m_explosionList.push_back(request);
 		enemy.ClearElement();
 	}
 	else
@@ -39,11 +53,70 @@ void GameCollision::ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy,int k)
 	}
 }
 
-void GameCollision::ProcessExplosion(EnemyManager& enemy, BossGolem& boss)
+void GameCollision::ProcessExplosion(EnemyManager& enemyManager, BossGolem& boss)
 {
+	//デバッグ表示用の爆発を、表示時間が過ぎたものから消す
+	for (int i = 0; i < m_explosionDebugList.size();)
+	{
+		m_explosionDebugList[i].cnt--;
+		if (m_explosionDebugList[i].cnt <= 0)
+		{
+			m_explosionDebugList.erase(m_explosionDebugList.begin() + i);
+		}
+		else
+		{
+			i++;
+		}
+	}
+
 	for (int i = 0; i < m_explosionList.size(); i++)
 	{
+		VECTOR explosionPos = m_explosionList[i].pos;
+		float explosionRadius = m_explosionList[i].radius;
+		int explosionDamage = m_explosionList[i].damage;
 
+		//処理した爆発を、デバッグ表示用に残す
+		ExplosionDebugInfo debugInfo;
+		debugInfo.pos = explosionPos;
+		debugInfo.radius = explosionRadius;
+		debugInfo.cnt = EXPLOSION_DEBUG_TIME;
+		m_explosionDebugList.push_back(debugInfo);
+
+		for (int j = 0; j < ENEMY_MAX; j++)
+		{
+			Enemy& enemy = enemyManager.GetEnemy(j);
+			if (enemy.GetActive() == false)
+			{
+				continue;
+			}
+			VECTOR enemyPos = enemy.GetCollisionPos();
+			float enemyRadius = enemy.GetRadius();
+			if (Collsion::CheckHitSphereToSphere(explosionPos, explosionRadius, enemyPos, enemyRadius) == true)
+			{
+				enemy.TakeDamage(explosionDamage);
+			}
+		}
+		if (boss.GetActive() == false)
+		{
+			continue;
+		}
+		VECTOR bossPos = boss.GetCollisionPos();
+		float bossRadius = boss.GetRadius();
+		if (Collsion::CheckHitSphereToSphere(explosionPos, explosionRadius, bossPos, bossRadius) == true)
+		{
+			boss.TakeDamage(explosionDamage);
+		}
+	}
+	m_explosionList.clear();
+}
+
+//爆発の範囲を、ワイヤーフレームで表示する(デバッグ用)
+void GameCollision::DrawExplosionDebug()
+{
+	for (int i = 0; i < m_explosionDebugList.size(); i++)
+	{
+		DrawSphere3D(m_explosionDebugList[i].pos, m_explosionDebugList[i].radius, 24,
+			GetColor(255, 160, 0), GetColor(0, 0, 0), FALSE);
 	}
 }
 

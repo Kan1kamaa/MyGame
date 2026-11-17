@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\2509413\\Desktop\\MyGame\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\Reaction.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Game\\System\\Reaction.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Lib\\Effect\\EffectManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Lib\\Effect\\EffectManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\Scene\\PlayScene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Game\\Scene\\PlayScene.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\GameCollision.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Game\\System\\GameCollision.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Lib\\Effect\\EffectManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Lib\\Effect\\EffectManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\GameCollision.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Game\\System\\GameCollision.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\Reaction.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Game\\System\\Reaction.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\GameCollision.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|solutionrelative:Src\\Game\\System\\GameCollision.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5A1E6EB7-6A1B-4462-BB34-0FD04ACF0E6A}|Sample3D.vcxproj|C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\Reaction.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -242,24 +242,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Reaction.h",
-              "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\Reaction.h",
-              "RelativeDocumentMoniker": "Src\\Game\\System\\Reaction.h",
-              "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\Reaction.h",
-              "RelativeToolTip": "Src\\Game\\System\\Reaction.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-11-12T03:58:47.263Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "GameCollision.h",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\GameCollision.h",
               "RelativeDocumentMoniker": "Src\\Game\\System\\GameCollision.h",
@@ -285,33 +272,45 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "EffectManager.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Lib\\Effect\\EffectManager.cpp",
               "RelativeDocumentMoniker": "Src\\Lib\\Effect\\EffectManager.cpp",
               "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Lib\\Effect\\EffectManager.cpp",
               "RelativeToolTip": "Src\\Lib\\Effect\\EffectManager.cpp",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAE0AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACkAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-11-04T00:45:59.984Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Reaction.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\Reaction.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\System\\Reaction.cpp",
               "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\Reaction.cpp",
               "RelativeToolTip": "Src\\Game\\System\\Reaction.cpp",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-11-12T03:58:36.314Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
+              "Title": "Reaction.h",
+              "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\Reaction.h",
+              "RelativeDocumentMoniker": "Src\\Game\\System\\Reaction.h",
+              "ToolTip": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\Reaction.h",
+              "RelativeToolTip": "Src\\Game\\System\\Reaction.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-11-12T03:58:47.263Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "GameCollision.cpp",
               "DocumentMoniker": "C:\\Users\\2509413\\Desktop\\MyGame\\Src\\Game\\System\\GameCollision.cpp",
               "RelativeDocumentMoniker": "Src\\Game\\System\\GameCollision.cpp",
@@ -319,8 +318,7 @@
               "RelativeToolTip": "Src\\Game\\System\\GameCollision.cpp",
               "ViewState": "AgIAADAAAAAAAAAAAAAAAAQAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-11-04T00:45:59.984Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-04T00:45:59.984Z"
             },
             {
               "$type": "Document",

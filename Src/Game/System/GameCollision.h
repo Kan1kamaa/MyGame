@@ -57,7 +57,7 @@ public:
 	static void CheckHitFairySkillToBoss(FairyManager& fairyManager, BossGolem& boss);
 
 	//記録された爆発を処理する(周囲の敵とボスにダメージ)。スキルの判定のあとに1フレームに1回呼ぶ
-	static void ProcessExplosion(EnemyManager& enemyManager, BossGolem& boss);
+	static void ProcessExplosion(EnemyManager& enemyManager, BossGolem& boss,EffectManager& effect);
 
 	//爆発の範囲を、ワイヤーフレームで表示する(デバッグ用)
 	static void DrawExplosionDebug();

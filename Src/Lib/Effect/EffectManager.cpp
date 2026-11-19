@@ -24,6 +24,9 @@ namespace {
 		{"Data/Effect/FireSkill/FireSkill2.efkefc",0.0f,0.1f,5.0f,0.0f},
 		{"Data/Effect/ThunderSkill/ThunderSkill2.efkefc",-7.0f,0.1f,10.0f,0.0f},
 		{"Data/Effect/WaterSkill/WaterSkill.efkefc",0.0f,0.1f,10.0f,0.0f},
+		{"Data/Effect/Overload/Overload.efkefc",0.0f,0.1f,10.0f,0.0f},
+		{"Data/Effect/Shock/Shock.efkefc",0.0f,-2.0f,10.0f,0.0f},
+
 	};
 }
 

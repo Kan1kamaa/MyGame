@@ -53,7 +53,7 @@ void GameCollision::ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy,int k)
 	}
 }
 
-void GameCollision::ProcessExplosion(EnemyManager& enemyManager, BossGolem& boss)
+void GameCollision::ProcessExplosion(EnemyManager& enemyManager, BossGolem& boss,EffectManager& effect)
 {
 	//デバッグ表示用の爆発を、表示時間が過ぎたものから消す
 	for (int i = 0; i < m_explosionDebugList.size();)
@@ -74,7 +74,7 @@ void GameCollision::ProcessExplosion(EnemyManager& enemyManager, BossGolem& boss
 		VECTOR explosionPos = m_explosionList[i].pos;
 		float explosionRadius = m_explosionList[i].radius;
 		int explosionDamage = m_explosionList[i].damage;
-
+		effect.Play(EffectManager::EFFECT_OVERLOAD, explosionPos, 0.0f);
 		//処理した爆発を、デバッグ表示用に残す
 		ExplosionDebugInfo debugInfo;
 		debugInfo.pos = explosionPos;

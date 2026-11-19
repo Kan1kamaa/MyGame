@@ -318,11 +318,11 @@ void Enemy::Draw()
 	}
 
 	//攻撃判定の可視化(デバッグ):判定を出している間は攻撃判定の球をワイヤーフレームで表示する
-	if (IsAttackActive() == true)
+	/*if (IsAttackActive() == true)
 	{
 		DrawSphere3D(GetAttackPos(), GetAttackRadius(), 16,
 			GetColor(255, 80, 80), GetColor(0, 0, 0), FALSE);
-	}
+	}*/
 }
 
 //ショット発射

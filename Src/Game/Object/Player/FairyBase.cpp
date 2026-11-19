@@ -6,7 +6,7 @@ const float MOVE_SPEED = 0.1;			//精霊の移動速度
 static const float ANIM_SPEED = 0.5f;	//アニメーションの速度
 //--- スキル判定の可視化(デバッグ用) ---
 //※色は GetColor を使うので、DXライブラリの初期化後(描画のとき)に作る
-static const bool SKILL_DEBUG_DRAW = true;		//false にすると、判定の球を表示しない
+static const bool SKILL_DEBUG_DRAW = false;		//true にすると、判定の球を表示する(デバッグ用)
 //コンストラクタ
 FairyBase::FairyBase()
 {

@@ -16,7 +16,7 @@ void PlayScene::Draw()
 	camera.Draw();
 	enemy.Draw();
 	boss.Draw();
-	GameCollision::DrawExplosionDebug();
+	//GameCollision::DrawExplosionDebug();	//爆発の範囲の表示(デバッグ用)
 	effect.Draw();
 }
 

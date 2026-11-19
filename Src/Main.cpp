@@ -10,7 +10,7 @@ int  WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	// メモリリーク確認用
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	ChangeWindowMode(true);			// ウィンドウモードで起動
+	ChangeWindowMode(false);			// ウィンドウモードで起動
 	SetGraphMode(1280, 720, 32);
 	SetUseDirect3DVersion(DX_DIRECT3D_11);	// Effekseerを使うためDirectX11を指定
 

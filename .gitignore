@@ -1,0 +1,22 @@
+# Visual Studio が自動で作るファイル(IntelliSenseのキャッシュなど。大きく、コミットする必要がない)
+.vs/
+*.suo
+*.user
+ipch/
+*.ipch
+*.VC.db
+*.VC.db-shm
+*.VC.db-wal
+*.VC.opendb
+
+# ビルドで作られるファイル
+x64/
+Debug/
+Release/
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.tlog
+*.log
+Log.txt

@@ -8,7 +8,7 @@ private:
 
 	ElementType m_element;
 	int m_elementCnt;
-	
+	int m_shockEffectHndl;
 public:
 	EnemyBase();
 	~EnemyBase();
@@ -35,6 +35,9 @@ public:
 
 	bool RollShockStun()const;
 
+	int GetShockEffectHndl()const;
+
+	void SetShockEffectHndl(int hndl);
 	//=========================
 	//攻撃の当たり判定(GameCollisionから使う。敵の種類ごとに上書きする)
 	//=========================

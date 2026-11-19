@@ -95,6 +95,7 @@ void PlayScene::Step()
 	GameCollision::CheckHitFairySkillToBoss(fairy, boss);
 	//スキルの判定で記録された爆発(過負荷)を処理する
 	GameCollision::ProcessExplosion(enemy, boss,effect);
+	GameCollision::ProcessShockEffectManager(enemy, boss, effect);
 
 	//プレイヤーがリスポーンしたら、ボスも最初の状態に戻して出し直す
 	if (player.CheckRespawned() == true)

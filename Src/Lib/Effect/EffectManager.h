@@ -48,4 +48,11 @@ public:
 	//@rotY : 基準となる向き(キャラクターのY回転。エフェクトはこの方向を向いて出る)
 	//@return : 再生中のエフェクトのハンドル(再生失敗は-1)
 	int Play(EffectId id, const VECTOR& pos, float rotY);
+
+	//再生中のエフェクトの位置を更新する(敵に追従させるときに毎フレーム呼ぶ)
+	void SetPos(int playingHndl, EffectId id, const VECTOR& pos, float rotY);
+	//そのエフェクトがまだ再生中か
+	bool IsPlaying(int playingHndl);
+	//再生中のエフェクトを止める
+	void Stop(int playingHndl);
 };

@@ -120,6 +120,38 @@ void GameCollision::DrawExplosionDebug()
 	}
 }
 
+
+void GameCollision::UpdateShockEffect(EnemyBase& enemy, EffectManager& effect)
+{
+	if (enemy.IsShocked() == false || enemy.GetActive() == false)
+	{
+		if (enemy.GetShockEffectHndl() != -1)
+		{
+			effect.Stop(enemy.GetShockEffectHndl());
+			enemy.SetShockEffectHndl(-1);
+		}
+	}
+	else if(enemy.IsShocked() == true)
+	{
+		if (enemy.GetShockEffectHndl() == -1 || effect.IsPlaying(enemy.GetShockEffectHndl()) == false)
+		{
+			int hndl = effect.Play(EffectManager::EFFECT_SHOCK, enemy.GetCollisionPos(), 0.0f);
+			enemy.SetShockEffectHndl(hndl);
+		}
+		effect.SetPos(enemy.GetShockEffectHndl(), EffectManager::EFFECT_SHOCK, enemy.GetCollisionPos(), 0.0f);
+	}
+}
+
+void GameCollision::ProcessShockEffectManager(EnemyManager& enemyManager, BossGolem& boss, EffectManager& effect)
+{
+	for (int i = 0; i < ENEMY_MAX; i++)
+	{
+		Enemy& enemy = enemyManager.GetEnemy(i);
+		UpdateShockEffect(enemy, effect);
+	}
+	UpdateShockEffect(boss, effect);
+}
+
 void GameCollision::CheckHitEnemyToShot(EnemyManager& enemyManager, ShotManager& shotManager)
 {
 	for (int i = 0; i < PL_SHOT_MAX; i++)

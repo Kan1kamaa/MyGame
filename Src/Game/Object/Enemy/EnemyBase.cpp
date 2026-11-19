@@ -18,6 +18,7 @@ EnemyBase::EnemyBase()
 	m_isDying = false;
 	m_speed = { 0.0f,0.0f,0.0f };
 	m_shockCnt = 0;
+	m_shockEffectHndl = -1;
 }
 
 EnemyBase::~EnemyBase()
@@ -34,6 +35,7 @@ void EnemyBase::Init()
 	m_isDying = false;
 	m_speed = { 0.0f,0.0f,0.0f };
 	m_shockCnt = 0;
+	m_shockEffectHndl = -1;
 }
 
 void EnemyBase::AddElement(ElementType elementType)
@@ -161,4 +163,14 @@ bool EnemyBase::RollShockStun()const
 	}
 	return false;
 
+}
+
+int EnemyBase::GetShockEffectHndl()const
+{
+	return m_shockEffectHndl;
+}
+
+void EnemyBase::SetShockEffectHndl(int hndl)
+{
+	m_shockEffectHndl = hndl;
 }

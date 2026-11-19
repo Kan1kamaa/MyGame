@@ -61,4 +61,8 @@ public:
 
 	//爆発の範囲を、ワイヤーフレームで表示する(デバッグ用)
 	static void DrawExplosionDebug();
+
+	static void UpdateShockEffect(EnemyBase& enemy, EffectManager& effect);
+
+	static void ProcessShockEffectManager(EnemyManager& enemyManager, BossGolem& boss, EffectManager& effect);
 };

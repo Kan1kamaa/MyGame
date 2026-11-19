@@ -25,7 +25,7 @@ namespace {
 		{"Data/Effect/ThunderSkill/ThunderSkill2.efkefc",-7.0f,0.1f,10.0f,0.0f},
 		{"Data/Effect/WaterSkill/WaterSkill.efkefc",0.0f,0.1f,10.0f,0.0f},
 		{"Data/Effect/Overload/Overload.efkefc",0.0f,0.1f,10.0f,0.0f},
-		{"Data/Effect/Shock/Shock.efkefc",0.0f,-2.0f,10.0f,0.0f},
+		{"Data/Effect/Shock/Shock.efkefc",0.0f,0.0f,20.0f,0.0f},
 
 	};
 }
@@ -121,4 +121,40 @@ int EffectManager::Play(EffectId id, const VECTOR& pos, float rotY)
 	SetRotationPlayingEffekseer3DEffect(playingHndl, 0.0f, rotY + info.rotOffsetY, 0.0f);
 	SetScalePlayingEffekseer3DEffect(playingHndl, info.scale, info.scale, info.scale);
 	return playingHndl;
+}
+
+void EffectManager::SetPos(int playingHndl, EffectId id, const VECTOR& pos, float rotY)
+{
+	if (playingHndl == -1 || id >= EFFECT_NUM)
+	{
+		return;
+	}
+	const EffectInfo& info = EFFECT_INFO[id];
+	//キャラの向いている方向(CharacterManagerの前方ベクトルと同じ取り方)へずらした位置に出す
+	VECTOR forward = { -sinf(rotY), 0.0f, -cosf(rotY) };
+	VECTOR playPos = VAdd(pos, VScale(forward, info.forwardDist));
+	playPos.y += info.height;
+	SetPosPlayingEffekseer3DEffect(playingHndl, playPos.x, playPos.y, playPos.z);
+}
+
+bool EffectManager::IsPlaying(int playingHndl)
+{
+	if (playingHndl == -1)
+	{
+		return false;
+	}
+	if (IsEffekseer3DEffectPlaying(playingHndl) == 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+void EffectManager::Stop(int playingHndl)
+{
+	if (playingHndl == -1)
+	{
+		return;
+	}
+	StopEffekseer3DEffect(playingHndl);
 }

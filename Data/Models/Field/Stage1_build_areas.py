@@ -3,6 +3,9 @@ from mathutils import Vector, noise
 
 M = bpy.data.materials
 
+# True: paint routes as dirt roads. False: no visible road; routes only stay free of trees/rocks.
+SHOW_PATHS = False
+
 def sstep(a, b, x):
     t = (x - a) / (b - a)
     t = 0.0 if t < 0 else (1.0 if t > 1 else t)
@@ -85,20 +88,49 @@ for _c in CFG.values():
     if "bridge" in _c: _c["bridge"] = (_xy(_c["bridge"][0]), _c["bridge"][1] * S)
     _c["trees"] = int(_c["trees"] * S * S); _c["rocks"] = int(_c["rocks"] * S * S); _c["grass"] = int(_c["grass"] * S * S)
 
+MARGIN = 35      # scenery outside the walkable area (no walls: hills, forest, far mountains)
+
+def exit_frame(c, side, pos):
+    """(edge point x, y, lateral axis coordinate fn, outward distance fn)"""
+    hx, hy = c["size"][0] / 2, c["size"][1] / 2
+    if side == "E": return (hx, pos, lambda x, y: abs(y - pos), lambda x, y: x - hx)
+    if side == "W": return (-hx, pos, lambda x, y: abs(y - pos), lambda x, y: -hx - x)
+    if side == "N": return (pos, hy, lambda x, y: abs(x - pos), lambda x, y: y - hy)
+    return (pos, -hy, lambda x, y: abs(x - pos), lambda x, y: -hy - y)
+
+def plateau_top(c, x, y):
+    top = 0.0
+    for (cx, cy, rx, ry, ph) in c["plateaus"]:
+        dx, dy = x - cx, y - cy
+        a = math.atan2(dy, dx)
+        jit = 1 + 0.1 * noise.noise(Vector((math.cos(a) * 1.5 + cx, math.sin(a) * 1.5 + cy, c["seed"])))
+        dn = ((abs(dx) / rx) ** 4 + (abs(dy) / ry) ** 4) ** 0.25
+        top = max(top, ph * sstep(-0.9, 0.9, (jit - dn) * min(rx, ry)))
+    return top
+
 def make_height(c):
     seed = c["seed"]; hx, hy = c["size"][0] / 2, c["size"][1] / 2
+    exits = []
+    for (_, side, pos, w, _, _) in c["exits"]:
+        ex, ey, lat, out = exit_frame(c, side, pos)
+        # height of the ground just inside the exit, kept along the corridor that leads out
+        inx = ex - 3 if side == "E" else ex + 3 if side == "W" else ex
+        iny = ey - 3 if side == "N" else ey + 3 if side == "S" else ey
+        exits.append((w, lat, out, plateau_top(c, inx, iny)))
     def h(x, y):
         n = noise.fractal(Vector((x * 0.035 + seed * 10, y * 0.035, 0.5)), 0.5, 2.0, 4)
         n2 = noise.noise(Vector((x * 0.12, y * 0.12, seed * 3.7)))
         base = 0.5 + c["amp"] * n
-        top = 0.0
-        for (cx, cy, rx, ry, ph) in c["plateaus"]:
-            dx, dy = x - cx, y - cy
-            a = math.atan2(dy, dx)
-            jit = 1 + 0.1 * noise.noise(Vector((math.cos(a) * 1.5 + cx, math.sin(a) * 1.5 + cy, seed)))
-            dn = ((abs(dx) / rx) ** 4 + (abs(dy) / ry) ** 4) ** 0.25
-            top = max(top, ph * sstep(-0.9, 0.9, (jit - dn) * min(rx, ry)))
-        z = base + top
+        z = base + plateau_top(c, x, y)
+        # open surroundings instead of walls
+        od = max(abs(x) - hx, abs(y) - hy) + 3.0 * n2
+        hills = 3.0 * sstep(-2, 14, od) * (1 + 0.5 * n) + 12.0 * sstep(16, 34, od) * (1 + 0.4 * n)
+        for (w, lat, out, etop) in exits:
+            cw = (1 - sstep(w / 2, w / 2 + 4, lat(x, y))) * sstep(-8, -2, out(x, y))
+            if cw > 0:
+                hills *= 1 - cw
+                z = lerp(z, max(z, base + etop), cw)
+        z += hills
         for (cx, cy, r) in c["ponds"]:
             z = lerp(-2.0, z, sstep(r - 4, r, math.hypot(x - cx, y - cy)))
         for (pts, w) in c["rivers"]:
@@ -108,17 +140,18 @@ def make_height(c):
             k = 1 - sstep(w / 2, w / 2 + 1.5, d)
             if k > 0:
                 z = lerp(z, base + lerp(z0, z1, t), k)
-        n4 = noise.noise(Vector((x * 0.3, y * 0.3, seed * 1.9)))
-        d = min(hx - abs(x), hy - abs(y)) + 3.0 * n2
-        wall = c["wall"] * (1 - sstep(0, 7, d)) * (1 + 0.3 * n2 + 0.12 * n4)
-        for (_, side, pos, w, _, _) in c["exits"]:
-            if side in "EW":
-                lat = abs(y - pos); near = hx - x if side == "E" else hx + x
-            else:
-                lat = abs(x - pos); near = hy - y if side == "N" else hy + y
-            wall *= 1 - (1 - sstep(w / 2, w / 2 + 3, lat)) * (1 - sstep(11, 15, near))
-        return z + wall
+        return z
     return h
+
+# rivers continue past the walkable area so they flow in from / out to the scenery
+for _c in CFG.values():
+    ext = []
+    for (pts, w) in _c["rivers"]:
+        def _far(p, q):
+            dx, dy = p[0] - q[0], p[1] - q[1]; L = math.hypot(dx, dy) or 1
+            return (p[0] + dx / L * (MARGIN + 10), p[1] + dy / L * (MARGIN + 10))
+        ext.append(([_far(pts[0], pts[1])] + pts + [_far(pts[-1], pts[-2])], w))
+    _c["rivers"] = ext
 
 def remove_scene(name):
     sc = bpy.data.scenes.get(name)
@@ -134,12 +167,13 @@ def build(code):
     c = CFG[code]; name = c["name"]
     remove_scene(name)
     sx, sy = c["size"]; hx, hy = sx / 2, sy / 2; st = 0.5
-    nx, ny = int(sx / st), int(sy / st)
+    tx, ty = hx + MARGIN, hy + MARGIN                     # terrain half size incl. scenery
+    nx, ny = int(2 * tx / st), int(2 * ty / st)
     hf = make_height(c)
-    H = [[hf(-hx + i * st, -hy + j * st) for i in range(nx + 1)] for j in range(ny + 1)]
+    H = [[hf(-tx + i * st, -ty + j * st) for i in range(nx + 1)] for j in range(ny + 1)]
 
     def samp(x, y):
-        fi = (x + hx) / st; fj = (y + hy) / st
+        fi = (x + tx) / st; fj = (y + ty) / st
         i = max(0, min(nx - 1, int(fi))); j = max(0, min(ny - 1, int(fj)))
         u = fi - i; v = fj - j
         return (H[j][i] * (1 - u) + H[j][i + 1] * u) * (1 - v) + (H[j + 1][i] * (1 - u) + H[j + 1][i + 1] * u) * v
@@ -162,7 +196,7 @@ def build(code):
         o = bpy.data.objects.new(n, data); cc.objects.link(o); return o
 
     # --- terrain
-    verts = [(-hx + i * st, -hy + j * st, H[j][i]) for j in range(ny + 1) for i in range(nx + 1)]
+    verts = [(-tx + i * st, -ty + j * st, H[j][i]) for j in range(ny + 1) for i in range(nx + 1)]
     W = nx + 1
     faces = [(j * W + i, j * W + i + 1, (j + 1) * W + i + 1, (j + 1) * W + i) for j in range(ny) for i in range(nx)]
     me = bpy.data.meshes.new(code + "_Terrain"); me.from_pydata(verts, [], faces); me.update()
@@ -174,7 +208,7 @@ def build(code):
         n3 = noise.noise(Vector((x * 0.08, y * 0.08, c["seed"] * 5)))
         if z < 0.05 and near_water(x, y): k = 5
         elif nz < 0.75: k = 4
-        elif any(polyd(x, y, pts) < 2.6 + 0.6 * n3 for pts in c["paths"]): k = 3
+        elif SHOW_PATHS and any(polyd(x, y, pts) < 2.6 + 0.6 * n3 for pts in c["paths"]): k = 3
         elif c["forest"]: k = 2 if n3 > -0.35 else 1
         else: k = 0 if n3 > -0.1 else 1
         idx.append(k)
@@ -187,7 +221,7 @@ def build(code):
         bX = [cx + r + 1 for (cx, cy, r) in c["ponds"]] + [p[0] + w for (ps, w) in c["rivers"] for p in ps]
         by = [cy - r - 1 for (cx, cy, r) in c["ponds"]] + [p[1] - w for (ps, w) in c["rivers"] for p in ps]
         bY = [cy + r + 1 for (cx, cy, r) in c["ponds"]] + [p[1] + w for (ps, w) in c["rivers"] for p in ps]
-        x0, x1 = max(-hx + 8, min(bx)), min(hx - 8, max(bX)); y0, y1 = max(-hy + 8, min(by)), min(hy - 8, max(bY))
+        x0, x1 = max(-tx + 1, min(bx)), min(tx - 1, max(bX)); y0, y1 = max(-ty + 1, min(by)), min(ty - 1, max(bY))
         wm = bpy.data.meshes.new(code + "_Water")
         wm.from_pydata([(x0, y0, -0.9), (x1, y0, -0.9), (x1, y1, -0.9), (x0, y1, -0.9)], [], [(0, 1, 2, 3)])
         wm.materials.append(M["Water"]); obj(code + "_Water", wm, col)
@@ -265,6 +299,26 @@ def build(code):
         o = obj(code + "_Tree", pine if (c["forest"] and rng.random() < 0.6) else broad, tc)
         o.location = (x, y, z - 0.3); o.scale = (s, s, s * rng.uniform(0.9, 1.2)); o.rotation_euler = (0, 0, rng.uniform(0, 6.28))
 
+    # --- scenery forest outside the walkable area (natural border instead of walls; exit corridors stay open)
+    frames = [(exit_frame(c, side, pos), w) for (_, side, pos, w, _, _) in c["exits"]]
+    sc_tc = sub("SceneryTrees"); opts = []; n_o = 0
+    for _ in range(12000):
+        if n_o >= 420: break
+        x = rng.uniform(-tx + 2, tx - 2); y = rng.uniform(-ty + 2, ty - 2)
+        od = max(abs(x) - hx, abs(y) - hy)
+        if od < 1 or rng.random() > 1 - 0.6 * sstep(8, 30, od): continue
+        if any(lat(x, y) < w / 2 + 5 and out(x, y) > -10 for ((_, _, lat, out), w) in frames): continue
+        if near_water(x, y) or slope(x, y) > 0.6: continue
+        if any((px - x) ** 2 + (py - y) ** 2 < 18 for px, py in opts): continue
+        opts.append((x, y)); n_o += 1
+        s = rng.uniform(0.9, 1.6)
+        o = obj(code + "_SceneryTree", pine if rng.random() < (0.7 if c["forest"] else 0.35) else broad, sc_tc)
+        o.location = (x, y, samp(x, y) - 0.3); o.scale = (s, s, s * rng.uniform(0.9, 1.2)); o.rotation_euler = (0, 0, rng.uniform(0, 6.28))
+
+    # invisible play boundary for the game (the visible walls are gone)
+    bnd = obj(code + "_PlayBounds", None, mc); bnd.empty_display_type = 'CUBE'
+    bnd.scale = (hx, hy, 15); bnd["bounds"] = True
+
     # --- rocks
     rc = sub("Rocks"); rocks = [bpy.data.meshes["Rock_%d" % i] for i in range(3)]; n_r = 0
     for _ in range(c["rocks"] * 20):
@@ -284,7 +338,8 @@ def build(code):
         if n_g >= c["grass"]: break
         x = rng.uniform(-hx + 2, hx - 2); y = rng.uniform(-hy + 2, hy - 2)
         z = samp(x, y)
-        if near_water(x, y) or slope(x, y) > 0.3 or any(polyd(x, y, p) < 1.8 for p in c["paths"]): continue
+        if near_water(x, y) or slope(x, y) > 0.3: continue
+        if SHOW_PATHS and any(polyd(x, y, p) < 1.8 for p in c["paths"]): continue
         for k in range(3):
             a = rng.uniform(0, 6.28); hgt = rng.uniform(0.4, 0.8)
             dx, dy = math.cos(a) * 0.12, math.sin(a) * 0.12
@@ -307,7 +362,7 @@ def build(code):
     sun = obj(code + "_Sun", bpy.data.lights["Sun"], col); sun.rotation_euler = (math.radians(50), 0, math.radians(35))
     cd = bpy.data.cameras.new(code + "_Cam"); cd.lens = 24; cd.clip_end = 1000
     cam = obj(code + "_Cam", cd, col)
-    cam.location = (0, -sy * 0.75, max(sx, sy) * 1.1)
+    cam.location = (0, -sy * 0.85, max(sx, sy) * 0.75)
     cam.rotation_euler = (Vector((0, 0, 0)) - cam.location).to_track_quat('-Z', 'Y').to_euler()
     sc.camera = cam
 

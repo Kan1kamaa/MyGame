@@ -97,9 +97,22 @@ void EnemyBase::StepElement()
 	}
 }
 
-unsigned int EnemyBase::GetElementColor()
+COLOR_F EnemyBase::GetElementColor()const
 {
-	return 0;
+	switch (m_element)
+	{
+	case NONE:
+		return{ 1.0f,1.0f,1.0f,1.0f };
+	case WIND:
+		return{ 1.0f,1.0f,1.0f,1.0f };
+	case FIRE:
+		return{ 1.0f,0.5f,0.2f,1.0f };
+	case WATER:
+		return{ 0.3f,0.5f,1.0f,1.0f };
+	case THUNDER:
+		return{ 1.0f,1.0f,0.5f,1.0f };
+	}
+	return{ 1.0f,1.0f,1.0f,1.0f };
 }
 
 void EnemyBase::Pull(const VECTOR& center, float power)

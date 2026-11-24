@@ -58,7 +58,7 @@ protected:
 	void StepBase();
 	void StepElement();
 
-	unsigned int GetElementColor();
+	COLOR_F GetElementColor()const;
 
 
 

@@ -91,8 +91,8 @@ void PlayScene::Step()
 	GameCollision::CheckHitBossToShot(boss, shot);
 	GameCollision::CheckHitBossAttackToPlayer(boss, player);
 	GameCollision::CheckHitPlayerAttackToBoss(player, boss);
-	GameCollision::CheckHitFairySkillToEnemy(fairy, enemy);
-	GameCollision::CheckHitFairySkillToBoss(fairy, boss);
+	GameCollision::CheckHitFairySkillToEnemy(fairy, enemy, effect);
+	GameCollision::CheckHitFairySkillToBoss(fairy, boss, effect);
 	//スキルの判定で記録された爆発(過負荷)を処理する
 	GameCollision::ProcessExplosion(enemy, boss,effect);
 	GameCollision::ProcessShockEffectManager(enemy, boss, effect);

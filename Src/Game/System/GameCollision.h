@@ -26,7 +26,7 @@ private:
 	static std::vector<ExplosionRequest> m_explosionList;
 	static std::vector<ExplosionDebugInfo> m_explosionDebugList;
 
-	static void ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy,int k);
+	static void ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy,int k, EffectManager& effect);
 	//敵(雑魚・ボス共通)の攻撃判定とプレイヤーの当たり判定
 	static void CheckHitAttackToPlayer(EnemyBase& enemy, CharacterManager& player);
 public:
@@ -51,10 +51,10 @@ public:
 	static void CheckHitPlayerAttackToBoss(CharacterManager& player, BossGolem& boss);
 
 	//精霊のスキルと敵の当たり判定
-	static void CheckHitFairySkillToEnemy(FairyManager& fairyManager, EnemyManager& enemyManager);
+	static void CheckHitFairySkillToEnemy(FairyManager& fairyManager, EnemyManager& enemyManager, EffectManager& effect);
 
 	//精霊のスキルとボスの当たり判定(ボスは引き寄せず、ダメージだけ与える)
-	static void CheckHitFairySkillToBoss(FairyManager& fairyManager, BossGolem& boss);
+	static void CheckHitFairySkillToBoss(FairyManager& fairyManager, BossGolem& boss, EffectManager& effect);
 
 	//記録された爆発を処理する(周囲の敵とボスにダメージ)。スキルの判定のあとに1フレームに1回呼ぶ
 	static void ProcessExplosion(EnemyManager& enemyManager, BossGolem& boss,EffectManager& effect);

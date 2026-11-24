@@ -26,6 +26,7 @@ namespace {
 		{"Data/Effect/WaterSkill/WaterSkill.efkefc",0.0f,0.1f,10.0f,0.0f},
 		{"Data/Effect/Overload/Overload.efkefc",0.0f,0.1f,10.0f,0.0f},
 		{"Data/Effect/Shock/Shock.efkefc",0.0f,0.0f,20.0f,0.0f},
+		{"Data/Effect/Vaporize/Vaporize.efkefc",0.0f,-10.0f,30.0f,0.0f},
 
 	};
 }

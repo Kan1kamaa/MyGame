@@ -448,12 +448,13 @@ void BossGolem::Draw()
 	{
 		MV1SetDifColorScale(m_hndl, GetColorF(1.0f, 0.3f, 0.3f, 1.0f));
 	}
-	MV1DrawModel(m_hndl);
-	if (isFlash == true)
+	else
 	{
-		//他の描画に影響しないよう元の色に戻す
-		MV1SetDifColorScale(m_hndl, GetColorF(1.0f, 1.0f, 1.0f, 1.0f));
+		MV1SetDifColorScale(m_hndl, GetElementColor());
 	}
+	MV1DrawModel(m_hndl);
+	//他の描画に影響しないよう元の色に戻す
+	MV1SetDifColorScale(m_hndl, GetColorF(1.0f, 1.0f, 1.0f, 1.0f));
 
 	//攻撃判定の可視化(デバッグ):判定を出している間は攻撃判定の球をワイヤーフレームで表示する
 	/*if (IsAttackActive() == true)

@@ -10,7 +10,7 @@ static const int EXPLOSION_DEBUG_TIME = 30;	//爆発の範囲を表示し続け�
 std::vector<ExplosionRequest>GameCollision::m_explosionList;
 std::vector<ExplosionDebugInfo>GameCollision::m_explosionDebugList;
 
-void GameCollision::ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy,int k)
+void GameCollision::ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy,int k, EffectManager& effect)
 {
 	ElementType element = fairy->GetFairyElement();
 	ReactionResult result = calcReaction(enemy.GetElement(), element);
@@ -45,6 +45,12 @@ void GameCollision::ApplySkillEffect(FairyBase* fairy, EnemyBase& enemy,int k)
 		request.radius = OVERLOAD_RADIUS;
 		request.damage = OVERLOAD_DAMAGE;
 		m_explosionList.push_back(request);
+		enemy.ClearElement();
+	}
+	else if (result.type == REACTION_VAPORIZE)
+	{
+		//蒸発:反応が起きた敵の位置にエフェクトを出し、付いていた属性を消費する
+		effect.Play(EffectManager::EFFECT_VAPORIZE, enemy.GetCollisionPos(), 0.0f);
 		enemy.ClearElement();
 	}
 	else
@@ -337,7 +343,7 @@ void GameCollision::CheckHitPlayerAttackToBoss(CharacterManager& player, BossGol
 }
 
 //精霊のスキルとボスの当たり判定(ボスは引き寄せず、ダメージだけ与える)
-void GameCollision::CheckHitFairySkillToBoss(FairyManager& fairyManager, BossGolem& boss)
+void GameCollision::CheckHitFairySkillToBoss(FairyManager& fairyManager, BossGolem& boss, EffectManager& effect)
 {
 	//ボスが出現していなければ何もしない
 	if (boss.GetActive() == false)
@@ -365,14 +371,14 @@ void GameCollision::CheckHitFairySkillToBoss(FairyManager& fairyManager, BossGol
 		{
 			if (Collsion::CheckHitSphereToSphere(fairy->GetSkillHitPos(k), fairy->GetSkillHitRadius(k), bossPos, bossRad) == true)
 			{
-				ApplySkillEffect(fairy, boss,k);
+				ApplySkillEffect(fairy, boss, k, effect);
 			}
 		}
 	}
 }
 
 //精霊のスキルと敵の当たり判定
-void GameCollision::CheckHitFairySkillToEnemy(FairyManager& fairyManager,EnemyManager& enemyManager)
+void GameCollision::CheckHitFairySkillToEnemy(FairyManager& fairyManager,EnemyManager& enemyManager, EffectManager& effect)
 {
 	for (int i = 0; i < fairyManager.GetFairyCount(); i++)
 	{
@@ -402,7 +408,7 @@ void GameCollision::CheckHitFairySkillToEnemy(FairyManager& fairyManager,EnemyMa
 				//敵とそれぞれの精霊のスキルの当たり判定
 				if (Collsion::CheckHitSphereToSphere(skillPos, skillRadius, enemy.GetCollisionPos(), enemy.GetRadius()) == true)
 				{
-					ApplySkillEffect(fairy, enemy,k);
+					ApplySkillEffect(fairy, enemy, k, effect);
 				}
 			}
 		}

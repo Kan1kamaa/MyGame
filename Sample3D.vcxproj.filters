@@ -174,6 +174,9 @@
     <ClCompile Include="Src\Game\System\Reaction.cpp">
       <Filter>ソース ファイル\Game\System</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Game\Camera\LockOn.cpp">
+      <Filter>ソース ファイル\Game\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Lib\Fps\Fps.h">
@@ -292,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="Src\Game\System\Reaction.h">
       <Filter>ソース ファイル\Game\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Game\Camera\LockOn.h">
+      <Filter>ソース ファイル\Game\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

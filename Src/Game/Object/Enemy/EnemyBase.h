@@ -9,6 +9,8 @@ private:
 	ElementType m_element;
 	int m_elementCnt;
 	int m_shockEffectHndl;
+
+	
 public:
 	EnemyBase();
 	~EnemyBase();
@@ -24,6 +26,8 @@ public:
 	void TakeDamage(int damage);
 
 	virtual void OnDead();
+
+	bool IsDying()const;
 
 	void ClearElement();
 

@@ -138,6 +138,11 @@ void EnemyBase::OnDead()
 
 }
 
+bool EnemyBase::IsDying()const
+{
+	return m_isDying;
+}
+
 void EnemyBase::ClearElement()
 {
 	m_element = NONE;

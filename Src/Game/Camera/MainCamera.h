@@ -25,6 +25,8 @@ public:
 
 	void Update();
 
+	void UpdateLockOn(const VECTOR& playerPos, const VECTOR& targetPos);
+
 	//現在のカメラの水平方向の向き(移動をカメラ基準にする際に使う)
 	float GetYaw() const { return m_yaw; }
 };

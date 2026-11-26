@@ -27,6 +27,8 @@ public:
 	//情報更新
 	void Update();
 
+	void UpdateLockOn(const VECTOR& playerPos, const VECTOR& targetPos);
+
 	//カメラタイプのセットゲット
 	void setCameraID(tagCameraID& state) { m_state&  state; }
 	tagCameraID GetCameraID(){ return m_state; }

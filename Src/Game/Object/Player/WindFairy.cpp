@@ -26,6 +26,7 @@ void WindFairy::StartAttack(const VECTOR& playerPos,float playerRotY)
 	if (m_state == SKILL)return;
 	m_hitCnt = 0;
 	m_state = SKILL;
+	m_rot.y = playerRotY;
 	m_SkillMinFrame = WIND_SKILL_MINFRAME;
 	RequestAnim(ANIMID_ATTACK, WIND_ANIM_SPEED);
 	//キャラの前方ベクトル(移動処理と同じ向きの取り方)

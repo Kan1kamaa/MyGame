@@ -92,3 +92,21 @@ void MainCamera::Update()
 	//カメラの情報をDxLibに反映
 	SetCameraPositionAndTargetAndUpVec(m_camerapos, m_focuspos, m_upvec);
 }
+
+void MainCamera::UpdateLockOn(const VECTOR& playerPos, const VECTOR& targetPos)
+{
+		VECTOR dir = VSub(targetPos, playerPos);
+		float targetYaw = atan2f(-dir.x, -dir.z);
+		float dist = targetYaw - m_yaw;
+		while (dist > DX_PI_F)
+		{
+			dist -= DX_PI_F * 2.0f;
+		}
+		while (dist < -DX_PI_F)
+		{
+			dist += DX_PI_F * 2.0f;
+		}
+		m_yaw += dist * 0.1f;
+		//次のフレームでも差分を取れるようカーソルを中央に戻す
+		SetMousePoint(SCREEN_CENTER_X, SCREEN_CENTER_Y);
+}

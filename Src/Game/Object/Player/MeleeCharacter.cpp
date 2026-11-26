@@ -61,7 +61,7 @@ namespace {
 //	コンストラクタ
 //----------------------
 MeleeCharacter::MeleeCharacter() : m_comboStage(0), m_prevAttackInput(false), m_comboQueued(false),
-m_weaponHndl(-1), m_weaponHndl2(-1), m_handFrameIndexL(-1), m_handFrameIndexR(-1),
+m_attackStarted(false), m_weaponHndl(-1), m_weaponHndl2(-1), m_handFrameIndexL(-1), m_handFrameIndexR(-1),
 m_effectRequest(-1)
 {
 }
@@ -74,6 +74,7 @@ void MeleeCharacter::Init()
 	m_comboStage = 0;
 	m_prevAttackInput = false;
 	m_comboQueued = false;
+	m_attackStarted = false;
 }
 
 //データロード
@@ -123,6 +124,7 @@ void MeleeCharacter::Fin()
 void MeleeCharacter::StartAttack(int stage)
 {
 	m_comboStage = stage;
+	m_attackStarted = true;
 	m_comboQueued = false;
 	//ANIMID_ATTACK1を基準に段数分ずらして再生(ループさせず最終フレームで止める)
 	RequestAnim(ANIMID_ATTACK1 + (stage - 1), ANIM_SPEED);
@@ -154,6 +156,7 @@ void MeleeCharacter::StartSkill()
 void MeleeCharacter::StartUlt()
 {
 	RequestAnim(ANIMID_ULT, ANIM_SPEED);
+	m_attackStarted = true;
 	m_effectRequest = EffectManager::EFFECT_SWORDULT;
 }
 
@@ -586,6 +589,15 @@ bool MeleeCharacter::PopEffectRequest(EffectManager::EffectId& id)
 	return true;
 }
 
+bool MeleeCharacter::PopAttackStart()
+{
+	if (m_attackStarted == true)
+	{
+		m_attackStarted = false;
+		return true;
+	}
+	return false;
+}
 float MeleeCharacter::GetAttackPower()const
 {
 	switch (m_animData.m_index)

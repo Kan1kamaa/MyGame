@@ -66,3 +66,8 @@ void  CameraManager::Update()
 
 	}
 }
+
+void CameraManager::UpdateLockOn(const VECTOR& playerPos, const VECTOR& targetPos)
+{
+	m_mainCam.UpdateLockOn(playerPos, targetPos);
+}

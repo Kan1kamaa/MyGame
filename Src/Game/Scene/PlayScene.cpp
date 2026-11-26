@@ -62,9 +62,16 @@ void PlayScene::Step()
 	if (camera.GetCameraID() == 0)
 	{
 		//先にマウスでカメラを回し、移動がこのフレームのカメラ向きを使うようにする
-		camera.UpdateLook();
-		player.Step(camera.GetYaw());
-		fairy.Step(player.GetPos(),player.GetRot().y);
+		if (lockon.IsLocked() == true)
+		{
+			camera.UpdateLockOn(player.GetPos(), lockon.GetTargetPos());
+		}
+		else
+		{
+			camera.UpdateLook();
+		}
+		player.Step(camera.GetYaw(), lockon.IsLocked(), lockon.GetTargetPos());
+		fairy.Step(player.GetPos(),player.GetRot().y,lockon.IsLocked(), lockon.GetTargetPos());
 		shot.Step();
 		enemy.Step(player.GetPos());
 		boss.Step(player.GetPos());
@@ -118,6 +125,7 @@ void PlayScene::Update()
 	enemy.Update();
 	boss.Update();
 	camera.Update();
+
 	effect.Update();
 }
 

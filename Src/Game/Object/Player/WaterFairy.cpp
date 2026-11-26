@@ -24,6 +24,7 @@ void WaterFairy::StartAttack(const VECTOR& playerPos, float playerRotY)
 {
 	if (m_state == SKILL)return;
 	m_state = SKILL;
+	m_rot.y = playerRotY;
 	m_SkillMinFrame = WATER_SKILL_MINFRAME;
 	m_hitCnt = 0;
 	RequestAnim(ANIMID_ATTACK, WATER_ANIM_SPEED);

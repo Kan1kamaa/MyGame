@@ -106,7 +106,7 @@ void FairyManager::SwapFairy(FairyType nextType,VECTOR playerpos)
 }
 
 //毎フレーム計算する処理
-void FairyManager::Step(const VECTOR& playerPos,const float playerRotY)
+void FairyManager::Step(const VECTOR& playerPos,const float playerRotY, bool isLocked, const VECTOR& targetPos)
 {
 	if (m_nowFairy != nullptr)
 	{
@@ -150,7 +150,14 @@ void FairyManager::Step(const VECTOR& playerPos,const float playerRotY)
 	{
 		if (m_nowFairy != nullptr)
 		{
-			m_nowFairy->StartAttack(playerPos,playerRotY);
+			float RotY = playerRotY;
+			if (isLocked == true)
+			{
+				VECTOR dir = VSub(targetPos, playerPos);
+				
+				RotY = atan2f(-dir.x, -dir.z);
+			}
+			m_nowFairy->StartAttack(playerPos,RotY);
 		}
 	}
 }

@@ -29,6 +29,7 @@ private:
 	bool m_isDying;			//死亡中か(死亡モーション再生〜リスポーンまで。この間は操作・被弾を受け付けない)
 	int  m_respawnWaitCnt;	//死亡モーションが終わってからリスポーンするまでの残りフレーム数
 	bool m_hasRespawned;	//リスポーンした直後か(PlaySceneがボスをリセットするのに使う)
+	
 	//--- Step() から呼ぶ小さな処理(1つずつ役割を分けている) ---
 
 	//WASD入力を読んで、カメラの向き基準の移動方向を返す
@@ -60,7 +61,7 @@ public:
 	void Load();
 	//毎フレーム計算する処理
 	//@cameraYaw : カメラの水平方向の向き(この向き基準でWASD移動する)
-	void Step(float cameraYaw);
+	void Step(float cameraYaw,bool isLocked,const VECTOR& targetPos);
 	//毎更新
 	void Update();
 	//キャラクターのモデルと刀の描画(影用の描画にも使う)

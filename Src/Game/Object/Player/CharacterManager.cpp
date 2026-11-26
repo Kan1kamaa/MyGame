@@ -112,7 +112,7 @@ void CharacterManager::Load()
 //----------------------
 //大きく分けて「入力を読む → 移動 → 向き直り → ジャンプ/重力 → 座標反映 → アニメ/攻撃」の順で処理する。
 //それぞれの中身は下の小さな関数に分けてある。
-void CharacterManager::Step(float cameraYaw)
+void CharacterManager::Step(float cameraYaw, bool isLocked, const VECTOR& targetPos)
 {
 	//死亡中は操作を受け付けず、リスポーンを待つだけ
 	if (m_isDying == true)
@@ -236,7 +236,12 @@ void CharacterManager::Step(float cameraYaw)
 	//------ アニメーションを処理 ------
 	m_char.UpdateAnimState(isAttackInput, isMoveInput, isRunInput, isGrounded, m_velocityY, isJumpTrigger,
 		isSkillTrigger, isUltTrigger);
-
+	if (m_char.PopAttackStart() == true && isLocked == true)
+	{
+		VECTOR dir = VSub(targetPos, m_pos);
+		m_rot.y = atan2f(-dir.x, -dir.z);
+		m_char.SetRot(m_rot);
+	}
 	//------ 回避(走り出し)に切り替わった瞬間だけ、まとめてスタミナを引く ------
 	bool isDodging = m_char.IsDodging();
 	if (isDodging == true && m_wasDodging == false)

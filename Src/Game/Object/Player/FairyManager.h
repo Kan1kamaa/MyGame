@@ -43,7 +43,7 @@ public:
 	void Load();
 	//毎フレーム計算する処理
 	//@playerPos : プレイヤーの座標
-	void Step(const VECTOR& playerPos,const float playerRotY);
+	void Step(const VECTOR& playerPos,const float playerRotY, bool isLocked, const VECTOR& targetPos);
 	//情報更新
 	void Update();
 	//描画

@@ -1,9 +1,10 @@
 #include"LockOn.h"
 #include"math.h"
 namespace {
-	static int LOCK_RANGE = 100;
-	static int LOCK_RELEASE_RANGE = 200;
-	static int ANGLE_WEIGHT = 10;
+	static int LOCK_RANGE = 200;
+	static int LOCK_RELEASE_RANGE = 300;
+	static int ANGLE_WEIGHT = 300;
+	const float LOCK_MAX_ANGLE = DX_PI_F / 3;
 	const int BOSS_INDEX = ENEMY_MAX;
 }
 
@@ -112,6 +113,10 @@ int LockOn::FindBestTarget(EnemyManager& enemy, BossGolem& boss, const VECTOR& p
 			angleDiff += DX_PI_F * 2.0f;
 		}
 		angleDiff = fabsf(angleDiff);
+		if (angleDiff > LOCK_MAX_ANGLE)
+		{
+			continue;
+		}
 		float score = dist + angleDiff * ANGLE_WEIGHT;
 		if (score < bestscore)
 		{

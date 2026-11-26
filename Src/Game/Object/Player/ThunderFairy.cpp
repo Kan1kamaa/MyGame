@@ -33,6 +33,7 @@ void ThunderFairy::StartAttack(const VECTOR& playerPos, float playerRotY)
 {
 	if (m_state == SKILL)return;
 	m_state = SKILL;
+	m_rot.y = playerRotY;
 	m_SkillMinFrame = THUNDER_SKILL_MINFRAME;
 	m_hitCnt = 0;
 	RequestAnim(ANIMID_ATTACK, THUNDER_ANIM_SPEED);

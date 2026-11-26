@@ -10,6 +10,7 @@
 #include"../System/SoundManager.h"
 #include"../../Lib/Effect/EffectManager.h"
 #include"../Object/Player/FairyManager.h"
+#include"../Camera/LockOn.h"
 class PlayScene : public SceneBase {
 private:
 	//エフェクト(Effekseer)
@@ -30,6 +31,7 @@ private:
 	//精霊
 	FairyManager fairy;
 	
+	LockOn lockon;
 public:
 	//描画
 	void Draw();

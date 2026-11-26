@@ -18,6 +18,7 @@ void PlayScene::Draw()
 	boss.Draw();
 	//GameCollision::DrawExplosionDebug();	//爆発の範囲の表示(デバッグ用)
 	effect.Draw();
+	lockon.Draw();
 }
 
 //初期化
@@ -32,7 +33,7 @@ void PlayScene::Init()
 	enemy.Init();
 	boss.Init();
 	effect.Init();
-
+	lockon.Init();
 	m_state = LOAD;
 }
 
@@ -68,7 +69,7 @@ void PlayScene::Step()
 		enemy.Step(player.GetPos());
 		boss.Step(player.GetPos());
 		sky.Step();
-
+		lockon.Step(enemy, boss, player.GetPos(), camera.GetYaw());
 		//攻撃・スキル・必殺技が始まったらエフェクトを出す
 		EffectManager::EffectId effectId;
 		VECTOR effectPos;
@@ -102,6 +103,7 @@ void PlayScene::Step()
 	{
 		boss.Reset(BOSS_SPAWN_POS);
 		fairy.Reset();
+		lockon.Init();
 	}
 }
 

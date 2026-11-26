@@ -192,3 +192,4 @@ void EnemyBase::SetShockEffectHndl(int hndl)
 {
 	m_shockEffectHndl = hndl;
 }
+

@@ -42,6 +42,7 @@ public:
 	int GetShockEffectHndl()const;
 
 	void SetShockEffectHndl(int hndl);
+
 	//=========================
 	//攻撃の当たり判定(GameCollisionから使う。敵の種類ごとに上書きする)
 	//=========================
